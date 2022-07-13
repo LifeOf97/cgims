@@ -42,10 +42,10 @@ const data = {
           </div>
 
           <div class="flex gap-5 mt-5 md:mt-10 md:gap-10">
-            <img :src="nigeriaImg" alt="Nigeria" class="w-7 h-7 md:w-10 md:h-10">
-            <img :src="waecImg" alt="WAEC" class="w-7 h-7 md:w-10 md:h-10">
-            <img :src="necoImg" alt="NECO" class="w-7 h-7 md:w-10 md:h-10">
-            <img :src="jambImg" alt="JAMB" class="w-7 h-7 md:w-10 md:h-10">
+            <img :src="nigeriaImg" alt="Nigeria" title="nigeria map logo" class="w-7 h-7 md:w-10 md:h-10">
+            <img :src="waecImg" alt="WAEC" title="waec logo" class="w-7 h-7 md:w-10 md:h-10">
+            <img :src="necoImg" alt="NECO" title="neco logo" class="w-7 h-7 md:w-10 md:h-10">
+            <img :src="jambImg" alt="JAMB" title="jamb logo" class="w-7 h-7 md:w-10 md:h-10">
           </div>
         </div>
       </div>
