@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main id="why" class="w-full h-full bg-white">
+  <main id="why" class="w-full h-full bg-white selection:bg-green-600 selection:text-white">
 
     <div class="w-11/12 py-10 mx-auto flex flex-col gap-5 md:w-10/12 lg:py-24 lg:w-9/12">
 
