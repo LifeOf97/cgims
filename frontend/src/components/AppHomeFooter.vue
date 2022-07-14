@@ -30,8 +30,8 @@ onMounted(() => {
             <p class="text-sm font-bold text-slate-500 md:text-base">Please Note</p>
             <div class="w-7/12 flex flex-col gap-5 md:w-4/12">
                 <p class="text-xs italic font-normal text-slate-400">
-                    All images, illustrations and texts used by the developer have been duly attributed to their respective
-                    owners and sources.
+                    All images, illustrations and explanations used by the developer
+                    have been duly attributed to their respective owners and sources.
                 </p>
             </div>
         </div>
