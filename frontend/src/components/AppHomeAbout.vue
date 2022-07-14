@@ -1,9 +1,21 @@
 <script setup>
 /* eslint-disable */
+import { onMounted, ref } from 'vue';
 import thinkingStory from '../assets/svgs/Thinking.svg'
 import IconExternalLink from './icons/IconExternalLink.vue';
 import IconHelpQuestionMark from './icons/IconHelpQuestionMark.vue';
+import {gsap} from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
+// refs
+const startAnim1 = ref(null)
+const startAnim2 = ref(null)
+const aboutTxt = ref(null)
+const aboutImg = ref(null)
+const aboutTxt2 = ref(null)
+
+// data
 const questions = [
     {
         id: 1,
@@ -37,16 +49,28 @@ const questions = [
     },
     
 ]
+
+// methods
+const animAbout = () => {
+    gsap.from(aboutTxt.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1.5, x: 100, opacity: 0,})
+    gsap.from(aboutImg.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1.5, x: -100, opacity: 0,})
+    gsap.from(aboutTxt2.value, {scrollTrigger: {trigger: startAnim2.value, start: "100px bottom", markers: false, id: "about"}, duration: 1, y: 100, opacity: 0, stagger: 0.2})
+}
+
+// hooks
+onMounted(() => {
+    animAbout()
+})
 </script>
 
 <template>
-  <main class="w-full h-full bg-white">
+  <main id="about" class="w-full h-full bg-white">
 
     <div class="w-11/12 py-24 mx-auto flex flex-col gap-10 md:w-10/12 lg:w-9/12">
 
-        <div class="w-full h-full flex flex-col gap-y-10 items-center  lg:flex-row">
+        <div ref="startAnim1" class="w-full h-full flex flex-col gap-y-10 items-center  lg:flex-row">
 
-            <div class="flex-1 flex flex-col gap-4">
+            <div ref="aboutTxt" class="flex-1 flex flex-col gap-4">
                 <p class="self-start bg-red-600 px-4 py-1 text-white text-xs font-medium rounded-full md:text-sm">About CGIMS</p>
                 <h3 class="text-slate-900 text-2xl font-black md:text-3xl">What is Career Guidance Information and Management System?</h3>
                 <p class="text-xs text-slate-600 md:text-sm">
@@ -65,7 +89,7 @@ const questions = [
             </div>
 
             <!-- start of story svg -->
-            <div class="relative flex-1 w-full">
+            <div ref="aboutImg" class="relative flex-1 w-full">
                 <img :src="thinkingStory" alt="Question Story" class="w-full h-full">
                 <a href="https://storyset.com/people" target="_blank" class="absolute bottom-7 right-16 text-xs italic hover:text-blue-600 md:bottom-12">People illustrations by Storyset</a>
             </div>
@@ -74,9 +98,9 @@ const questions = [
         </div>
 
         <!-- start of other questions -->
-        <div class="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div ref="startAnim2" class="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 
-            <div v-for="question in questions" :key="question.id" class="flex flex-col gap-5">
+            <div ref="aboutTxt2" v-for="question in questions" :key="question.id" class="flex flex-col gap-5">
                 <div class="flex gap-4 items-center">
                     <div class="w-10 h-10 rounded-full shadow-inner shadow-slate-400 bg-slate-200 flex items-center justify-center">
                         <IconHelpQuestionMark class="w-5 h-5 fill-slate-900" />

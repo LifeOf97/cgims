@@ -5,6 +5,7 @@ import AppHomeHero from '../components/AppHomeHero.vue';
 import AppHomeAbout from '../components/AppHomeAbout.vue';
 import AppHomeWhy from '../components/AppHomeWhy.vue';
 import AppHomeHow from '../components/AppHomeHow.vue';
+import AppHomeFooter from '../components/AppHomeFooter.vue';
 
 </script>
 
@@ -40,6 +41,12 @@ import AppHomeHow from '../components/AppHomeHow.vue';
         <section>
           <AppHomeHow />
         </section>
+        <!-- start of how section -->
+
+        <!-- start of how section -->
+        <footer>
+          <AppHomeFooter />
+        </footer>
         <!-- start of how section -->
 
     </div>

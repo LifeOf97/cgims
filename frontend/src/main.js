@@ -5,10 +5,12 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/index.css";
+import FlagIcon from "vue-flag-icon";
 
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
+app.use(FlagIcon);
 
 app.mount("#app");

@@ -19,9 +19,11 @@
     "autoprefixer": "^10.4.7",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^9.0.0",
+    "gsap": "^3.10.4",
     "postcss": "^8.4.14",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.1.6",
-    "vite": "^2.9.14"
+    "vite": "^2.9.14",
+    "vue-flag-icon": "^2.1.0"
   }
 }
