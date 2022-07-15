@@ -13,8 +13,8 @@ const howImg = ref(null)
 
 // methods
 const animHow = () => {
-    gsap.from(howTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "how"}, duration: 1.5, x: 100, opacity: 0,})
-    gsap.from(howImg.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "how"}, duration: 1.5, x: -100, opacity: 0,})
+    gsap.from(howTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "how"}, duration: 1, x: 100, opacity: 0,})
+    gsap.from(howImg.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "how"}, duration: 1, x: -100, opacity: 0,})
 }
 
 // hooks

@@ -14,7 +14,7 @@ const nav = ref(null)
 
 // methods
 const animNav = () => {
-    gsap.from(nav.value, {y: -50, opacity: 0, duration: 1})
+    gsap.from(nav.value, {opacity: 0, duration: 1})
 }
 
 const closeMobileNav = (e) => {

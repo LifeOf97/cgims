@@ -1,11 +1,29 @@
-from rest_framework.authtoken.models import Token
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.conf import settings
+# NOTE: this signals are explicitly connected to in th apps.py file
+from django.contrib.auth import get_user_model
+
+Profile = get_user_model()
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_profile_token(sender, instance=None, created=False, **kwargs):
-    # if the profile is created then create token for that profile.
-    if created and instance.is_staff:
-        Token.objects.create(user=instance)
+def delete_staff_profile(sender, instance, **kwargs):
+    """
+    When a staff instance is deleted, we need to also delete
+    the corresponding staff profile
+    """
+    try:
+        profile = Profile.objects.get(username__iexact=instance.staff_id)
+    except Profile.DoesNotExist:
+        pass
+    else:
+        profile.delete()
+
+def delete_student_profile(sender, instance, **kwargs):
+    """
+    When a students instance is deleted, we need to also delete
+    the corresponding student profile
+    """
+    try:
+        profile = Profile.objects.get(username__iexact=instance.sid)
+    except Profile.DoesNotExist:
+        pass
+    else:
+        profile.delete()

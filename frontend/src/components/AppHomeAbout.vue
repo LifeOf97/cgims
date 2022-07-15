@@ -52,8 +52,8 @@ const questions = [
 
 // methods
 const animAbout = () => {
-    gsap.from(aboutTxt.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1.5, x: 100, opacity: 0,})
-    gsap.from(aboutImg.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1.5, x: -100, opacity: 0,})
+    gsap.from(aboutTxt.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1, x: 100, opacity: 0,})
+    gsap.from(aboutImg.value, {scrollTrigger: {trigger: startAnim1.value, start: "250px bottom", markers: false, id: "about"}, duration: 1, x: -100, opacity: 0,})
     gsap.from(aboutTxt2.value, {scrollTrigger: {trigger: startAnim2.value, start: "100px bottom", markers: false, id: "about"}, duration: 1, y: 100, opacity: 0, stagger: 0.2})
 }
 

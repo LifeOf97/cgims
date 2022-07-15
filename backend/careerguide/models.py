@@ -22,7 +22,7 @@ DEPT: tuple = (
     ('art', 'art'),
     ('science', 'science'),
     ('commercial', 'commercial'),
-    ('social science', 'social science'),
+    ('social_science', 'social_science'),
 )
 
 
@@ -112,7 +112,7 @@ class Student(models.Model):
         ]
 
     def save(self, *args, **kwargs):
-        self.sid = F"{self.department}/{self.level}/{self.reg_no}".upper()
+        self.sid = F"{self.department}/{self.level}/{self.reg_no}".lower()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -133,7 +133,7 @@ class Schedule(models.Model):
     slug = models.SlugField(_("Title slug"), max_length=255, blank=False, null=True)
     detail = models.TextField(_("Details"), blank=True, null=True)
     created = models.DateTimeField(_("Created"), auto_now=False, auto_now_add=False, default=timezone.now, blank=False, null=False)
-    expire = models.DateField(_("Expire"), auto_now=False, auto_now_add=False, blank=True, null=True)
+    expire = models.DateTimeField(_("Expire"), auto_now=False, auto_now_add=False, blank=True, null=True)
     completed = models.BooleanField(_("Completed"), default=False, blank=False, null=False)
 
     def save(self, *args, **kwargs):
@@ -156,10 +156,11 @@ class Questionnaire(models.Model):
     slug = models.SlugField(_("Title slug"), max_length=255, blank=False, null=True)
     question = models.TextField(_("Question"), blank=False, null=False)
     completed = models.BooleanField(_("Completed"), default=False, blank=False, null=False)
-    categories = models.CharField(
-        _("Categories"), max_length=255, blank=True, null=False,
-        help_text=_("Comma/space seperated values representing the type of students this questionnaire is ment for<br>E.G: art, ss1, male")
-    )
+    categories = models.JSONField(_("Categories"), default=list)
+    # categories = models.CharField(
+    #     _("Categories"), max_length=255, blank=True, null=False,
+    #     help_text=_("Comma/space seperated values representing the type of students this questionnaire is ment for<br>E.G: art, ss1, male")
+    # )
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

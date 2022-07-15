@@ -13,8 +13,8 @@ const whyImg = ref(null)
 
 // methods
 const animWhy = () => {
-    gsap.from(whyTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "why"}, duration: 1.5, x: -100, opacity: 0,})
-    gsap.from(whyImg.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "why"}, duration: 1.5, x: 100, opacity: 0,})
+    gsap.from(whyTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "why"}, duration: 1, x: -100, opacity: 0,})
+    gsap.from(whyImg.value, {scrollTrigger: {trigger: startAnim.value, start: "250px bottom", markers: false, id: "why"}, duration: 1, x: 100, opacity: 0,})
 }
 
 // hooks

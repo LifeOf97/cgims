@@ -12,8 +12,8 @@ const footTxt2 = ref(null)
 
 // methods
 const animFooter = () => {
-    gsap.from(footTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "100px bottom", markers: false, id: "footer"}, duration: 1.5, y: 50, opacity: 0,})
-    gsap.from(footTxt2.value, {scrollTrigger: {trigger: startAnim.value, start: "100px bottom", markers: false, id: "footer"}, duration: 1.5, y: -50, opacity: 0,})
+    gsap.from(footTxt.value, {scrollTrigger: {trigger: startAnim.value, start: "100px bottom", markers: false, id: "footer"}, duration: 1, y: 50, opacity: 0,})
+    gsap.from(footTxt2.value, {scrollTrigger: {trigger: startAnim.value, start: "100px bottom", markers: false, id: "footer"}, duration: 1, y: -50, opacity: 0,})
 }
 
 // hooks
@@ -27,11 +27,12 @@ onMounted(() => {
 
     <div ref="startAnim" class="w-11/12 mx-auto flex flex-col pb-10 md:w-10/12 lg:w-9/12">
         <div ref="footTxt" class="flex flex-col gap-2">
-            <p class="text-sm font-bold text-slate-500 md:text-base">Please Note</p>
+            <p class="text-xs font-normal text-slate-500 md:text-base">Please Note</p>
             <div class="w-7/12 flex flex-col gap-5 md:w-4/12">
                 <p class="text-xs italic font-normal text-slate-400">
-                    All images, illustrations and explanations used by the developer
-                    have been duly attributed to their respective owners and sources.
+                    All images, illustrations and explanations from third party sources
+                    used by the developer have been duly attributed to their respective
+                    owners and/or sources.
                 </p>
             </div>
         </div>

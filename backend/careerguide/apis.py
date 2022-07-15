@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework import status
 from django.utils import timezone
+from django.db.models import Q
 
 # get the current user model
 Profile = get_user_model()
@@ -86,7 +87,7 @@ class StaffViewSet(viewsets.GenericViewSet):
         Edited so as to perform a case insensitive search.
         """
         queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, staff_id__iexact=self.kwargs['staff_id'])
+        obj = get_object_or_404(queryset, staff_id__iexact=self.request.user.staff.staff_id)
 
         self.check_object_permissions(self.request, obj)
         return obj
@@ -110,7 +111,7 @@ class StaffViewSet(viewsets.GenericViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data, context={"request": request})
-
+        print(serializer.initial_data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
@@ -135,16 +136,15 @@ class StaffViewSet(viewsets.GenericViewSet):
 class StudentViewSet(viewsets.GenericViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [permissions.AllowAny]
 
     def get_object(self):
         # Get an object instance with the following lookup fields.
         # make sure to edit the hyperlink identity field on the serializer class to make use
         # of two url kwargs
         lookup_kwargs = {
-            "department": self.kwargs["department"],
-            "level": self.kwargs["level"],
-            "reg_no": self.kwargs["reg_no"]
+            "department": self.kwargs["department"].lower(),
+            "level": self.kwargs["level"].lower(),
+            "reg_no": self.kwargs["reg_no"].lower()
         }
 
         obj  = get_object_or_404(self.get_queryset(), **lookup_kwargs)
@@ -206,7 +206,7 @@ class ScheduleViewSet(viewsets.GenericViewSet):
         # Modified to return an instance of the logged in users schedule.
         # make sure to edit the hyperlink identity field on the serializer class to make use
         # of two url kwargs [staff_id and instance id]
-        obj = get_object_or_404(self.get_queryset(), staff__staff_id=self.request.user.staff.staff_id, id=self.kwargs["id"])
+        obj = get_object_or_404(self.get_queryset(), staff=self.request.user.staff, id=self.kwargs["id"])
 
         # Make sure to check if the user has object level permission
         self.check_object_permissions(self.request, obj)
@@ -223,48 +223,34 @@ class ScheduleViewSet(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={"request": request})
 
-        # make sure this schedule belongs to the currently logged in staff
-        if request.user.staff.staff_id == self.kwargs["staff_id"].upper():
-
-            # check to make sure the expire field was filled with a date, else populate
-            # it with a date 7 days in the future.
-            if serializer.initial_data.get('expire'):
-                if timezone.datetime.fromisoformat(serializer.initial_data["expire"]) < timezone.datetime.now():
-                    return Response(data={"detail": _("Expire Date cannot be in the past")}, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    pass
+        # check to make sure the expire field was filled with a date, else populate
+        # it with a date 7 days in the future.
+        if serializer.initial_data.get('expire'):
+            if timezone.datetime.fromisoformat(serializer.initial_data["expire"]) < timezone.datetime.now():
+                return Response(data={"detail": _("Expire Date cannot be in the past")}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                serializer.initial_data["expire"] = timezone.datetime.now() + timezone.timedelta(days=7)
+                pass
+        else:
+            serializer.initial_data["expire"] = timezone.datetime.now() + timezone.timedelta(days=7)
 
-            if serializer.is_valid():
-                serializer.save(staff=request.user.staff)
-                return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-            # else if serializer is not valid
-            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # else if logged the in staff is not the owner of this schedule
-        serializer = {"detail": "You are not the owner of the account you are trying to create a schedule for!"}
-        return Response(data=serializer, status=status.HTTP_406_NOT_ACCEPTABLE)
+        if serializer.is_valid():
+            serializer.save(staff=request.user.staff)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         serializer = self.serializer_class(instance=self.get_object(), data=request.data, context={"request": request}, partial=True)
 
-        # make sure this schedule belongs to the currently logged in staff
-        if request.user.staff.staff_id == self.kwargs["staff_id"].upper():
-            if serializer.is_valid():
-                serializer.save(staff=request.user.staff)
-                return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
-            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # else if logged the in staff is not the owner of this schedule
-        serializer = {"detail": "You are not the owner of the account you are trying to create a schedule for!"}
-        return Response(data=serializer, status=status.HTTP_406_NOT_ACCEPTABLE)
+        if serializer.is_valid():
+            serializer.save(staff=request.user.staff)
+            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         schedule = self.get_object()
-        staff, title = [schedule.staff.staff_id, schedule.title]
+        id, staff, title, created = [schedule.id, schedule.staff.staff_id, schedule.title, schedule.created]
         schedule.delete()
-        serializer = {"staff id": staff, "title": title, "detail": "Deleted successfully"}
+        serializer = {"id": id, "staff": staff, "title": title, "created": created, "detail": "Deleted successfully"}
         return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
 
 
@@ -282,7 +268,7 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
         # return an instance of a questionnaire for the logged in staff and the specified id.
         # make sure to edit the hyperlink identity field on the serializer class to make use
         # of two url kwargs [staff_id and intance id]
-        obj = get_object_or_404(self.get_queryset(), staff__staff_id=self.request.user.staff.staff_id, id=self.kwargs["id"])
+        obj = get_object_or_404(self.get_queryset(), staff=self.request.user.staff, id=self.kwargs["id"])
 
         # make sure to check for object level permissions
         self.check_object_permissions(self.request, obj)
@@ -299,80 +285,35 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={"request":  request})
 
-        # First, we need to retrieve reg_no's belonging to students in each category.
-        # get the categories field from the initial_data
-        categories = serializer.initial_data.get("categories")
-        # print(F"categories: {categories}")
-        # default categories
-        all_department = set({"art", "commercial", "science", "social science"})
-        all_level = set({"jss1", "jss2", "jss3", "sss1", "sss2", "sss3"})
-        all_gender = set({"male", "female"})
-        
-        # retrieved categories
-        try:
-            categories = set({cat for cat in categories})
-        except TypeError:
-            categories = set({})
-        # else:
-        #     categories = set({cat for cat in categories})
+        categories = list(set(serializer.initial_data.get("categories")))
 
-        student_queryset = Student.objects.all()
-
-        # Here i made use of the set intersection method to provide only the supplied categories
-        # from the frontend or non at all.
-        student_category = [student for student in student_queryset.filter(
-            department__in=[dept for dept in all_department.intersection(categories)],
-            level__in=[lvl for lvl in all_level.intersection(categories)],
-            profile__gender__in=[sex for sex in all_gender.intersection(categories)]
+        student_category = [student for student in Student.objects.filter(
+            Q(department__in=[dept for dept in categories]) |
+            Q(level__in=[lvl for lvl in categories]) |
+            Q(profile__gender__in=[gender for gender in categories])
         )]
-
-        # then update the students field with the reg number of students in each category
-        serializer.initial_data["students"] = [student.profile.id for student in student_category]
-        # and also update the category field to contain a string of space delimated values of the
-        # student_category
-        serializer.initial_data["categories"] = ",".join(categories)
-        print(serializer.initial_data["categories"])
-        print(serializer.initial_data["students"])
+        print(student_category)
+        # set the students field to the all students that fit into any of the categories
+        serializer.initial_data['students'] = [student.sid for student in student_category]
 
         if serializer.is_valid():
             serializer.save(staff=request.user.staff)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+      
     def update(self, request, *args, **kwargs):
         serializer = self.serializer_class(instance=self.get_object(), data=request.data, context={"request": request}, partial=True)
 
-        # First, we need to retrieve reg_no's belonging to students in each category.
-        # get the categories field from the validated serializer
         categories = serializer.initial_data.get("categories")
-        # default categories
-        all_department: set = set({"art", "commercial", "science", "social science"})
-        all_level: set = set({"jss1", "jss2", "jss3", "sss1", "sss2", "sss3"})
-        all_gender: set = set({"male", "female"})
-        
-        # retrieved categories
-        try:
-            categories: set = set({cat for cat in categories})
-        except TypeError:
-            categories: set = set({})
-        else:
-            categories: set = set({cat for cat in categories})
-
         student_queryset = Student.objects.all()
-
-        student_category: set = [student for student in student_queryset.filter(
-            department__in=[dept for dept in all_department.intersection(categories)],
-            level__in=[lvl for lvl in all_level.intersection(categories)],
-            profile__gender__in=[sex for sex in all_gender.intersection(categories)]
+        
+        student_category = [student for student in student_queryset.filter(
+            Q(department__in=[dept for dept in categories]) |
+            Q(level__in=[lvl for lvl in categories]) |
+            Q(profile__gender__in=[gender for gender in categories])
         )]
-
-        # then update the students field with the reg number of students in each category
-        serializer.initial_data["students"] = [student.profile.id for student in student_category]
-        # and also update the category field to contain a string of space delimated values of the
-        # student_category
-        serializer.initial_data["categories"] = ",".join(categories)
-        print(serializer.initial_data["categories"])
-        print(serializer.initial_data["students"])
+        # set the students field to the all students that fit into any of the categories
+        serializer.initial_data["students"] = [student.sid for student in student_category]
 
         if serializer.is_valid():
             serializer.save(staff=request.user.staff)
@@ -381,9 +322,9 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
 
     def destroy(self, request, *args, **kwargs):
         question = self.get_object()
-        q_id, q_title, q_completed = [question.id, question.title, question.completed]
+        id, staff, title, completed = [question.id, question.staff.staff_id, question.title, question.completed]
         question.delete()
-        serializer = {"id": q_id, "title": q_title, "completed": q_completed, "detail": "Deleted successfully"}
+        serializer = {"id": id, "staff": staff, "title": title, "completed": completed, "detail": "Deleted successfully"}
         return Response(data=serializer, status=status.HTTP_200_OK)
 
 
@@ -514,7 +455,7 @@ class ResultViewSet(viewsets.GenericViewSet):
         }
         obj = get_object_or_404(self.get_queryset(), **lookup_kwargs)
         # make sure to check for object level permissions
-        self.check_object_permissions(self.request, obj)
+        self.check_object_permissions(self.request, obj)    
         return obj
 
     def list(self, request, *args, **kwargs):

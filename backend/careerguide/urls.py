@@ -30,23 +30,23 @@ urlpatterns = [
     # staff urls path
     path("staffs/", apis.StaffViewSet.as_view({"get": "list"}), name="staff-list"),
     path("staffs/create/", apis.StaffViewSet.as_view({"post": "create"}), name="staff-create"),
-    path("staffs/<str:staff_id>/", apis.StaffViewSet.as_view({"get": "retrieve"}), name="staff-detail"),
-    path("staffs/<str:staff_id>/update/", apis.StaffViewSet.as_view({"put": "update", "patch": "update"}), name="staff-update"),
-    path("staffs/<str:staff_id>/delete/", apis.StaffViewSet.as_view({"delete": "destroy"}), name="staff-delete"),
+    path("staffs/me/", apis.StaffViewSet.as_view({"get": "retrieve"}), name="staff-detail"),
+    path("staffs/me/update/", apis.StaffViewSet.as_view({"put": "update", "patch": "update"}), name="staff-update"),
+    path("staffs/me/delete/", apis.StaffViewSet.as_view({"delete": "destroy"}), name="staff-delete"),
 
     # staff schedule urls
-    path("staffs/<str:staff_id>/schedules/", apis.ScheduleViewSet.as_view({"get": "list"}), name="staff-schedule-list"),
-    path("staffs/<str:staff_id>/schedules/create/", apis.ScheduleViewSet.as_view({"post": "create"}), name="staff-schedule-create"),
-    path("staffs/<str:staff_id>/schedules/<int:id>/", apis.ScheduleViewSet.as_view({"get": "retrieve"}), name="staff-schedule-detail"),
-    path("staffs/<str:staff_id>/schedules/<int:id>/update/", apis.ScheduleViewSet.as_view({"put": "update", "patch": "update"}), name="staff-schedule-update"),
-    path("staffs/<str:staff_id>/schedules/<int:id>/delete/", apis.ScheduleViewSet.as_view({"delete": "destroy"}), name="staff-schedule-delete"),
+    path("staffs/me/schedules/", apis.ScheduleViewSet.as_view({"get": "list"}), name="staff-schedule-list"),
+    path("staffs/me/schedules/create/", apis.ScheduleViewSet.as_view({"post": "create"}), name="staff-schedule-create"),
+    path("staffs/me/schedules/<int:id>/", apis.ScheduleViewSet.as_view({"get": "retrieve"}), name="staff-schedule-detail"),
+    path("staffs/me/schedules/<int:id>/update/", apis.ScheduleViewSet.as_view({"put": "update", "patch": "update"}), name="staff-schedule-update"),
+    path("staffs/me/schedules/<int:id>/delete/", apis.ScheduleViewSet.as_view({"delete": "destroy"}), name="staff-schedule-delete"),
     
     # staffs questionnaire urls path
-    path("staffs/<str:staff_id>/questionnaires/", apis.QuestionnaireViewSet.as_view({"get": "list"}), name="staff-questionnaire-list"),
-    path("staffs/<str:staff_id>/questionnaires/create/", apis.QuestionnaireViewSet.as_view({"post": "create"}), name="staff-questionnaire-create"),
-    path("staffs/<str:staff_id>/questionnaires/<int:id>/", apis.QuestionnaireViewSet.as_view({"get": "retrieve"}), name="staff-questionnaire-detail"),
-    path("staffs/<str:staff_id>/questionnaires/<int:id>/update/", apis.QuestionnaireViewSet.as_view({"put": "update", "patch": "update"}), name="staff-questionnaire-update"),
-    path("staffs/<str:staff_id>/questionnaires/<int:id>/delete/", apis.QuestionnaireViewSet.as_view({"delete": "destroy"}), name="staff-questionnaire-delete"),
+    path("staffs/me/questionnaires/", apis.QuestionnaireViewSet.as_view({"get": "list"}), name="staff-questionnaire-list"),
+    path("staffs/me/questionnaires/create/", apis.QuestionnaireViewSet.as_view({"post": "create"}), name="staff-questionnaire-create"),
+    path("staffs/me/questionnaires/<int:id>/", apis.QuestionnaireViewSet.as_view({"get": "retrieve"}), name="staff-questionnaire-detail"),
+    path("staffs/me/questionnaires/<int:id>/update/", apis.QuestionnaireViewSet.as_view({"put": "update", "patch": "update"}), name="staff-questionnaire-update"),
+    path("staffs/me/questionnaires/<int:id>/delete/", apis.QuestionnaireViewSet.as_view({"delete": "destroy"}), name="staff-questionnaire-delete"),
 
     # questions url
     path("questions/", apis.QuestionViewSet.as_view({"get": "list"}), name="questions-list"),
@@ -77,6 +77,3 @@ urlpatterns = [
     path("students/<str:department>/<str:level>/<str:reg_no>/results/delete/", apis.ResultViewSet.as_view({"delete": "destroy"}), name="students-result-delete"),
 
 ]
-
-# urls can append a [url]?format=* or [url].* where * is one of ['json', 'api']
-urlpatterns = format_suffix_patterns(urlpatterns, allowed=["api", "json"])
