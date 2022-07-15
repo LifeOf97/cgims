@@ -7,8 +7,13 @@ import waecImg from '../assets/images/waec.png'
 import necoImg from '../assets/images/neco.png'
 import jambImg from '../assets/images/jamb.png'
 import gsap from "gsap"
+import { useTippy } from "vue-tippy"
 
 // refs
+const nigeria = ref(null)
+const waec = ref(null)
+const neco = ref(null)
+const jamb = ref(null)
 const heroTag = ref(null)
 const heroTxt = ref(null)
 const heroTxt2 = ref(null)
@@ -29,6 +34,12 @@ const animHero = () => {
   gsap.from(heroImg, {x: 50, opacity: 0, stagger: 0.2, duration: 0.5, delay: 2})
   gsap.from(heroTag.value, {y: -50, opacity: 0, duration: 1, delay: 3})
 }
+
+// tippyjs
+useTippy(nigeria, {content: "Nigeria", animation: 'scale'})
+useTippy(waec, {content: "WAEC", animation: 'scale'})
+useTippy(neco, {content: "NECO", animation: 'scale'})
+useTippy(jamb, {content: "JAMB", animation: 'scale'})
 
 // hooks
 onMounted(() => {
@@ -64,10 +75,10 @@ onMounted(() => {
           </div>
 
           <div class="flex gap-5 mt-5 md:mt-10 md:gap-10">
-            <img :src="nigeriaImg" alt="Nigeria" title="nigeria map logo" class="heroImg w-7 h-7 md:w-10 md:h-10">
-            <img :src="waecImg" alt="WAEC" title="waec logo" class="heroImg w-7 h-7 md:w-10 md:h-10">
-            <img :src="necoImg" alt="NECO" title="neco logo" class="heroImg w-7 h-7 md:w-10 md:h-10">
-            <img :src="jambImg" alt="JAMB" title="jamb logo" class="heroImg w-7 h-7 md:w-10 md:h-10">
+            <img ref="nigeria" :src="nigeriaImg" alt="Nigeria" class="heroImg w-7 h-7 md:w-10 md:h-10">
+            <img ref="waec" :src="waecImg" alt="WAEC"  class="heroImg w-7 h-7 md:w-10 md:h-10">
+            <img ref="neco" :src="necoImg" alt="NECO"  class="heroImg w-7 h-7 md:w-10 md:h-10">
+            <img ref="jamb" :src="jambImg" alt="JAMB"  class="heroImg w-7 h-7 md:w-10 md:h-10">
           </div>
         </div>
       </div>

@@ -365,7 +365,6 @@ class QuestionViewSet(viewsets.GenericViewSet):
         return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
 
 
-
 class ObservationViewSet(viewsets.GenericViewSet):
     queryset = Observation.objects.all()
     serializer_class = ObservationSerializer
@@ -424,7 +423,7 @@ class ObservationViewSet(viewsets.GenericViewSet):
 
         if serializer.is_valid():
             serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
@@ -484,7 +483,7 @@ class ResultViewSet(viewsets.GenericViewSet):
 
         if serializer.is_valid():
             serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):

@@ -51,7 +51,7 @@ onMounted(() => {
                 <a
                     href="https://twitter.com/realestKMA"
                     target="_blank"
-                    title="KMA = Kelvin Mayowa Ayeni"
+                    v-tippy="{content: 'KMA = Kelvin Mayowa Ayeni', animation: 'scale'}"
                     class="text-blue-500 hover:text-blue-600">
                     RealestKMA
                 </a>
