@@ -28,9 +28,9 @@ onMounted(() => {
 
     <div class="w-11/12 py-10 mx-auto flex flex-col gap-5 md:w-10/12 lg:py-24 lg:w-9/12">
 
-        <div ref="startAnim" class="w-full h-full flex flex-col gap-y-10 items-center  lg:flex-row">
+        <div ref="startAnim" class="w-full h-full flex flex-col gap-y-10 items-center lg:flex-row">
 
-            <div ref="howTxt" class="flex-1 flex flex-col gap-4 lg:px-10">
+            <div ref="howTxt" class="flex-1 flex flex-col gap-4 lg:pr-10">
                 <p class="self-start bg-blue-600 px-4 py-1 text-white text-xs font-medium rounded-full md:text-sm">How CGIMS</p>
                 <h3 class="text-slate-900 text-2xl font-black md:text-3xl">How Career Guidance Information and Management System Works?</h3>
                 <p class="text-xs text-slate-600 md:text-sm">

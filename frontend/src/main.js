@@ -8,9 +8,6 @@ import "./assets/index.css";
 import FlagIcon from "vue-flag-icon";
 import VueTippy from "vue-tippy";
 import "tippy.js/dist/tippy.css";
-import "tippy.js/themes/light.css";
-import "tippy.js/dist/backdrop.css";
-import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/scale.css";
 
 const app = createApp(App);

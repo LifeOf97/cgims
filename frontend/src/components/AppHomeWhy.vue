@@ -28,7 +28,7 @@ onMounted(() => {
 
     <div class="w-11/12 py-10 mx-auto flex flex-col gap-5 md:w-10/12 lg:py-24 lg:w-9/12">
 
-        <div ref="startAnim" class="w-full h-full flex flex-col gap-y-10 items-center  lg:flex-row">
+        <div ref="startAnim" class="w-full h-full flex flex-col gap-y-10 items-center lg:flex-row">
 
             <div ref="whyTxt" class="order-1 flex-1 flex flex-col gap-4 lg:px-10 lg:order-2">
                 <p class="self-start bg-green-600 px-4 py-1 text-white text-xs font-medium rounded-full md:text-sm">Why CGIMS</p>
