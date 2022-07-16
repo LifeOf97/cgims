@@ -2,9 +2,10 @@
 /* eslint-disable */
 import { ref } from 'vue';
 import AppStaffLeftNav from '../components/AppStaffLeftNav.vue';
+import AppStaffAvatar from '../components/AppStaffAvatar.vue';
 
 // refs
-const mobileNav = ref(true)
+const mobileNav = ref(false)
 </script>
 
 <template>
@@ -35,6 +36,10 @@ const mobileNav = ref(true)
       <!-- start of routerview -->
       <div class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
         <RouterView />
+
+        <div class="absolute top-5 right-10">
+          <AppStaffAvatar />
+        </div>
       </div>
       <!-- end of routerview -->
 

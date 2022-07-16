@@ -8,8 +8,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "chart.js": "^3.8.0",
+    "luxon": "^3.0.1",
     "pinia": "^2.0.14",
     "vue": "^3.2.37",
+    "vue-chartjs": "^4.1.1",
     "vue-router": "^4.1.2",
     "vue-tippy": "^6.0.0-alpha.62"
   },

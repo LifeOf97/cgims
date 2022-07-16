@@ -18,7 +18,15 @@ const router = createRouter({
     {
       path: "/staff",
       name: "staff",
+      redirect: {name: 'staffdashboard'},
       component: () => import("../views/StaffAccount.vue"),
+      children: [
+        {
+          path: "/staff",
+          name: "staffdashboard",
+          component: () => import("../components/AppStaffDashboard.vue"),
+        },
+      ]
     },
   ],
   scrollBehavior(to, from, savedPosition) {
