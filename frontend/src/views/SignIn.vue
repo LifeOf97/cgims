@@ -35,7 +35,7 @@ const loading = ref(false)
                         <AppCheckBox v-model="rememberMe" label="Remember me" />
                         <RouterLink to="#" v-tippy="{content: 'Coming soon', animation: 'scale', trigger: 'click'}" class="text-blue-500 text-xs hover:text-blue-600">Forgot password?</RouterLink>
                     </div>
-                    <AppButton type="2" :loading="loading" label="Sign In" class="mt-2" />
+                    <AppButton type="2" :color="2" :loading="loading" label="Sign In" class="mt-2" />
                 </form>
 
             </div>

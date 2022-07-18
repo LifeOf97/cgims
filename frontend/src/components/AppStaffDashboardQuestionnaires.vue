@@ -2,7 +2,6 @@
 /* eslint-disable */
 import { RouterLink } from 'vue-router';
 import AppStaffDashboardQuestionnairesCard from './AppStaffDashboardQuestionnairesCard.vue'
-import IconLongRight from './icons/IconLongRight.vue';
 import IconLongLeft from './icons/IconLongLeft.vue';
 </script>
 

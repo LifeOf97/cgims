@@ -5,6 +5,7 @@ import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import AppStaffLeftNav from '../components/AppStaffLeftNav.vue';
 import AppStaffAvatar from '../components/AppStaffAvatar.vue';
 import IconHamburger from '../components/icons/IconHamburger.vue';
+import AppStaffQuestionnaireForm from '../components/AppStaffQuestionnaireForm.vue';
 
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
@@ -39,7 +40,7 @@ const mobileNav = ref(false)
       </div>
 
       <!-- start of routerview -->
-      <div class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
+      <div :class="mobileNav ? 'blur-sm':'lg:blur-0'" class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
         
         <div class="w-full absolute px-5 top-5 right-0 flex items-center justify-between lg:justify-end">
           <button @click="mobileNav = true" type="button" class="group lg:hidden">
@@ -55,6 +56,19 @@ const mobileNav = ref(false)
       <!-- end of routerview -->
 
     </div>
+
+    <teleport to="body">
+      <transition
+        name="scale"
+        enter-from-class="scale-0 opacity-0"
+        enter-active-class="transition-all duration-200"
+        leave-to-class="scale-0 opacity-0"
+        leave-active-class="transition-all duration-200">
+          <div v-if="questionnaireStore.create.open|questionnaireStore.edit.open" class="fixed w-full h-full z-50 bg-slate-400/50 backdrop-blur overflow-auto">
+            <AppStaffQuestionnaireForm />
+          </div>
+      </transition>
+    </teleport>
 
   </main>
 </template>

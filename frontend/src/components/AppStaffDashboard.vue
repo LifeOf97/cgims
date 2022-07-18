@@ -3,7 +3,7 @@
 import AppDashboardGreet from './AppDashboardGreet.vue';
 import AppStaffDashboardCardHero from './AppStaffDashboardCardHero.vue';
 import AppStaffDashboardQuestionnaires from './AppStaffDashboardQuestionnaires.vue';
-import AppStaffDashboardCalendar from './AppStaffDashboardCalendar.vue';
+import AppStaffCalendar from './AppStaffCalendar.vue';
 </script>
 
 <template>
@@ -17,12 +17,11 @@ import AppStaffDashboardCalendar from './AppStaffDashboardCalendar.vue';
         </div>
 
         <div class="relative pb-10 lg:pb-0">
-            <div class="lg:mt-24 lg:sticky lg:top-10">
-                <AppStaffDashboardCalendar />
+            <div class="lg:mt-24 lg:sticky lg:top-3">
+                <AppStaffCalendar />
             </div>
         </div>
-
-
     </div>
+
   </main>
 </template>

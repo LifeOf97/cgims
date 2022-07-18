@@ -1,9 +1,14 @@
 <script setup>
 /* eslint-disable */
+import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import AppDoughnutChart from './AppDoughnutChart.vue';
 import {DateTime} from "luxon";
 import IconGroup from './icons/IconGroup.vue';
 import IconClock from './icons/IconClock.vue';
+import AppButton from './AppButton.vue';
+
+// stores
+const questionnaireStore = useStaffQuestionnaireStore()
 
 // props
 const props = defineProps({
@@ -41,13 +46,18 @@ const humanizeDate = (value) => {
                 </span>
             </div>
 
-            <!-- edit button -->
-            <button
-                class="w-full text-slate-900 font-medium py-2 mt-5 bg-white shadow-md rounded-lg transition-all duration-200
-                ring-offset-2 ring-offset-slate-50 ring-slate-400 hover:ring-2 hover:bg-slate-400 hover:text-white">
-                Edit
-            </button>
-            <!-- edit button -->
+            <!-- start view/edit button -->
+            <div class="mt-5 flex items-center gap-3">
+                <AppButton @click="questionnaireStore.view.open = true" label="View" :type="2" :color="1" />
+                <AppButton @click="questionnaireStore.edit.open = true" label="Update" :type="2" :color="1" />
+                <!-- <button
+                    @click="questionnaireStore.edit.open = true"
+                    class="w-full text-slate-900 font-medium py-2 mt-5 bg-white shadow-md rounded-lg transition-all duration-200
+                    ring-offset-2 ring-offset-slate-50 ring-slate-400 hover:ring-2 hover:bg-slate-400 hover:text-white">
+                        Edit
+                </button> -->
+            </div>
+            <!-- end view/edit button -->
         </div>
 
     </div>

@@ -35,6 +35,12 @@ const router = createRouter({
           component: () => import("../components/AppStaffQuestionnaire.vue"),
           meta: {title: "CGIMS | Staff Questionnaires"},
         },
+        {
+          path: "/staff/schedules",
+          name: "staffschedules",
+          component: () => import("../components/AppStaffSchedule.vue"),
+          meta: {title: "CGIMS | Staff Schedules"},
+        },
       ]
     },
     {
