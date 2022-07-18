@@ -1,20 +1,25 @@
 <script setup>
 /* eslint-disable */
 import { ref } from 'vue';
+import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import AppStaffLeftNav from '../components/AppStaffLeftNav.vue';
 import AppStaffAvatar from '../components/AppStaffAvatar.vue';
+import IconHamburger from '../components/icons/IconHamburger.vue';
+
+// stores
+const questionnaireStore = useStaffQuestionnaireStore()
 
 // refs
 const mobileNav = ref(false)
 </script>
 
 <template>
-  <main class="w-full h-full min-h-full bg-white">
+  <main class="w-full h-full min-h-full">
     <div class="relative">
 
       <div>
         <!-- start of nav for large screens -->
-        <div class="hidden fixed top-0 left-0 h-full overflow-auto bg-slate-50 lg:block lg:w-3/12 xl:w-2/12">
+        <div class="hidden fixed top-0 left-0 h-full overflow-auto bg-slate-100 lg:block lg:w-3/12 xl:w-2/12">
           <AppStaffLeftNav />
         </div>
         <!-- end of nav for large screens -->
@@ -26,8 +31,8 @@ const mobileNav = ref(false)
           enter-active-class="transition-all duration-200"
           leave-to-class="-translate-x-full opacity-0"
           leave-active-class="transition-all duration-200">
-          <div v-if="mobileNav" class="fixed top-0 left-0 h-full w-9/12 z-40 shadow-lg overflow-auto bg-slate-50 lg:hidden">
-            <AppStaffLeftNav ref="mobileNav" />
+          <div v-if="mobileNav" class="fixed top-0 left-0 h-full w-9/12 z-40 shadow-lg shadow-black/50 overflow-auto bg-slate-100 lg:hidden">
+            <AppStaffLeftNav @click="mobileNav = false" />
           </div>
         </transition>
         <!-- end of nav for small screens -->
@@ -35,10 +40,16 @@ const mobileNav = ref(false)
 
       <!-- start of routerview -->
       <div class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
-        <RouterView />
+        
+        <div class="w-full absolute px-5 top-5 right-0 flex items-center justify-between lg:justify-end">
+          <button @click="mobileNav = true" type="button" class="group lg:hidden">
+            <IconHamburger class="w-10 h-10 fill-slate-500 transition-all duration-200 group-hover:fill-rose-500" />
+          </button>
+          <AppStaffAvatar  />
+        </div>
 
-        <div class="absolute top-5 right-10">
-          <AppStaffAvatar />
+        <div @click="mobileNav = false" class="w-full">
+          <RouterView id="staffView" />
         </div>
       </div>
       <!-- end of routerview -->

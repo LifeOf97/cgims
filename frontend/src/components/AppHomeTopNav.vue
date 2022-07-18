@@ -85,7 +85,7 @@ onUnmounted(() => {
                         <RouterLink @click="mobileNav = false" to="/#how" class="bg-transparent p-2 text-slate-900 text-base font-normal rounded-md hover:bg-rose-500 hover:text-white ">How</RouterLink>
                     </div>
                     <div class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
-                        <RouterLink @click="mobileNav = false" :to="{name: 'signin'}" class="text-slate-900 text-base font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
+                        <RouterLink @click="mobileNav = false" :to="{name: 'staff'}" class="text-slate-900 text-base font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
                         <RouterLink v-tippy="{content: 'Coming soon &#128584', trigger: 'click', animation: 'scale'}" to="/" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Students</RouterLink>
                     </div>
                 </div>

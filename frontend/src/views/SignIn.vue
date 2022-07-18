@@ -28,14 +28,14 @@ const loading = ref(false)
                     <p class="text-lg font-semibold text-slate-700 md:text-xl">Sign into your account</p>
                 </div>
 
-                <form @submit.prevent class="w-full flex flex-col gap-5">
+                <form @submit.prevent="loading = !loading" class="w-full flex flex-col gap-5">
                     <AppInputField label="Staff ID" placeholder="STF1234" />
                     <AppPasswordField v-model="password" />
                     <div class="w-full flex items-center justify-between">
                         <AppCheckBox v-model="rememberMe" label="Remember me" />
                         <RouterLink to="#" v-tippy="{content: 'Coming soon', animation: 'scale', trigger: 'click'}" class="text-blue-500 text-xs hover:text-blue-600">Forgot password?</RouterLink>
                     </div>
-                    <AppButton label="Sign In" class="mt-2" />
+                    <AppButton type="2" :loading="loading" label="Sign In" class="mt-2" />
                 </form>
 
             </div>
@@ -43,8 +43,8 @@ const loading = ref(false)
             <!-- start of back to home link -->
             <div class="w-10/12 absolute top-0 flex items-center justify-end py-5 md:w-5/12 lg:w-7/12">
                 <div class="flex items-center gap-2 group">
-                    <IconLongLeft class="w-7 h-7 fill-blue-500 group-hover:animate-bounce-left" />
-                    <RouterLink :to="{name: 'home'}" class="text-rose-500 text-xs font-medium md:text-sm">Home</RouterLink>
+                    <IconLongLeft class="w-7 h-7 fill-slate-300 group-hover:animate-bounce-left" />
+                    <RouterLink :to="{name: 'home'}" class="text-blue-500 text-xs font-medium md:text-sm">Home</RouterLink>
                 </div>
             </div>
             <!-- end of back to home link -->

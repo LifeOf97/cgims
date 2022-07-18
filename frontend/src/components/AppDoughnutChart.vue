@@ -21,8 +21,8 @@ const chart = {
     chartData: {
         datasets: [
             {
-                data: [40, 20],
-                backgroundColor: ['#22c55e', '#e2e8f0'],
+                data: [10, 2],
+                backgroundColor: ['#94a3b8', '#e2e8f0'],
                 borderWidth: 4,
             }
         ]

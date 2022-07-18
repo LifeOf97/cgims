@@ -61,7 +61,7 @@ onMounted(() => {
             <p class="font-semibold text-slate-700 pr-1 truncate">Career Guidance Information and Management System</p>
           </div>
 
-          <div ref="heroTxt" class="text-3xl font-black mt-7 mb-2 md:text-4xl lg:text-5xl">
+          <div ref="heroTxt" class="text-3xl text-slate-800 font-black mt-7 mb-2 md:text-4xl lg:text-5xl">
             <p class="leading-tight">Help The Younger One’s</p>
             <p>Decide Their <span class="text-rose-500">Career</span> Path</p>
           </div>

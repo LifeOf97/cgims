@@ -3,21 +3,22 @@
 import AppDashboardGreet from './AppDashboardGreet.vue';
 import AppStaffDashboardCardHero from './AppStaffDashboardCardHero.vue';
 import AppStaffDashboardQuestionnaires from './AppStaffDashboardQuestionnaires.vue';
+import AppStaffDashboardCalendar from './AppStaffDashboardCalendar.vue';
 </script>
 
 <template>
-  <main class="w-full h-full bg-white px-5 pt-20">
+  <main class="w-full h-full bg-white px-5 pt-32 lg:pt-20">
     <div class="relative w-full grid grid-cols-1 gap-4 lg:grid-cols-3">
 
         <div class="col-span-2 flex flex-col gap-7">
             <AppDashboardGreet />
             <AppStaffDashboardCardHero />
-            <AppStaffDashboardQuestionnaires />
+            <AppStaffDashboardQuestionnaires class="mt-3" />
         </div>
 
-        <div class="relative">
-            <div class="lg:sticky lg:top-20">
-                hhhe
+        <div class="relative pb-10 lg:pb-0">
+            <div class="lg:mt-24 lg:sticky lg:top-10">
+                <AppStaffDashboardCalendar />
             </div>
         </div>
 
