@@ -9,7 +9,7 @@ import IconFlag from './icons/IconFlag.vue'
 // props
 const props = defineProps({
     title: {type: String},
-    created: {type: Date},
+    created: {type: Object},
     detail: {type: String},
     completed: {type: Boolean},
 })

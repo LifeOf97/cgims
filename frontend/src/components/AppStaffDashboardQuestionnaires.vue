@@ -14,7 +14,7 @@ import IconLongLeft from './icons/IconLongLeft.vue';
           <p class="text-xs text-slate-500 font-normal">Based on recently created</p>
         </div>
 
-        <div class="grid gap-5 grid-cols-1 md:grid-cols-2">
+        <div class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <AppStaffDashboardQuestionnairesCard v-for="card in [1,2,3,4]" :key="card" />
         </div>
 

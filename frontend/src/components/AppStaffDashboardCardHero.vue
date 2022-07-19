@@ -16,7 +16,8 @@ useTippy(story, {
   content: `<a target="_blank" href="https://storyset.com/education">Education illustrations by Storyset</a>`,
   animation: 'scale',
   allowHTML: true,
-  interactive: true
+  interactive: true,
+  theme: 'translucent'
 })
 </script>
 

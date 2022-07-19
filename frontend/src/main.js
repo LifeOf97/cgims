@@ -9,6 +9,7 @@ import FlagIcon from "vue-flag-icon";
 import VueTippy from "vue-tippy";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
+import "tippy.js/themes/translucent.css";
 import { SetupCalendar } from "v-calendar";
 import "v-calendar/dist/style.css";
 

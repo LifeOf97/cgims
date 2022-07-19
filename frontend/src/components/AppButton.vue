@@ -33,7 +33,9 @@ const props = defineProps({
       v-if="props.type == 2"
       type="submit"
       :disabled="loading"
-      :class="props.color == 1 ? 'bg-white hover:bg-slate-400 disabled:bg-slate-200':'bg-rose-500 hover:bg-rose-600 disabled:bg-rose-400'"
+      :class="props.color == 1 ? 'bg-white hover:bg-slate-400 disabled:bg-slate-200':'',
+      props.color == 2 ? 'bg-rose-500 hover:bg-rose-600 disabled:bg-rose-400':'',
+      props.color == 3 ? 'bg-slate-400 hover:bg-slate-500 disabled:bg-slate-300':''"
       class="group w-full px-4 py-2 text-center text-sm rounded transition-all duration-200 shadow-lg disabled:cursor-wait md:text-base">
       <div v-if="props.loading" class="w-full flex items-center justify-center">
           <IconLoading class="w-7 h-7 fill-white animate-spin" />

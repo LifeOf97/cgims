@@ -28,7 +28,7 @@ const humanizeDate = (value) => {
 
 <template>
   <main class="relative w-full h-full bg-slate-50 shadow-md rounded-md">
-    <div class="flex gap-5 py-6 px-4">
+    <div class="w-full flex gap-5 py-6 px-4">
 
         <AppDoughnutChart class="w-20 h-20 self-start" />
 
@@ -48,14 +48,8 @@ const humanizeDate = (value) => {
 
             <!-- start view/edit button -->
             <div class="mt-5 flex items-center gap-3">
-                <AppButton @click="questionnaireStore.view.open = true" label="View" :type="2" :color="1" />
-                <AppButton @click="questionnaireStore.edit.open = true" label="Update" :type="2" :color="1" />
-                <!-- <button
-                    @click="questionnaireStore.edit.open = true"
-                    class="w-full text-slate-900 font-medium py-2 mt-5 bg-white shadow-md rounded-lg transition-all duration-200
-                    ring-offset-2 ring-offset-slate-50 ring-slate-400 hover:ring-2 hover:bg-slate-400 hover:text-white">
-                        Edit
-                </button> -->
+                <AppButton class="w-full" @click="questionnaireStore.view.open = true" label="View" :type="2" :color="1" />
+                <AppButton class="w-full" @click="questionnaireStore.edit.open = true" label="Update" :type="2" :color="1" />
             </div>
             <!-- end view/edit button -->
         </div>
