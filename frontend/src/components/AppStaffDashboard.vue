@@ -8,7 +8,7 @@ import AppStaffCalendar from './AppStaffCalendar.vue';
 
 <template>
   <main class="w-full h-full bg-white px-5 pt-32 lg:pt-20">
-    <div class="relative w-full grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div class="relative w-full grid grid-cols-1 gap-7 lg:grid-cols-3">
 
         <div class="col-span-2 flex flex-col gap-7">
             <AppDashboardGreet />

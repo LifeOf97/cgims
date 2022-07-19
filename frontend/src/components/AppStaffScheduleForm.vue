@@ -13,10 +13,25 @@ const weekday = ref(DateTime.now().setLocale("en-US").toLocaleString({weekday: '
 const full = ref(DateTime.now().setLocale("en-US").toLocaleString(DateTime.DATE_FULL))
 const time = ref(DateTime.now().setLocale("en-US").toLocaleString(DateTime.TIME_SIMPLE))
 const minDate = ref(DateTime.now().plus({days: 1}).toISODate())
+
+// methods
+const formatDate = () => {
+    const date = DateTime.fromJSDate(expire.value)
+    if (expire.value) return date.setLocale("en-US").toLocaleString(DateTime.DATE_FULL)
+    else return "";
+}
+
+const selectAttribute = {
+    highlight: 'red'
+}
 </script>
 
 <template>
-  <main class="w-full h-full">
+  <main class="w-full h-full flex flex-col gap-7">
+
+    <div class="border-b border-slate-200 pb-2">
+        <h3 class="text-lg text-slate-900 font-semibold tracking-wider md:text-2xl">Create a schedule</h3>
+    </div>
 
     <form @submit.prevent class="w-full flex flex-col gap-7">
 
@@ -35,13 +50,17 @@ const minDate = ref(DateTime.now().plus({days: 1}).toISODate())
                 ring-offset-rose-100 shadow transition-all duration-200 hover:ring-2 focus:ring-2 focus:outline-none md:text-sm"></textarea>
         </div>
 
-        <div class="flex items-center justify-end gap-5">
-            <label for="expire" class="relative cursor-pointer group border">
-                <input type="text" name="expire" id="expire" required class="absolute bg-transparent w-7 h-7 cursor-pointer">
-                <DatePicker mode="date" v-model="expire" :min-date="minDate">
+        <div class="flex items-center justify-end gap-3">
+            <div class="text-xs text-slate-900 font-medium flex items-center gap-2">
+                <p>Expires:</p>
+                <p :class="formatDate() ? 'px-4 py-2':''" class="text-xs text-slate-700 font-medium rounded-lg bg-slate-200 shadow-inner shadow-slate-400">{{formatDate()}}</p>
+            </div>
+            <label for="expire" class="relative cursor-pointer group mt-2">
+                <input v-model="expire" type="text" name="expire" id="expire" required class="absolute bg-transparent w-7 h-7 cursor-pointer text-transparent focus:outline-none">
+                <DatePicker mode="date" v-model="expire" :min-date="minDate" :select-attribute="selectAttribute">
                     <template v-slot="{togglePopover}" class="relative">
                         <button @click.prevent="togglePopover()" class="relative">
-                            <IconCalendar class="w-7 h-7 fill-slate-400 transition-all duration-200 group-hover:fill-slate-900" />
+                            <IconCalendar class="w-7 h-7 fill-slate-500 transition-all duration-200 group-hover:fill-slate-900" />
                         </button>
                     </template>
                 </DatePicker>
