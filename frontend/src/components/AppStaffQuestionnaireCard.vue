@@ -48,8 +48,8 @@ const humanizeDate = (value) => {
 
             <!-- start view/edit button -->
             <div class="mt-5 flex items-center gap-3">
-                <AppButton class="w-full" @click="questionnaireStore.view.open = true" label="View" :type="2" :color="1" />
-                <AppButton class="w-full" @click="questionnaireStore.edit.open = true" label="Update" :type="2" :color="1" />
+                <AppButton class="w-full" @click.prevent="questionnaireStore.view.open = true" label="View" :type="2" :color="1" />
+                <AppButton class="w-full" @click.prevent="questionnaireStore.edit.open = true" label="Update" :type="2" :color="1" />
             </div>
             <!-- end view/edit button -->
         </div>

@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { ref } from 'vue';
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
-import AppStaffDashboardQuestionnairesCard from './AppStaffDashboardQuestionnairesCard.vue'
+import AppStaffQuestionnaireCard from './AppStaffQuestionnaireCard.vue'
 import AppEmptyState from './AppEmptyState.vue';
 import AppButton from './AppButton.vue';
 import IconFolderPlus from './icons/IconFolderPlus.vue';
@@ -11,7 +11,7 @@ import IconFolderPlus from './icons/IconFolderPlus.vue';
 const questionnaireStore = useStaffQuestionnaireStore()
 
 // refs
-const hasQuestionnaire = ref(false)
+const hasQuestionnaire = ref(true)
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const hasQuestionnaire = ref(false)
       </div>
 
       <div v-if="hasQuestionnaire" class="grid gap-7 grid-cols-1 pb-10 md:grid-cols-2 xl:grid-cols-3">
-        <AppStaffDashboardQuestionnairesCard v-for="card in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="card" />
+        <AppStaffQuestionnaireCard v-for="card in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="card" />
       </div>
 
       <div v-else class="w-full mx-auto md:w-7/12">
@@ -32,7 +32,7 @@ const hasQuestionnaire = ref(false)
             <IconFolderPlus class="w-10 h-10 fill-slate-200 md:w-16 md:h-16" />
           </template>
           <template #title>
-            <p class="text-slate-600 text-xs font-medium text-center md:text-sm">
+            <p class="text-slate-500 text-xs font-normal text-center md:text-sm">
               You have not created any questionnaires.
             </p>
           </template>

@@ -2,13 +2,18 @@
 /* eslint-disable */
 import { ref } from 'vue';
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
+import { useStaffScheduleStore } from '../stores/staffSchedule';
 import AppStaffLeftNav from '../components/AppStaffLeftNav.vue';
 import AppStaffAvatar from '../components/AppStaffAvatar.vue';
 import IconHamburger from '../components/icons/IconHamburger.vue';
 import AppStaffQuestionnaireForm from '../components/AppStaffQuestionnaireForm.vue';
+import AppStaffQuestionnaireView from '../components/AppStaffQuestionnaireView.vue';
+import AppNotificationModal from '../components/AppNotificationModal.vue';
+import AppButton from '../components/AppButton.vue';
 
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
+const scheduleStore = useStaffScheduleStore()
 
 // refs
 const mobileNav = ref(false)
@@ -64,8 +69,61 @@ const mobileNav = ref(false)
         enter-active-class="transition-all duration-200"
         leave-to-class="scale-0 opacity-0"
         leave-active-class="transition-all duration-200">
-          <div v-if="questionnaireStore.create.open|questionnaireStore.edit.open" class="fixed w-full h-full z-50 bg-slate-400/50 backdrop-blur overflow-auto">
+          <div v-if="questionnaireStore.create.open|questionnaireStore.edit.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
             <AppStaffQuestionnaireForm />
+          </div>
+      </transition>
+    </teleport>
+
+    <teleport to="body">
+      <transition
+        name="scale"
+        enter-from-class="scale-0 opacity-0"
+        enter-active-class="transition-all duration-200"
+        leave-to-class="scale-0 opacity-0"
+        leave-active-class="transition-all duration-200">
+          <div v-if="questionnaireStore.view.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
+            <AppStaffQuestionnaireView />
+          </div>
+      </transition>
+    </teleport>
+
+    <teleport to="body">
+      <transition
+        name="scale"
+        enter-from-class="scale-0 opacity-0"
+        enter-active-class="transition-all duration-200"
+        leave-to-class="scale-0 opacity-0"
+        leave-active-class="transition-all duration-200">
+          <div v-if="questionnaireStore.delete.open" class="fixed w-full h-full z-30 flex items-end justify-center bg-slate-400/50 backdrop-blur overflow-auto md:items-center">
+            <AppNotificationModal>
+              <template #header>Delete questionnaire</template>
+              <template #detail>Are you sure you want to delete this questionnaire?</template>
+              <template #buttons>
+                <AppButton class="w-full md:w-auto" @click.prevent="questionnaireStore.delete.open = false" label="Cancle" :type="1" :color="1" />
+                <AppButton class="w-full md:w-auto" @click.prevent label="Delete" :type="2" :color="2" />
+              </template>
+            </AppNotificationModal>
+          </div>
+      </transition>
+    </teleport>
+
+    <teleport to="body">
+      <transition
+        name="scale"
+        enter-from-class="scale-0 opacity-0"
+        enter-active-class="transition-all duration-200"
+        leave-to-class="scale-0 opacity-0"
+        leave-active-class="transition-all duration-200">
+          <div v-if="scheduleStore.delete.open" class="fixed w-full h-full z-30 flex items-end justify-center bg-slate-400/50 backdrop-blur overflow-auto md:items-center">
+            <AppNotificationModal>
+              <template #header>Delete schedule</template>
+              <template #detail>Are you sure you want to delete this schedule?</template>
+              <template #buttons>
+                <AppButton class="w-full md:w-auto" @click.prevent="scheduleStore.delete.open = false" label="Cancle" :type="1" :color="1" />
+                <AppButton class="w-full md:w-auto" @click.prevent label="Delete" :type="2" :color="2" />
+              </template>
+            </AppNotificationModal>
           </div>
       </transition>
     </teleport>

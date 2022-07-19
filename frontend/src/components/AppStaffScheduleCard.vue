@@ -5,6 +5,10 @@ import {DateTime} from "luxon";
 import AppButton from "./AppButton.vue";
 import AppToggle from "./AppToggle.vue";
 import IconFlag from './icons/IconFlag.vue'
+import { useStaffScheduleStore } from "../stores/staffSchedule";
+
+// stores
+const scheduleStore = useStaffScheduleStore()
 
 // props
 const props = defineProps({
@@ -48,8 +52,8 @@ const displayDate = (value) => {
                 <div class="flex items-center justify-between border-t pt-2">
                     <AppToggle v-model="completed" :label="props.title" text="Completed" />
                     <div class="flex gap-3">
-                        <AppButton label="Update" :type="1" :color="1" />
-                        <AppButton  label="Delete" :type="2" :color="2" />
+                        <AppButton @click.prevent="" label="Update" :type="1" :color="1" />
+                        <AppButton @click.prevent="scheduleStore.delete.open = true" label="Delete" :type="2" :color="2" />
                     </div>
                 </div>
             </span>

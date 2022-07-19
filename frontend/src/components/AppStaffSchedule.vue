@@ -44,12 +44,12 @@ const maxSchedules = computed(() => {
                         <IconInfoCircleOutline class="w-10 h-10 fill-slate-200 md:w-16 md:h-16" />
                     </template>
                     <template #title>
-                        <p class="text-slate-600 text-xs font-medium text-center md:text-sm">
+                        <p class="text-slate-500 text-xs font-normal text-center md:text-sm">
                             You have reached your maximum schedule limit
                         </p>
                     </template>
                     <template #tail>
-                        <p class="text-slate-400 text-xs font-normal text-center md:text-sm">
+                        <p class="text-slate-400 text-xs font-light text-center md:text-sm">
                             Delete one or more schedules to create space
                         </p>
                     </template>
@@ -61,7 +61,7 @@ const maxSchedules = computed(() => {
                     <h3 class="text-slate-900 text-xl font-bold md:text-2xl">My Schedules</h3>
                     <IconHelpCircleOutline
                         v-tippy="{arrow: true, animation: 'scale', maxWidth: '150px', theme: 'translucent', placement: 'left'}"
-                        content="You can only have a mximum of 8 schedules"
+                        content="You can only have a maximum of 8 schedules"
                         class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900" />
                 </div>
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-2">
