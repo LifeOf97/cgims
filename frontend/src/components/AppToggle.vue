@@ -6,7 +6,7 @@ const props = defineProps({
     modelValue: {type: Boolean, default: false},
     label: {type: String, default: "toggle"},
     text: {type: String, default: "Completed"},
-    textPos: {type: String, default: "bottom"}
+    placement: {type: String, default: "right"}
 })
 
 // emits
@@ -16,11 +16,22 @@ const emits = defineEmits(["update:modelValue"])
 <template>
     <main>
 
-        <label :for="label" class="flex flex-col">
-            <div :class="[props.modelValue ? 'bg-green-500':'bg-slate-200', textPos == 'top' ? 'order-2':'order-1']" class="relative flex items-center w-14 h-6 rounded-full shadow-inner cursor-pointer">
+        <label
+            :for="props.label"
+            :class="props.placement == 'right' ? 'flex-row':'', props.placement == 'left' ? 'flex-row':'', props.placement == 'top' ? 'flex-col':'',
+            props.placement == 'bottom' ? 'flex-col':''" class="flex gap-2 items-center flex-wrap group">
+
+            <p
+                :class="props.placement == 'top' ? 'order-1':'', props.placement == 'bottom' ? 'order-2':'', props.placement == 'right' ? 'order-2':'',
+                props.placement == 'left' ? 'order-1':''" class="flex-initial text-slate-400 text-xs font-medium cursor-pointer group-hover:text-slate-900">{{props.text}}</p>
+            
+            <div
+                :class="props.modelValue ? 'bg-green-500':'bg-slate-200', props.placement == 'top' ? 'order-2':'', props.placement == 'bottom' ? 'order-1':'',
+                props.placement == 'right' ? 'order-1':'', props.placement == 'left' ? 'order-2':''"
+                class="relative flex items-center w-14 h-6 rounded-full shadow-inner cursor-pointer">
+                
                 <div :class="props.modelValue ? 'translate-x-[2.1rem]':'translate-x-px'" class="w-5 h-5 rounded-full bg-white shadow transition-all duration-200"></div>
             </div>
-            <p :class="props.textPos == 'top' ? 'order-1 mb-2':'order-2 mt-2'" class="flex-initial text-slate-400 text-xs font-medium cursor-pointer hover:text-slate-900">{{props.text}}</p>
         </label>
 
         <input type="checkbox" :name="label" :id="label" @change="$emit('update:modelValue', $event.target.checked)" class="hidden">

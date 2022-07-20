@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import StaffAccount from "../views/StaffAccount.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +22,7 @@ const router = createRouter({
       path: "/staff",
       name: "staff",
       redirect: {name: 'staffdashboard'},
-      component: () => import("../views/StaffAccount.vue"),
+      component: StaffAccount,
       children: [
         {
           path: "/staff",
@@ -30,16 +31,37 @@ const router = createRouter({
           meta: {title: "CGIMS | Staff Dashboard"},
         },
         {
-          path: "/staff/questionnaires",
+          path: "/staff/myquestionnaires",
           name: "staffquestionnaires",
           component: () => import("../components/AppStaffQuestionnaire.vue"),
           meta: {title: "CGIMS | Staff Questionnaires"},
         },
         {
-          path: "/staff/schedules",
+          path: "/staff/myschedules",
           name: "staffschedules",
           component: () => import("../components/AppStaffSchedule.vue"),
           meta: {title: "CGIMS | Staff Schedules"},
+        },
+        {
+          path: "/staff/mystudents",
+          name: "staffstudents",
+          redirect: {name: 'staffstudentlist'},
+          component: () => import("../components/AppStaffStudent.vue"),
+          children: [
+            {
+              path: "/staff/mystudents",
+              name: "staffstudentlist",
+              component: () => import("../components/AppStaffStudentList.vue"),
+              meta: {title: "CGIMS | Staff Assigned Students"},
+            },
+            {
+              path: "/staff/mystudents/:department/:class/:regNo",
+              name: "staffstudentsdata",
+              component: () => import("../components/AppStaffStudentData.vue"),
+              props: true,
+              meta: {title: "CGIMS | Student data"},
+            },
+          ]
         },
       ]
     },

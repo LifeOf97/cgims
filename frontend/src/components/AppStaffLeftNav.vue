@@ -1,7 +1,7 @@
 <script setup>
 /* eslint-disable */
 import { RouterLink, useRoute } from 'vue-router';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AppLogo from './AppLogo.vue';
 import AppButton from './AppButton.vue';
 import IconCalendar from './icons/IconCalendar.vue';
@@ -19,6 +19,11 @@ const route = useRoute()
 
 //refs
 const signOut = ref(false)
+
+// computed
+const isStudentRoute = computed(() => {
+  return route.path.includes('students')
+})
 </script>
 
 <template>
@@ -62,11 +67,11 @@ const signOut = ref(false)
           
           <RouterLink
             @click="$emit('click')"
-            to="#"
-            :class="route.name == 'staffstudents' ? 'bg-slate-400':'bg-transparent'"
+            :to="{name: 'staffstudents'}"
+            :class="isStudentRoute ? 'bg-slate-400':'bg-transparent'"
             class="group flex items-center gap-3 p-2 rounded-md transition-all duration-200 hover:bg-slate-400">
-              <IconGroup :class="route.name == 'staffstudents' ? 'fill-white':'fill-slate-900'" class="w-6 h-6 transition-all duration-200 group-hover:fill-white" />
-              <p :class="route.name == 'staffstudents' ? 'text-slate-50':'text-slate-700'"  class="text-xs font-medium transition-all duration-200 truncate group-hover:text-slate-50 md:text-sm">My Students</p>
+              <IconGroup :class="isStudentRoute ? 'fill-white':'fill-slate-900'" class="w-6 h-6 transition-all duration-200 group-hover:fill-white" />
+              <p :class="isStudentRoute ? 'text-slate-50':'text-slate-700'"  class="text-xs font-medium transition-all duration-200 truncate group-hover:text-slate-50 md:text-sm">My Students</p>
           </RouterLink>
         </div>
 
@@ -88,7 +93,7 @@ const signOut = ref(false)
         enter-active-class="transition-all duration-200"
         leave-to-class="scale-0 opacity-0"
         leave-active-class="transition-all duration-200">
-          <div v-if="signOut" class="fixed w-full h-full z-30 flex items-end justify-center bg-slate-400/50 backdrop-blur overflow-auto md:items-center">
+          <div v-if="signOut" class="fixed w-full h-full z-50 flex items-end justify-center bg-slate-400/50 backdrop-blur overflow-auto md:items-center">
             <AppNotificationModal>
               <template #icon><IconLogOut class="w-7 h-7 fill-rose-500" /></template>
               <template #header>Sign Out</template>

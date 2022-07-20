@@ -49,11 +49,11 @@ const displayDate = (value) => {
                 <p class="text-slate-500 text-sm font-normal">{{props.detail}}</p>
 
                 <!-- buttons -->
-                <div class="flex items-center justify-between border-t pt-2">
-                    <AppToggle v-model="completed" :label="props.title" text="Completed" />
-                    <div class="flex gap-3">
-                        <AppButton @click.prevent="" label="Update" :type="1" :color="1" />
-                        <AppButton @click.prevent="scheduleStore.delete.open = true" label="Delete" :type="2" :color="2" />
+                <div class="flex flex-wrap items-center justify-between border-t pt-2 md:gap-3">
+                    <AppToggle v-model="completed" :label="props.title" placement="bottom" text="Completed" />
+                    <div class="flex flex-wrap gap-3 md:gap-1 xl:gap-3">
+                        <AppButton class="md:w-full xl:w-auto" @click.prevent="" label="Update" :type="1" :color="1" />
+                        <AppButton class="md:w-full xl:w-auto" @click.prevent="scheduleStore.delete.open = true" label="Delete" :type="2" :color="2" />
                     </div>
                 </div>
             </span>

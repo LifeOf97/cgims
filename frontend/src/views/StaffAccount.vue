@@ -37,15 +37,18 @@ const mobileNav = ref(false)
           enter-active-class="transition-all duration-200"
           leave-to-class="-translate-x-full opacity-0"
           leave-active-class="transition-all duration-200">
-          <div v-if="mobileNav" class="fixed top-0 left-0 h-full w-9/12 z-40 shadow-lg shadow-black/50 overflow-auto bg-slate-100 lg:hidden">
-            <AppStaffLeftNav @click="mobileNav = false" />
+          <div v-if="mobileNav" class="fixed top-0 left-0 h-full w-full flex z-40 overflow-auto bg-transparent lg:hidden">
+            <div class="fixed h-full overflow-auto w-9/12 bg-slate-100 shadow-lg shadow-black/50">
+              <AppStaffLeftNav @click="mobileNav = false" />
+            </div>
+            <div @click="mobileNav = false" class="fixed right-0 h-full w-3/12 backdrop-blur"></div>
           </div>
         </transition>
         <!-- end of nav for small screens -->
       </div>
 
       <!-- start of routerview -->
-      <div :class="mobileNav ? 'blur-sm':'lg:blur-0'" class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
+      <div class="fixed right-0 w-full h-full bg-white overflow-auto lg:w-9/12 xl:w-10/12">
         
         <div class="w-full absolute px-5 top-5 right-0 flex items-center justify-between lg:justify-end">
           <button @click="mobileNav = true" type="button" class="group lg:hidden">

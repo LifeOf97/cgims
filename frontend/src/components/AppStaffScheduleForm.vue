@@ -56,7 +56,7 @@ const selectAttribute = {
                 <p :class="formatDate() ? 'px-4 py-2':''" class="text-xs text-slate-700 font-medium rounded-lg bg-slate-200 shadow-inner shadow-slate-400">{{formatDate()}}</p>
             </div>
             <label for="expire" class="relative cursor-pointer group mt-2">
-                <input v-model="expire" type="text" name="expire" id="expire" required class="absolute bg-transparent w-7 h-7 cursor-pointer text-transparent focus:outline-none">
+                <input v-model="expire" type="text" name="expire" id="expire" required class="absolute bg-transparent w-7 h-7 cursor-pointer text-transparent -z-0 focus:outline-none">
                 <DatePicker mode="date" v-model="expire" :min-date="minDate" :select-attribute="selectAttribute">
                     <template v-slot="{togglePopover}" class="relative">
                         <button @click.prevent="togglePopover()" class="relative">

@@ -18,7 +18,7 @@ const schedules = [
     {id: 5, completed: false, title: 'Title of schedule 5', detail: "Detail 5", created: DateTime.now()},
     {id: 6, completed: false, title: 'Title of schedule 6', detail: "Detail 6", created: DateTime.now()},
     {id: 7, completed: false, title: 'Title of schedule 7', detail: "Detail 7", created: DateTime.now()},
-    {id: 8, completed: false, title: 'Title of schedule 8', detail: "Detail 8", created: DateTime.now()},
+    // {id: 8, completed: false, title: 'Title of schedule 8', detail: "Detail 8", created: DateTime.now()},
 ]
 
 // computed
@@ -62,7 +62,7 @@ const maxSchedules = computed(() => {
                     <IconHelpCircleOutline
                         v-tippy="{arrow: true, animation: 'scale', maxWidth: '150px', theme: 'translucent', placement: 'left'}"
                         content="You can only have a maximum of 8 schedules"
-                        class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900" />
+                        class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900 focus:outline-none" />
                 </div>
                 <div class="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-2">
                     <AppStaffScheduleCard v-for="schedule in schedules" :key="schedule.id" v-bind="schedule" />
