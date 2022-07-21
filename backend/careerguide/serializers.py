@@ -195,7 +195,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
         ('art', 'art'),
         ('science', 'science'),
         ('commercial', 'commercial'),
-        ('social_science', 'social_science'),
+        ('social science', 'social science'),
     )
     staff = serializers.SlugRelatedField(read_only=True, slug_field="staff_id")
     students = serializers.SlugRelatedField(queryset=Student.objects.all(), many=True, slug_field="sid", required=False)
@@ -208,7 +208,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         if data.get('categories'):
             # remove duplicate choices from the categories field
-            data['categories'] = list(set(data['categories']))
+            data['categories'] = list(set([cat.lower() for cat in data['categories']]))
         return super().to_internal_value(data)
 
 

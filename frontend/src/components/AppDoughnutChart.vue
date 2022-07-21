@@ -7,6 +7,7 @@ ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 
 // props
 const props = defineProps({
+    chartData: {type: Object, required: true},
     chartId: {type: String, default: 'doughnut-chart'},
     datasetIdKey: {type: String, default: 'label'},
     width: { type: Number},
@@ -21,7 +22,7 @@ const chart = {
     chartData: {
         datasets: [
             {
-                data: [10, 2],
+                data: [12, 2],
                 backgroundColor: ['#94a3b8', '#e2e8f0'],
                 borderWidth: 4,
             }
@@ -31,7 +32,9 @@ const chart = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {position: ""},
+            legend: {
+                position: "",
+            },
             title: {display: false, text: "Completed by"}
         }
     }
@@ -41,7 +44,7 @@ const chart = {
 <template>
 <Doughnut
     :chart-options="chart.chartOptions"
-    :chart-data="chart.chartData"
+    :chart-data="props.chartData"
     :chart-id="props.chartId"
     :dataset-id-key="props.datasetIdKey"
     :plugins="props.plugins"

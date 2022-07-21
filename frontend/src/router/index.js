@@ -20,10 +20,11 @@ const router = createRouter({
       meta: {title: "CGIMS | Sign In"},
     },
     {
-      path: "/staff",
+      path: "/:staffId",
       name: "staff",
       redirect: {name: 'staffdashboard'},
       component: StaffAccount,
+      props: true,
       meta: {requiresAuth: true},
       children: [
         {

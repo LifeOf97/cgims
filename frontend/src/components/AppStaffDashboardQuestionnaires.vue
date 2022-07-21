@@ -1,7 +1,7 @@
 <script setup>
 /* eslint-disable */
 import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import { computed } from 'vue'
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import AppStaffQuestionnaireCard from './AppStaffQuestionnaireCard.vue'
 import IconLongLeft from './icons/IconLongLeft.vue';
@@ -11,9 +11,6 @@ import AppButton from './AppButton.vue';
 
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
-
-// refs
-const hasQuestionnaire = ref(true)
 </script>
 
 <template>
@@ -25,9 +22,15 @@ const hasQuestionnaire = ref(true)
           <p class="text-xs text-slate-500 font-normal">Based on recently created</p>
         </div>
 
+        <!-- start of loading effect -->
+        <div v-if="questionnaireStore.retrieve.loading" class="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          loading...
+        </div>
+        <!-- end of loading effect -->
+
         <!-- shows only if the staff has some questionnaires -->
-        <div v-if="hasQuestionnaire" class="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <AppStaffQuestionnaireCard v-for="card in [1,2,3,4]" :key="card" />
+        <div v-if="questionnaireStore.retrieve.data" class="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+            <AppStaffQuestionnaireCard v-for="questionnaire in questionnaireStore.latestFourQuestionnaires" :key="questionnaire.id" :questionnaire="questionnaire" />
         </div>
 
         <!-- shows only if the staff has no questionnaires -->
@@ -48,7 +51,7 @@ const hasQuestionnaire = ref(true)
         </AppEmptyState>
 
         <!-- shows only if the staff has some questionnaires -->
-        <div v-if="hasQuestionnaire" class="w-full flex items-center gap-2">
+        <div v-if="questionnaireStore.retrieve.data" class="w-full flex items-center gap-2">
           <div class="w-full h-px bg-slate-200"></div>
           <div class="flex shrink-0 items-center gap-2 group">
             <IconLongLeft class="w-7 h-7 fill-slate-400 group-hover:animate-bounce-left" />

@@ -14,7 +14,7 @@ const questionnaireStore = useStaffQuestionnaireStore()
 const selectQuestion = ref(false)
 const title = ref("")
 const question = ref("")
-const category = reactive([])
+const categories = reactive([])
 const filters = reactive([
     {
         id: 1,
@@ -49,11 +49,22 @@ const filters = reactive([
 ])
 
 // methods
-const updateCategory = (state, value) => {
+const updateCategories = (state, value) => {
     // for some reasons the checkbox state is passed as false when active and
     // true when inactive soo....
-    if (!state) category.push(value);
-    else category.splice(category.indexOf(value), 1);
+    if (!state) categories.push(value);
+    else categories.splice(categories.indexOf(value), 1);
+}
+
+const submitQuestionnaire = () => {
+    const data = {
+        title: title.value,
+        question: question.value,
+        categories: Object.values(categories)
+    }
+
+    if (questionnaireStore.create.open) return questionnaireStore.createQuestionnaire(data)
+    else return questionnaireStore.updateQuestionnaire(data)
 }
 </script>
 
@@ -73,13 +84,13 @@ const updateCategory = (state, value) => {
                     <p class="text-xs text-slate-400 font-medium">Update your questionnaire</p>
                 </div>
     
-                <button @click="questionnaireStore.create.open = false, questionnaireStore.edit.open = false" type="button" class="p-2 transition-all duration-200 rounded-md group hover:bg-slate-100">
+                <button @click="questionnaireStore.create.open = false, questionnaireStore.update.open = false" type="button" class="p-2 transition-all duration-200 rounded-md group hover:bg-slate-100">
                     <IconCloseBig class="w-7 h-7 fill-slate-600 transition-all duration-200 group-hover:fill-rose-500" />
                 </button>
             </div>
         </div>
 
-        <form @submit.prevent class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <form @submit.prevent="submitQuestionnaire()" class="grid grid-cols-1 gap-5 lg:grid-cols-3">
 
             <div class="col-span-3 grid gap-10 grid-cols-3">
 
@@ -110,6 +121,7 @@ const updateCategory = (state, value) => {
                             id="question"
                             cols="30"
                             rows="10"
+                            v-model="question"
                             required
                             placeholder="Enter questions..."
                             class="w-full resize-none p-2 bg-slate-100 font-normal text-xs text-slate-900 rounded-sm ring-rose-500 ring-offset-2
@@ -118,13 +130,14 @@ const updateCategory = (state, value) => {
                 </div>
                 <!-- end form fields -->
 
-                <!-- start of students category -->
+                <!-- start of students categories -->
                 <div class="col-span-3 flex flex-col gap-7 lg:col-span-1">
                     <div clas>
                         <h3 class="text-slate-800 text-base font-bold md:text-xl">Students</h3>
                         <p class="text-xs text-slate-400 font-normal">
-                            Select the category of students this questionnaire is ment for.
+                            Select the categories of students this questionnaire is ment for.
                         </p>
+                        {{categories}}
                     </div>
 
                     <div class="flex flex-col gap-7">
@@ -140,14 +153,14 @@ const updateCategory = (state, value) => {
                                     transition-all duration-200 ring-slate-400 hover:ring-1">
                                     <IconPlus :class="opt.selected ? 'fill-white':'fill-slate-500'" class="w-4 h-4 transition-all duration-200" />
                                     {{opt.name}}
-                                    <input @click="updateCategory(opt.selected, opt.name)" type="checkbox" v-model="opt.selected" :name="opt.name" :id="opt.name" class="hidden">
+                                    <input @click="updateCategories(opt.selected, opt.name)" type="checkbox" v-model="opt.selected" :name="opt.name" :id="opt.name" class="hidden">
                                 </label>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <!-- end of students category -->
+                <!-- end of students categories -->
 
             </div>
 

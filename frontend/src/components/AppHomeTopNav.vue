@@ -18,7 +18,11 @@ const nav = ref(null)
 
 // computed
 const isAuthenticated = computed(() => {
-    return localStorage.getItem("cgims_user")
+    return JSON.parse(localStorage.getItem("cgims_user"))
+})
+
+const getStaffId = computed(() => {
+    return JSON.parse(localStorage.getItem("cgims_staffid"))
 })
 
 // methods
@@ -65,7 +69,7 @@ onUnmounted(() => {
             <div>
                 <div v-if="isAuthenticated" class="flex items-center gap-5">
                     <button type="button" @click.prevent="userStore.userSignOut.open = true" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Sign out</button>
-                    <RouterLink :to="{name: 'staff'}" class="bg-rose-500 px-4 py-1 text-sm text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
+                    <RouterLink :to="{name: 'staff', params: {staffId: getStaffId}}" class="bg-rose-500 px-4 py-1 text-sm text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
                 </div>
                 <div v-else class="flex items-center gap-5">
                     <RouterLink :to="{name: 'signinstaff'}" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
@@ -102,7 +106,7 @@ onUnmounted(() => {
                     <div>
                         <div v-if="isAuthenticated" class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
                             <button type="button" @click.prevent="userStore.userSignOut.open = true" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Sign out</button>
-                            <RouterLink @click="mobileNav = false" :to="{name: 'staff'}" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
+                            <RouterLink @click="mobileNav = false" :to="{name: 'staff', params: {staffId: getStaffId}}" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
                         </div>
                         <div v-else class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
                             <RouterLink @click="mobileNav = false" :to="{name: 'signinstaff'}" class="text-slate-900 text-base font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>

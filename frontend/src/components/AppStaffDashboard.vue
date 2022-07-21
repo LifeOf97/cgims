@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { onBeforeMount, ref } from 'vue';
 import { useUserStore } from '../stores/user';
+import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import AppDashboardGreet from './AppDashboardGreet.vue';
 import AppStaffDashboardCardHero from './AppStaffDashboardCardHero.vue';
 import AppStaffDashboardQuestionnaires from './AppStaffDashboardQuestionnaires.vue';
@@ -9,10 +10,12 @@ import AppStaffCalendar from './AppStaffCalendar.vue';
 
 // stores
 const userStore = useUserStore()
+const questionnaireStore = useStaffQuestionnaireStore()
 
 // hooks
 onBeforeMount(() => {
   if (!userStore.userData.data) userStore.getMe()
+  if (!questionnaireStore.retrieve.data) questionnaireStore.getQuestionnaires()
 })
 </script>
 

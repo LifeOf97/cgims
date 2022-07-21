@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { defineStore } from "pinia";
+import { useStaffQuestionnaireStore } from "./staffQuestionnaire";
 import axios from "axios";
 
 
@@ -16,6 +17,7 @@ export const useUserStore = defineStore({
       access: JSON.parse(localStorage.getItem("cgims_access")),
       refresh: JSON.parse(localStorage.getItem("cgims_refresh")),
       username: JSON.parse(localStorage.getItem("cgims_username")),
+      staffId: JSON.parse(localStorage.getItem("cgims_staffid")),
       success: false,
       redirect: null,
       error: null
@@ -24,6 +26,7 @@ export const useUserStore = defineStore({
   }),
   actions: {
     async signIn(data) {
+      const questionnaireStore = useStaffQuestionnaireStore()
       this.userSignIn.loading = true
       this.userSignIn.success = false
       this.userSignIn.error = null
@@ -34,6 +37,7 @@ export const useUserStore = defineStore({
           this.userSignIn.error = null
           localStorage.setItem("cgims_access", JSON.stringify(resp.data['access']))
           localStorage.setItem("cgims_refresh", JSON.stringify(resp.data['refresh']))
+          localStorage.setItem("cgims_staffid", JSON.stringify(data['username']))
           this.userSignIn.access = JSON.parse(localStorage.getItem("cgims_access"))
           this.userSignIn.refresh = JSON.parse(localStorage.getItem("cgims_refresh"))
           
@@ -46,10 +50,16 @@ export const useUserStore = defineStore({
 
           // get the staff data
           this.getMe()
+          questionnaireStore.getQuestionnaires()
 
           // then redirect to initially requested page or dashboard
           setTimeout(() => {
-            this.$router.push(this.userSignIn.redirect || { name: 'staff' })
+            this.$router.push(
+              this.userSignIn.redirect ||
+              {
+                name: 'staff',
+                params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}
+              })
             this.userSignIn.loading = false
             this.userSignIn.success = false
           }, 3000);

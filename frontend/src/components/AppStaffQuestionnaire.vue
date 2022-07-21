@@ -10,8 +10,6 @@ import IconFolderPlus from './icons/IconFolderPlus.vue';
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
 
-// refs
-const hasQuestionnaire = ref(true)
 </script>
 
 <template>
@@ -22,8 +20,12 @@ const hasQuestionnaire = ref(true)
         <p class="text-lg text-slate-900 font-semibold tracking-wider md:text-2xl">Questionnaires</p>
       </div>
 
-      <div v-if="hasQuestionnaire" class="grid gap-7 grid-cols-1 pb-10 sm:grid-cols-2 xl:grid-cols-3">
-        <AppStaffQuestionnaireCard v-for="card in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="card" />
+      <div v-if="questionnaireStore.retrieve.loading" class="w-full mx-auto md:w-7/12">
+        Loading...
+      </div>
+
+      <div v-else-if="questionnaireStore.retrieve.data" class="grid gap-7 grid-cols-1 pb-10 sm:grid-cols-2 xl:grid-cols-3">
+        <AppStaffQuestionnaireCard v-for="questionnaire in questionnaireStore.retrieve.data" :key="questionnaire.id" :questionnaire="questionnaire" />
       </div>
 
       <div v-else class="w-full mx-auto md:w-7/12">

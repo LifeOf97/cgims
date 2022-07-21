@@ -8,10 +8,15 @@ export const useStaffQuestionnaireStore = defineStore({
     state: () => ({
         create: {open: false, loading: false, error: null},
         update: {open: false, loading: false, error: null},
-        view: {open: false, loading: false},
+        view: {data: null, open: false, loading: false},
         retrieve: {data: JSON.parse(localStorage.getItem("cgims_questionnaires")), loading: false, open: false, error: null},
         delete: {open: false, loading: false, error: null},
       }),
+    getters: {
+        latestFourQuestionnaires: (state) => {
+            return state.retrieve.data.slice(0, 4)
+        }
+    },
     actions: {
         async createQuestionnaire(data) {
             this.create.loading = true
