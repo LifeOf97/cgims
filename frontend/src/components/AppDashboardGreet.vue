@@ -19,11 +19,19 @@ const greet = computed(() => {
   else if ((time >= 12) && (time < 18)) return "afternoon"
   else return "evening"
 })
+
+// methods
+const otherName = () => {
+  if (props.person.profile.other_name) {
+    return `.${props.person.profile.other_name[0]}.`
+  }
+  return ""
+}
 </script>
 
 <template>
     <div class="flex flex-col">
         <p class="text-slate-500 text-xs lg:text-lg">Good {{greet}}</p>
-        <h3 class="text-slate-800 text-xl font-black md:text-3xl">{{person.profile.first_name}} {{person.profile.other_name[0]}}. {{person.profile.last_name}}</h3>
+        <h3 class="text-slate-800 text-xl font-black md:text-3xl">{{person.profile.first_name}} {{otherName()}} {{person.profile.last_name}}</h3>
     </div>
 </template>

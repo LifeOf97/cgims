@@ -1,9 +1,19 @@
 <script setup>
 /* eslint-disable */
+import { onBeforeMount, ref } from 'vue';
+import { useUserStore } from '../stores/user';
 import AppDashboardGreet from './AppDashboardGreet.vue';
 import AppStaffDashboardCardHero from './AppStaffDashboardCardHero.vue';
 import AppStaffDashboardQuestionnaires from './AppStaffDashboardQuestionnaires.vue';
 import AppStaffCalendar from './AppStaffCalendar.vue';
+
+// stores
+const userStore = useUserStore()
+
+// hooks
+onBeforeMount(() => {
+  if (!userStore.userData.data) userStore.getMe()
+})
 </script>
 
 <template>
@@ -11,7 +21,7 @@ import AppStaffCalendar from './AppStaffCalendar.vue';
     <div class="relative w-full grid grid-cols-1 gap-7 lg:grid-cols-3">
 
         <div class="flex flex-col gap-7 lg:col-span-2">
-            <AppDashboardGreet />
+            <AppDashboardGreet :person="userStore.userData.data" />
             <AppStaffDashboardCardHero />
             <AppStaffDashboardQuestionnaires class="mt-3" />
         </div>

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { createRouter, createWebHistory } from "vue-router";
+import { useUserStore } from "../stores/user";
 import HomeView from "../views/HomeView.vue";
 import StaffAccount from "../views/StaffAccount.vue";
 
@@ -13,8 +14,8 @@ const router = createRouter({
       meta: {title: "CGIMS | Home"},
     },
     {
-      path: "/signin",
-      name: "signin",
+      path: "/signin/staff",
+      name: "signinstaff",
       component: () => import("../views/SignIn.vue"),
       meta: {title: "CGIMS | Sign In"},
     },
@@ -23,43 +24,44 @@ const router = createRouter({
       name: "staff",
       redirect: {name: 'staffdashboard'},
       component: StaffAccount,
+      meta: {requiresAuth: true},
       children: [
         {
-          path: "/staff",
+          path: "dashboard",
           name: "staffdashboard",
           component: () => import("../components/AppStaffDashboard.vue"),
-          meta: {title: "CGIMS | Staff Dashboard"},
+          meta: {requiresAuth: true, title: "CGIMS | Staff Dashboard"},
         },
         {
-          path: "/staff/myquestionnaires",
+          path: "myquestionnaires",
           name: "staffquestionnaires",
           component: () => import("../components/AppStaffQuestionnaire.vue"),
-          meta: {title: "CGIMS | Staff Questionnaires"},
+          meta: {requiresAuth: true, title: "CGIMS | Staff Questionnaires"},
         },
         {
-          path: "/staff/myschedules",
+          path: "myschedules",
           name: "staffschedules",
           component: () => import("../components/AppStaffSchedule.vue"),
-          meta: {title: "CGIMS | Staff Schedules"},
+          meta: {requiresAuth: true, title: "CGIMS | Staff Schedules"},
         },
         {
-          path: "/staff/mystudents",
+          path: "mystudents",
           name: "staffstudents",
           redirect: {name: 'staffstudentlist'},
           component: () => import("../components/AppStaffStudent.vue"),
           children: [
             {
-              path: "/staff/mystudents",
+              path: "",
               name: "staffstudentlist",
               component: () => import("../components/AppStaffStudentList.vue"),
-              meta: {title: "CGIMS | Staff Assigned Students"},
+              meta: {requiresAuth: true, title: "CGIMS | Staff Assigned Students"},
             },
             {
-              path: "/staff/mystudents/:department/:class/:regNo",
+              path: ":department/:class/:regNo",
               name: "staffstudentsdata",
               component: () => import("../components/AppStaffStudentData.vue"),
               props: true,
-              meta: {title: "CGIMS | Student data"},
+              meta: {requiresAuth: true, title: "CGIMS | Student data"},
             },
           ]
         },
@@ -85,12 +87,13 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   // update the page title
   document.title = to.meta.title;
-  // const user = useUserStore()
+  const user = useUserStore()
 
-  // if (to.meta.requiresAuth && !JSON.parse(localStorage.getItem('libex_token'))) {
-  //   user.userSignIn.redirect = to.fullPath
-  //   return {name: 'signin', query: {redirect: to.fullPath}}
-  // }
+  // make sure request is authenticated or redirect
+  if (to.meta.requiresAuth && !JSON.parse(localStorage.getItem('cgims_access'))) {
+    user.userSignIn.redirect = to.fullPath
+    return {name: 'signinstaff', query: {redirect: to.fullPath}}
+  }
 })
 
 export default router;

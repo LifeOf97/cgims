@@ -64,7 +64,7 @@ const maxSchedules = computed(() => {
                         content="You can only have a maximum of 8 schedules"
                         class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900 focus:outline-none" />
                 </div>
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-2">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                     <AppStaffScheduleCard v-for="schedule in schedules" :key="schedule.id" v-bind="schedule" />
                 </div>
             </div>

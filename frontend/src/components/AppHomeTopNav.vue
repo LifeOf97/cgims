@@ -1,16 +1,25 @@
 <script setup>
 /* eslint-disable */
 import { RouterLink } from 'vue-router';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useUserStore } from "../stores/user";
 import AppLogo from './AppLogo.vue'
 import IconHamburger from './icons/IconHamburger.vue';
 import IconCloseBig from './icons/IconCloseBig.vue';
 import gsap from 'gsap'
 
+// stores
+const userStore = useUserStore()
+
 // refs
 const root = ref(null)
 const mobileNav = ref(false)
 const nav = ref(null)
+
+// computed
+const isAuthenticated = computed(() => {
+    return localStorage.getItem("cgims_user")
+})
 
 // methods
 const animNav = () => {
@@ -47,21 +56,27 @@ onUnmounted(() => {
         <!-- end f logo -->
 
         <!-- start of links for lrage screens -->
-        <div class="hidden w-9/12 items-center justify-between md:flex">
+        <div class="hidden w-9/12 items-center justify-between sm:flex">
             <div class="flex gap-7">
                 <RouterLink to="/#about" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">About</RouterLink>
                 <RouterLink to="/#why" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Why</RouterLink>
                 <RouterLink to="/#how" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">How</RouterLink>
             </div>
-            <div class="flex items-center gap-5">
-                <RouterLink :to="{name: 'staff'}" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
-                <RouterLink v-tippy="{content: 'Coming soon &#128584', trigger: 'click', animation: 'scale'}" to="/" class="bg-rose-500 px-4 py-1 text-sm text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Students</RouterLink>
+            <div>
+                <div v-if="isAuthenticated" class="flex items-center gap-5">
+                    <button type="button" @click.prevent="userStore.userSignOut.open = true" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Sign out</button>
+                    <RouterLink :to="{name: 'staff'}" class="bg-rose-500 px-4 py-1 text-sm text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
+                </div>
+                <div v-else class="flex items-center gap-5">
+                    <RouterLink :to="{name: 'signinstaff'}" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
+                    <RouterLink v-tippy="{content: 'Coming soon &#128584', trigger: 'click', animation: 'scale'}" to="/" class="bg-rose-500 px-4 py-1 text-sm text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Students</RouterLink>
+                </div>
             </div>
         </div>
         <!-- end of links for lrage screens -->
 
         <!-- start of links for lrage screens -->
-        <button type="button" @click.prevent="mobileNav = true" class="md:hidden">
+        <button type="button" @click.prevent="mobileNav = true" class="sm:hidden">
             <IconHamburger class="w-8 h-8 fill-slate-800 hover:fill-rose-500 transition-all duration-200" />
         </button>
 
@@ -84,9 +99,15 @@ onUnmounted(() => {
                         <RouterLink @click="mobileNav = false" to="/#why" class="bg-transparent p-2 text-slate-900 text-base font-normal rounded-md hover:bg-rose-500 hover:text-white ">Why</RouterLink>
                         <RouterLink @click="mobileNav = false" to="/#how" class="bg-transparent p-2 text-slate-900 text-base font-normal rounded-md hover:bg-rose-500 hover:text-white ">How</RouterLink>
                     </div>
-                    <div class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
-                        <RouterLink @click="mobileNav = false" :to="{name: 'staff'}" class="text-slate-900 text-base font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
-                        <RouterLink v-tippy="{content: 'Coming soon &#128584', animation: 'scale'}" to="/" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Students</RouterLink>
+                    <div>
+                        <div v-if="isAuthenticated" class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
+                            <button type="button" @click.prevent="userStore.userSignOut.open = true" class="text-slate-900 text-sm font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Sign out</button>
+                            <RouterLink @click="mobileNav = false" :to="{name: 'staff'}" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Dashboard</RouterLink>
+                        </div>
+                        <div v-else class="flex px-7 items-center justify-center gap-5 border-t border-slate-200 pt-5">
+                            <RouterLink @click="mobileNav = false" :to="{name: 'signinstaff'}" class="text-slate-900 text-base font-normal border-b-2 border-transparent transition-all duration-200 hover:border-rose-500 md:text-base">Staffs</RouterLink>
+                            <RouterLink v-tippy="{content: 'Coming soon &#128584', animation: 'scale'}" to="/" class="bg-rose-500 px-4 py-1 text-base text-white font-semibold rounded-md transition-all duration-200 hover:shadow-lg hover:scale-105">Students</RouterLink>
+                        </div>
                     </div>
                 </div>
             </div>

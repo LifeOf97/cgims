@@ -3,12 +3,14 @@
 import { DateTime } from 'luxon';
 import { ref } from 'vue';
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
+import { useUserStore } from '../stores/user';
 import AppButton from './AppButton.vue';
-import AppStaffAvatar from './AppStaffAvatar.vue';
+import AppUserHandle from './AppUserHandle.vue';
 import IconCloseBig from './icons/IconCloseBig.vue';
 
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
+const userStore = useUserStore()
 
 // refs
 const fullDate = ref(DateTime.now().setLocale("en-US").toLocaleString(DateTime.DATE_FULL))
@@ -31,7 +33,7 @@ const tags = ['art', 'sss1', 'sss2', 'sss3']
 
         <!-- start of staff and date -->
         <div class="w-full flex items-center justify-between">
-          <AppStaffAvatar />
+          <AppUserHandle :person="userStore.userData.data" />
           <p class="text-slate-500 text-xs font-medium md:text-sm">{{ fullDate }}</p>
         </div>
         <!-- end of staff and date -->
@@ -52,7 +54,7 @@ const tags = ['art', 'sss1', 'sss2', 'sss3']
         <!-- start of buttons -->
         <div class="border-t border-slate-200 pt-5 flex items-center justify-end gap-2">
           <AppButton @click.prevent="questionnaireStore.delete.open = true" label="Delete" :type="1" :color="1" />
-          <AppButton @click.prevent="questionnaireStore.view.open = false, questionnaireStore.edit.open = true" label="Edit" :type="2" :color="2" />
+          <AppButton @click.prevent="questionnaireStore.view.open = false, questionnaireStore.update.open = true" label="Update" :type="2" :color="2" />
         </div>
         <!-- end of buttons -->
 

@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # Boolean value
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.1.102"]
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'corsheaders',
     "drf_spectacular",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -152,21 +154,38 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONOpenAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
+# Django security Settings
+# CSRF_COOKIE_DOMAIN = ""
+# CSRF_COOKIE_SAMESITE = 'Lax'
+# CSRF_COOKIE_HTTPONLY = False
+# CSRF_COOKIE_SECURE = True
+
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_HTTPONLY = True
+
 # Django corsheaders settings
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8080",
-    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",
     "http://localhost:3000",
+    "http://192.168.1.102:8000",
+    "http://192.168.1.102:3000",
 ]
 
-CORS_ALLOW_METHODS = list(default_methods) + []
-CORS_ALLOW_HEADERS = list(default_headers) + []
-CORS_EXPOSE_HEADERS = []
-CORS_REPLACE_HTTPS_REFERER = False
-CORS_PREFLIGHT_MAX_AGE = 86400
+# CORS_ALLOW_METHODS = list(default_methods) + []
+# CORS_ALLOW_HEADERS = list(default_headers) + []
+# CORS_EXPOSE_HEADERS = []
+# CORS_REPLACE_HTTPS_REFERER = False
+# CORS_PREFLIGHT_MAX_AGE = 86400
 CORS_ALLOW_CREDENTIALS = True
 
 # drg_spectacular settings

@@ -3,8 +3,9 @@
 import { ref } from 'vue';
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
 import { useStaffScheduleStore } from '../stores/staffSchedule';
+import { useUserStore } from '../stores/user';
 import AppStaffLeftNav from '../components/AppStaffLeftNav.vue';
-import AppStaffAvatar from '../components/AppStaffAvatar.vue';
+import AppUserHandle from '../components/AppUserHandle.vue';
 import IconHamburger from '../components/icons/IconHamburger.vue';
 import AppStaffQuestionnaireForm from '../components/AppStaffQuestionnaireForm.vue';
 import AppStaffQuestionnaireView from '../components/AppStaffQuestionnaireView.vue';
@@ -14,6 +15,7 @@ import AppButton from '../components/AppButton.vue';
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
 const scheduleStore = useStaffScheduleStore()
+const userStore = useUserStore()
 
 // refs
 const mobileNav = ref(false)
@@ -54,7 +56,7 @@ const mobileNav = ref(false)
           <button @click="mobileNav = true" type="button" class="group lg:hidden">
             <IconHamburger class="w-10 h-10 fill-slate-500 transition-all duration-200 group-hover:fill-rose-500" />
           </button>
-          <AppStaffAvatar  />
+          <AppUserHandle :person="userStore.userData.data" />
         </div>
 
         <div @click="mobileNav = false" class="w-full">
@@ -65,20 +67,23 @@ const mobileNav = ref(false)
 
     </div>
 
-    <teleport to="body">
+    <!-- start of questionnaire form modal -->
+    <teleport to="#app">
       <transition
         name="scale"
         enter-from-class="scale-0 opacity-0"
         enter-active-class="transition-all duration-200"
         leave-to-class="scale-0 opacity-0"
         leave-active-class="transition-all duration-200">
-          <div v-if="questionnaireStore.create.open|questionnaireStore.edit.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
+          <div v-if="questionnaireStore.create.open|questionnaireStore.update.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
             <AppStaffQuestionnaireForm />
           </div>
       </transition>
     </teleport>
+    <!-- end of questionnaire form modal -->
 
-    <teleport to="body">
+    <!-- start of questionnaire view modal -->
+    <teleport to="#app">
       <transition
         name="scale"
         enter-from-class="scale-0 opacity-0"
@@ -90,8 +95,10 @@ const mobileNav = ref(false)
           </div>
       </transition>
     </teleport>
+    <!-- end of questionnaire view modal -->
 
-    <teleport to="body">
+    <!-- start of questionnaire delete modal -->
+    <teleport to="#app">
       <transition
         name="scale"
         enter-from-class="scale-0 opacity-0"
@@ -110,8 +117,10 @@ const mobileNav = ref(false)
           </div>
       </transition>
     </teleport>
+    <!-- end of questionnaire delete modal -->
 
-    <teleport to="body">
+    <!-- start of schedule delete modal -->
+    <teleport to="#app">
       <transition
         name="scale"
         enter-from-class="scale-0 opacity-0"
@@ -130,6 +139,7 @@ const mobileNav = ref(false)
           </div>
       </transition>
     </teleport>
+    <!-- end of schedule delete modal -->
 
   </main>
 </template>

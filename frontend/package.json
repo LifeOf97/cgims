@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "chart.js": "^3.8.0",
     "luxon": "^3.0.1",
     "pinia": "^2.0.14",

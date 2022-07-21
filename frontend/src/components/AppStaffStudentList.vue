@@ -31,7 +31,7 @@ const students = [
         </div>
 
         <div v-if="hasStudents" class="w-full h-full  grid gap-y-10 gap-x-5 pb-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-            <AppStaffStudentCard v-for="student in students" :key="student.id" v-bind="student" />
+            <AppStaffStudentCard v-for="student in students" :key="student.id" :student="student" />
         </div>
 
         <div v-else class="w-full mx-auto md:w-7/12">

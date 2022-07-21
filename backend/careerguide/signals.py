@@ -6,7 +6,7 @@ Profile = get_user_model()
 
 def delete_staff_profile(sender, instance, **kwargs):
     """
-    When a staff instance is deleted, we need to also delete
+    When a staff instance is deleted, we also need to delete
     the corresponding staff profile
     """
     try:
@@ -18,7 +18,7 @@ def delete_staff_profile(sender, instance, **kwargs):
 
 def delete_student_profile(sender, instance, **kwargs):
     """
-    When a students instance is deleted, we need to also delete
+    When a students instance is deleted, we also need to delete
     the corresponding student profile
     """
     try:

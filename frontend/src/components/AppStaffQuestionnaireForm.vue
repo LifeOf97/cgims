@@ -68,7 +68,7 @@ const updateCategory = (state, value) => {
                     <h3 class="text-xl text-slate-800 font-bold md:text-2xl">Create Questionnaire</h3>
                     <p class="text-xs text-slate-400 font-medium">Create a new questionnaire</p>
                 </div>
-                <div v-else-if="questionnaireStore.edit.open" class="flex flex-col">
+                <div v-else-if="questionnaireStore.update.open" class="flex flex-col">
                     <h3 class="text-xl text-slate-800 font-bold md:text-2xl">Update Questionnaire</h3>
                     <p class="text-xs text-slate-400 font-medium">Update your questionnaire</p>
                 </div>
@@ -153,8 +153,8 @@ const updateCategory = (state, value) => {
 
             <div class="col-span-3 w-full flex items-center justify-end border-t border-slate-200 pt-5 lg:col-span-2">
                 <div class="flex gap-2">
-                    <AppButton @click.prevent="questionnaireStore.create.open = false, questionnaireStore.edit.open = false" :type="1" label="Cancle" />
-                    <AppButton :type="2" :color="2" label="Save" :loading="questionnaireStore.create.loading || questionnaireStore.edit.loading" />
+                    <AppButton @click.prevent="questionnaireStore.create.open = false, questionnaireStore.update.open = false" :type="1" label="Cancle" />
+                    <AppButton :type="2" :color="2" :label="questionnaireStore.create.open ? 'Create':'Save changes'" :loading="questionnaireStore.create.loading || questionnaireStore.update.loading" />
                 </div>
             </div>
 

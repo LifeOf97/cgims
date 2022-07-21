@@ -26,7 +26,7 @@ const hasQuestionnaire = ref(true)
         </div>
 
         <!-- shows only if the staff has some questionnaires -->
-        <div v-if="hasQuestionnaire" class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <div v-if="hasQuestionnaire" class="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <AppStaffQuestionnaireCard v-for="card in [1,2,3,4]" :key="card" />
         </div>
 

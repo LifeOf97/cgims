@@ -15,6 +15,7 @@ const emits = defineEmits(['update:modelValue'])
             type="checkbox"
             :name="props.label"
             :id="props.label"
+            :checked="modelValue" 
             @change="$emit('update:modelValue', $event.target.checked)"
             class="ring-2 ring-transparent ring-offset-1 accent-rose-500 transition-all duration-200 hover:ring-rose-500"
         />

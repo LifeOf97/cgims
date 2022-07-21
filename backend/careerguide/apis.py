@@ -93,7 +93,7 @@ class StaffViewSet(viewsets.GenericViewSet):
         return obj
 
     def get_permissions(self, *args, **kwargs):
-        if self.action is 'create':
+        if self.action == 'create':
             permission_classes = [permissions.AllowAny,]
         elif self.action == 'list':
             permission_classes = [permissions.IsAdminUser,]

@@ -1,21 +1,39 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
-
-import "./assets/index.css";
+import axios from "axios";
 import FlagIcon from "vue-flag-icon";
 import VueTippy from "vue-tippy";
+import { SetupCalendar } from "v-calendar";
+
+import "./assets/index.css";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/themes/translucent.css";
-import { SetupCalendar } from "v-calendar";
 import "v-calendar/dist/style.css";
 
+// axios settings
+// axios.defaults.baseURL = "http://localhost:8000/api/";
+axios.defaults.baseURL = "http://192.168.1.102:8000/api/";
+axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.withCredentials = true;
+axios.defaults.timeout = 9000;
+
+// app instance
 const app = createApp(App);
 
+// insert router into stores
+const pinia = createPinia();
+pinia.use(({ store }) => {
+  store.$router = markRaw(router);
+});
+
+// v-calender
 app.use(SetupCalendar, {});
+
+// tippy.js
 app.use(
   VueTippy,
   // optional
@@ -30,7 +48,8 @@ app.use(
   }
 );
 
-app.use(createPinia());
+// app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.use(FlagIcon);
 

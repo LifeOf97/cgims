@@ -1,0 +1,91 @@
+/* eslint-disable */
+import { defineStore } from "pinia";
+import axios from "axios";
+
+
+export const useUserStore = defineStore({
+  id: "user",
+  state: () => ({
+    userData: {
+      loading: false,
+      data: JSON.parse(localStorage.getItem("cgims_user")),
+      error: null
+    },
+    userSignIn: {
+      loading: false,
+      access: JSON.parse(localStorage.getItem("cgims_access")),
+      refresh: JSON.parse(localStorage.getItem("cgims_refresh")),
+      username: JSON.parse(localStorage.getItem("cgims_username")),
+      success: false,
+      redirect: null,
+      error: null
+    },
+    userSignOut: {open: false}
+  }),
+  actions: {
+    async signIn(data) {
+      this.userSignIn.loading = true
+      this.userSignIn.success = false
+      this.userSignIn.error = null
+
+      await axios.post('auth/token/signin/', data)
+        .then((resp) => {
+          this.userSignIn.success = true
+          this.userSignIn.error = null
+          localStorage.setItem("cgims_access", JSON.stringify(resp.data['access']))
+          localStorage.setItem("cgims_refresh", JSON.stringify(resp.data['refresh']))
+          this.userSignIn.access = JSON.parse(localStorage.getItem("cgims_access"))
+          this.userSignIn.refresh = JSON.parse(localStorage.getItem("cgims_refresh"))
+          
+          // check if user marked rememberMe
+          if (data.rememberMe) {
+            localStorage.setItem("cgims_username", JSON.stringify(data['username']))
+            this.userSignIn.refresh = JSON.parse(localStorage.getItem("cgims_refresh"))
+          }
+          else localStorage.removeItem("cgims_username")
+
+          // get the staff data
+          this.getMe()
+
+          // then redirect to initially requested page or dashboard
+          setTimeout(() => {
+            this.$router.push(this.userSignIn.redirect || { name: 'staff' })
+            this.userSignIn.loading = false
+            this.userSignIn.success = false
+          }, 3000);
+
+        })
+        .catch((err) => {
+          this.userSignIn.loading = false
+          this.userSignIn.success = false
+
+          if (err.response.status == 401) this.userSignIn.error = "Incorrect Staff_id/password"
+          else this.userSignIn.error = "An error occured, please try again."
+          console.log(err.response)
+        })
+    },
+    async getMe() {
+      this.userData.loading = true
+      this.userData.error = null
+
+      await axios.get('staffs/me/', {headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('cgims_access'))}` } })
+        .then((resp) => {
+          this.userData.loading = false
+          localStorage.setItem("cgims_user", JSON.stringify(resp.data))
+          this.userData.data = JSON.parse(localStorage.getItem("cgims_user"))
+        })
+        .catch((err) => {
+          this.userData.loading = false
+          this.userData.error = "An error occured"
+          console.log(err.response)
+        })
+    },
+    async signOut() {
+      localStorage.removeItem('cgims_access')
+      localStorage.removeItem('cgims_refresh')
+      localStorage.removeItem('cgims_user')
+      this.userSignOut.open = false
+      this.$router.push({name: 'signinstaff'})
+  },
+  },
+});

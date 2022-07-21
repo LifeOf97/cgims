@@ -34,7 +34,13 @@ const emits = defineEmits(["update:modelValue"])
             </div>
         </label>
 
-        <input type="checkbox" :name="label" :id="label" @change="$emit('update:modelValue', $event.target.checked)" class="hidden">
+        <input
+            type="checkbox"
+            :name="label"
+            :id="label"
+            :checked="modelValue"
+            @change="$emit('update:modelValue', $event.target.checked)"
+            class="hidden">
 
     </main>
 </template>
