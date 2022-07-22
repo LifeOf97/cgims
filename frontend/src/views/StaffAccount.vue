@@ -75,7 +75,7 @@ const mobileNav = ref(false)
         enter-active-class="transition-all duration-200"
         leave-to-class="scale-0 opacity-0"
         leave-active-class="transition-all duration-200">
-          <div v-if="questionnaireStore.create.open|questionnaireStore.update.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
+          <div v-if="questionnaireStore.create.open||questionnaireStore.update.open" class="fixed w-full h-full z-20 bg-slate-400/50 backdrop-blur overflow-auto">
             <AppStaffQuestionnaireForm />
           </div>
       </transition>
@@ -111,7 +111,7 @@ const mobileNav = ref(false)
               <template #detail>Are you sure you want to delete this questionnaire?</template>
               <template #buttons>
                 <AppButton class="w-full md:w-auto" @click.prevent="questionnaireStore.delete.open = false" label="Cancle" :type="1" :color="1" />
-                <AppButton class="w-full md:w-auto" @click.prevent label="Delete" :type="2" :color="2" />
+                <AppButton class="w-full md:w-auto" @click.prevent="questionnaireStore.deleteQuestionnaire()" label="Delete" :type="2" :color="2" :loading="questionnaireStore.delete.loading" />
               </template>
             </AppNotificationModal>
           </div>

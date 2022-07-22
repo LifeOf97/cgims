@@ -16,10 +16,10 @@ const otherName = () => {
 </script>
 
 <template>
-  <main class="flex items-center gap-3 group cursor-pointer">
+  <main class="flex items-center gap-3 group cursor-default">
     <button
       @click.prevent
-      class="flex items-center justify-center h-8 w-8 overflow-hidden ring-rose-600 ring-offset-2 ring-offset-white bg-rose-500 rounded-full transition-all duration-200 group-hover:ring-2">
+      class="flex items-center justify-center h-8 w-8 cursor-default overflow-hidden ring-rose-600 ring-offset-2 ring-offset-white bg-rose-500 rounded-full transition-all duration-200 group-hover:ring-2">
         <img v-if="props.person.profile.image" :src="props.person.profile.image" alt="Image" class="w-full h-full object-cover object-center">
         <p v-else class="font-semibold text-lg text-white">{{props.person.profile.first_name[0]}}</p>
     </button>

@@ -58,7 +58,7 @@ const data = {
         </div>
         <!-- end of student images -->
 
-        <div class="w-full h-full mt-16 pb-10  md:mt-28 xl:w-10/12">
+        <div class="w-full h-full mt-16 pb-10 md:mt-28 xl:w-10/12">
           <div class="w-full h-full grid gap-7 grid-cols-1 sm:grid-cols-2 lg:gap-10 xl:grid-cols-3">
 
             <span class="flex flex-col gap-1">

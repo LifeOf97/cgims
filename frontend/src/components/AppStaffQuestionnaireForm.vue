@@ -1,7 +1,7 @@
 <script setup>
 /* eslint-disable */
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted, onBeforeMount } from 'vue';
 import IconCloseBig from './icons/IconCloseBig.vue';
 import AppInputField from './AppInputField.vue';
 import AppButton from './AppButton.vue';
@@ -12,38 +12,38 @@ const questionnaireStore = useStaffQuestionnaireStore()
 
 // refs
 const selectQuestion = ref(false)
-const title = ref("")
-const question = ref("")
-const categories = reactive([])
+const title = ref(questionnaireStore.focus.data['title'])
+const question = ref(questionnaireStore.focus.data['question'])
+const categories = reactive([...questionnaireStore.focus.data['categories']])
 const filters = reactive([
     {
         id: 1,
         title: 'Gender',
         options: [
-            {id: 1, name: 'Male', selected: false},
-            {id: 2, name: 'Female', selected: false},
+            {id: 1, name: 'male', selected: questionnaireStore.focus.data['categories'].includes('male')},
+            {id: 2, name: 'female', selected: questionnaireStore.focus.data['categories'].includes('female')},
         ]
     },
     {
         id: 1,
         title: 'Class',
         options: [
-            {id: 1, name: 'JSS1', selected: false},
-            {id: 2, name: 'JSS2', selected: false},
-            {id: 3, name: 'JSS3', selected: false},
-            {id: 4, name: 'SSS1', selected: false},
-            {id: 5, name: 'SSS2', selected: false},
-            {id: 6, name: 'SSS3', selected: false},
+            {id: 1, name: 'jss1', selected: questionnaireStore.focus.data['categories'].includes('jss1')},
+            {id: 2, name: 'jss2', selected: questionnaireStore.focus.data['categories'].includes('jss2')},
+            {id: 3, name: 'jss3', selected: questionnaireStore.focus.data['categories'].includes('jss3')},
+            {id: 4, name: 'sss1', selected: questionnaireStore.focus.data['categories'].includes('sss1')},
+            {id: 5, name: 'sss2', selected: questionnaireStore.focus.data['categories'].includes('sss2')},
+            {id: 6, name: 'sss3', selected: questionnaireStore.focus.data['categories'].includes('sss3')},
         ]
     },
     {
         id: 1,
         title: 'Department',
         options: [
-            {id: 1, name: 'Art', selected: false},
-            {id: 2, name: 'Commercial', selected: false},
-            {id: 3, name: 'Science', selected: false},
-            {id: 4, name: 'Social Science', selected: false},
+            {id: 1, name: 'art', selected: questionnaireStore.focus.data['categories'].includes('art')},
+            {id: 2, name: 'commercial', selected: questionnaireStore.focus.data['categories'].includes('commercial')},
+            {id: 3, name: 'science', selected: questionnaireStore.focus.data['categories'].includes('science')},
+            {id: 4, name: 'social science', selected: questionnaireStore.focus.data['categories'].includes('social science')},
         ]
     },
 ])
@@ -69,7 +69,7 @@ const submitQuestionnaire = () => {
 </script>
 
 <template>
-  <main class="w-full h-full">
+  <main class="w-full h-full selection:bg-rose-500 selection:text-white">
 
     <div class="w-full h-auto mx-auto bg-white py-5 px-5 flex flex-col gap-16 shadow-lg shadow-slate-500/50 md:py-10 md:px-20 lg:w-10/12 xl:w-9/12">
 
@@ -84,7 +84,7 @@ const submitQuestionnaire = () => {
                     <p class="text-xs text-slate-400 font-medium">Update your questionnaire</p>
                 </div>
     
-                <button @click="questionnaireStore.create.open = false, questionnaireStore.update.open = false" type="button" class="p-2 transition-all duration-200 rounded-md group hover:bg-slate-100">
+                <button @click="questionnaireStore.$reset()" type="button" class="p-2 transition-all duration-200 rounded-md group hover:bg-slate-100">
                     <IconCloseBig class="w-7 h-7 fill-slate-600 transition-all duration-200 group-hover:fill-rose-500" />
                 </button>
             </div>
@@ -127,6 +127,10 @@ const submitQuestionnaire = () => {
                             class="w-full resize-none p-2 bg-slate-100 font-normal text-xs text-slate-900 rounded-sm ring-rose-500 ring-offset-2
                             ring-offset-rose-100 shadow transition-all duration-200 hover:ring-2 focus:ring-2 focus:outline-none md:text-sm"></textarea>
                     </div>
+                    
+                    <ul v-if="questionnaireStore.create.error||questionnaireStore.update.error" class="flex ">
+                        <li v-if="questionnaireStore.create.error" class="list-disc list-inside text-xs text-red-500 font-medium">{{questionnaireStore.create.error||questionnaireStore.update.error}}</li>
+                    </ul>
                 </div>
                 <!-- end form fields -->
 
@@ -137,7 +141,6 @@ const submitQuestionnaire = () => {
                         <p class="text-xs text-slate-400 font-normal">
                             Select the categories of students this questionnaire is ment for.
                         </p>
-                        {{categories}}
                     </div>
 
                     <div class="flex flex-col gap-7">
@@ -151,7 +154,7 @@ const submitQuestionnaire = () => {
                                     :class="opt.selected ? 'bg-slate-400 text-white':'bg-slate-100 text-slate-500'"
                                     class="group flex items-center gap-1 text-xs font-medium px-3 py-2 cursor-pointer rounded-md
                                     transition-all duration-200 ring-slate-400 hover:ring-1">
-                                    <IconPlus :class="opt.selected ? 'fill-white':'fill-slate-500'" class="w-4 h-4 transition-all duration-200" />
+                                    <IconPlus :class="opt.selected ? 'fill-white':'fill-slate-500'" class="w-4 h-4 transition-all duration-200 capitalize" />
                                     {{opt.name}}
                                     <input @click="updateCategories(opt.selected, opt.name)" type="checkbox" v-model="opt.selected" :name="opt.name" :id="opt.name" class="hidden">
                                 </label>
@@ -166,8 +169,8 @@ const submitQuestionnaire = () => {
 
             <div class="col-span-3 w-full flex items-center justify-end border-t border-slate-200 pt-5 lg:col-span-2">
                 <div class="flex gap-2">
-                    <AppButton @click.prevent="questionnaireStore.create.open = false, questionnaireStore.update.open = false" :type="1" label="Cancle" />
-                    <AppButton :type="2" :color="2" :label="questionnaireStore.create.open ? 'Create':'Save changes'" :loading="questionnaireStore.create.loading || questionnaireStore.update.loading" />
+                    <AppButton @click.prevent="questionnaireStore.$reset()" :type="1" label="Cancle" />
+                    <AppButton :type="2" :color="2" :label="questionnaireStore.create.open ? 'Create':'Save changes'" :loading="questionnaireStore.create.loading||questionnaireStore.update.loading" />
                 </div>
             </div>
 

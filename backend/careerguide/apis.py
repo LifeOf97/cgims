@@ -285,14 +285,15 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={"request":  request})
 
-        categories = list(set(serializer.initial_data.get("categories")))
+        categories = list(set([cat.lower() for cat in serializer.initial_data.get("categories")]))
 
         student_category = [student for student in Student.objects.filter(
             Q(department__in=[dept for dept in categories]) |
             Q(level__in=[lvl for lvl in categories]) |
             Q(profile__gender__in=[gender for gender in categories])
         )]
-        print(student_category)
+        # print(categories)
+        # print(student_category)
         # set the students field to the all students that fit into any of the categories
         serializer.initial_data['students'] = [student.sid for student in student_category]
 
@@ -304,10 +305,9 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
     def update(self, request, *args, **kwargs):
         serializer = self.serializer_class(instance=self.get_object(), data=request.data, context={"request": request}, partial=True)
 
-        categories = serializer.initial_data.get("categories")
-        student_queryset = Student.objects.all()
+        categories = list(set([cat.lower() for cat in serializer.initial_data.get("categories")]))
         
-        student_category = [student for student in student_queryset.filter(
+        student_category = [student for student in Student.objects.filter(
             Q(department__in=[dept for dept in categories]) |
             Q(level__in=[lvl for lvl in categories]) |
             Q(profile__gender__in=[gender for gender in categories])

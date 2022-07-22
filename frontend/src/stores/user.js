@@ -86,7 +86,8 @@ export const useUserStore = defineStore({
         })
         .catch((err) => {
           this.userData.loading = false
-          this.userData.error = "An error occured"
+          if (err.response.status == 401) this.signOut()
+          else this.create.error = "An error occured."
           console.log(err.response)
         })
     },
@@ -94,6 +95,7 @@ export const useUserStore = defineStore({
       localStorage.removeItem('cgims_access')
       localStorage.removeItem('cgims_refresh')
       localStorage.removeItem('cgims_user')
+      localStorage.removeItem('cgims_questionnaires')
       this.userSignOut.open = false
       this.$router.push({name: 'signinstaff'})
   },

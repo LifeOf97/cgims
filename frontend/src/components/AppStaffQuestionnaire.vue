@@ -20,11 +20,13 @@ const questionnaireStore = useStaffQuestionnaireStore()
         <p class="text-lg text-slate-900 font-semibold tracking-wider md:text-2xl">Questionnaires</p>
       </div>
 
-      <div v-if="questionnaireStore.retrieve.loading" class="w-full mx-auto md:w-7/12">
-        Loading...
+      <!-- start of loading effect -->
+      <div v-if="questionnaireStore.retrieve.loading" class="w-full grid gap-7 grid-cols-1 pb-10 sm:grid-cols-2 xl:grid-cols-3">
+        <div v-for="card in [1,2,3,4,5,6,7,8,9]" class="w-full h-40 bg-slate-100 shadow-md animate-pulse"></div>
       </div>
+      <!-- end of loading effect -->
 
-      <div v-else-if="questionnaireStore.retrieve.data" class="grid gap-7 grid-cols-1 pb-10 sm:grid-cols-2 xl:grid-cols-3">
+      <div v-else-if="questionnaireStore.retrieve.data.length > 0" class="grid gap-7 grid-cols-1 pb-10 sm:grid-cols-2 xl:grid-cols-3">
         <AppStaffQuestionnaireCard v-for="questionnaire in questionnaireStore.retrieve.data" :key="questionnaire.id" :questionnaire="questionnaire" />
       </div>
 

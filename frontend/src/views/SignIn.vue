@@ -17,7 +17,7 @@ import IconCloseBig from '../components/icons/IconCloseBig.vue';
 const userStore = useUserStore()
 
 // refs
-const username = ref(userStore.userSignIn.username)
+const username = ref(JSON.parse(localStorage.getItem("cgims_username")))
 const password = ref('')
 const rememberMe = ref(JSON.parse(localStorage.getItem("cgims_username")) ? true:false)
 
@@ -97,18 +97,20 @@ const signIn = () => {
         <!-- start of successful sign in notification -->
         <transition
             name="slide"
-            enter-from-class="translate-x-20 opacity-0"
+            enter-from-class="translate-y-20 opacity-0"
             enter-active-class="transition-all duration-200"
-            leave-to-class="translate-x-20 opacity-0"
+            leave-to-class="translate-y-20 opacity-0"
             leave-active-class="transition-all duration-700">
-            <div  v-if="userStore.userSignIn.success" class="bg-white absolute top-16 right-5 flex items-center gap-5 px-4 py-2 shadow-lg shadow-slate-300 rounded-lg">
-                <div class="p-1 border border-green-500 flex items-center justify-center rounded-full">
-                    <IconCheckAllBig class="w-3 h-3 fill-green-500" />
+            <div v-if="userStore.userSignIn.success" class="w-full bg-transparent absolute top-10 flex items-center justify-center">
+                <div class="bg-white flex items-center gap-5 px-4 py-2 shadow-lg shadow-slate-300 rounded-lg">
+                    <div class="p-1 border border-green-500 flex items-center justify-center rounded-full">
+                        <IconCheckAllBig class="w-3 h-3 fill-green-500" />
+                    </div>
+                    <p class="text-xs text-slate-900 font-medium">Signed in successfully</p>
+                    <button type="button" @click="userStore.userSignIn.success = false">
+                        <IconCloseBig class="w-5 h-5 fill-slate-400" />
+                    </button>
                 </div>
-                <p class="text-xs text-slate-900 font-medium">Signed in successfully</p>
-                <button type="button" @click="userStore.userSignIn.success = false">
-                    <IconCloseBig class="w-5 h-5 fill-slate-400" />
-                </button>
             </div>
         </transition>
         <!-- end of successful sign in notification -->

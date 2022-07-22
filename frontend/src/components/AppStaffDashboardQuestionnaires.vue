@@ -24,12 +24,12 @@ const questionnaireStore = useStaffQuestionnaireStore()
 
         <!-- start of loading effect -->
         <div v-if="questionnaireStore.retrieve.loading" class="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          loading...
+          <div v-for="card in [1,2,3,4]" class="w-full h-44 bg-slate-100 shadow-md animate-pulse"></div>
         </div>
         <!-- end of loading effect -->
 
         <!-- shows only if the staff has some questionnaires -->
-        <div v-if="questionnaireStore.retrieve.data" class="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <div v-else-if="questionnaireStore.retrieve.data.length > 0" class="w-full grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <AppStaffQuestionnaireCard v-for="questionnaire in questionnaireStore.latestFourQuestionnaires" :key="questionnaire.id" :questionnaire="questionnaire" />
         </div>
 
@@ -39,7 +39,7 @@ const questionnaireStore = useStaffQuestionnaireStore()
             <IconFolderPlus class="w-10 h-10 fill-slate-200 md:w-16 md:h-16" />
           </template>
           <template #title>
-            <p class="text-slate-500 text-xs font-medium text-center md:text-sm">
+            <p class="text-slate-400 text-xs font-medium text-center md:text-sm">
               You have not created any questionnaires.
             </p>
           </template>
@@ -51,7 +51,7 @@ const questionnaireStore = useStaffQuestionnaireStore()
         </AppEmptyState>
 
         <!-- shows only if the staff has some questionnaires -->
-        <div v-if="questionnaireStore.retrieve.data" class="w-full flex items-center gap-2">
+        <div v-if="questionnaireStore.retrieve.data.length > 0" class="w-full flex items-center gap-2">
           <div class="w-full h-px bg-slate-200"></div>
           <div class="flex shrink-0 items-center gap-2 group">
             <IconLongLeft class="w-7 h-7 fill-slate-400 group-hover:animate-bounce-left" />
