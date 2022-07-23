@@ -1,9 +1,8 @@
 <script setup>
 /* eslint-disable */
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import {DateTime} from "luxon";
 import AppButton from "./AppButton.vue";
-import AppToggle from "./AppToggle.vue";
 import IconFlag from './icons/IconFlag.vue'
 import { useStaffScheduleStore } from "../stores/staffSchedule";
 
@@ -12,53 +11,47 @@ const scheduleStore = useStaffScheduleStore()
 
 // props
 const props = defineProps({
-    title: {type: String},
-    created: {type: Object},
-    detail: {type: String},
-    completed: {type: Boolean},
+    schedule: {type: Object}
 })
-const completed = ref(props.completed)
-const update = ref(false)
+
+// data
+const schedulId = document.getElementsByClassName("detail")
 
 // methods
 const displayDate = (value) => {
     return DateTime.fromISO(value).setLocale("en-US").toLocaleString(DateTime.DATETIME_MED);
 }
 
-// watchers
-// watch(completed, (newValue, oldValue) => {
-//     if (completed.value === newVal) update.value = true
-//     else update.value = false
-// })
+const isOpen = () => {
+    console.log(schedulId)
+}
 </script>
 
 <template>
-    <main>
+    <main class="detail">
 
-        <details class="flex flex-col gap-4 bg-slate-100 rounded-md p-4 shadow transition-all duration-500 open:shadow-lg hover:shadow-lg">
+        <details @click="isOpen()" class="flex flex-col gap-4 bg-slate-100 rounded-md p-4 shadow transition-all duration-500 group open:shadow-lg hover:shadow-lg">
             <summary class="flex items-center gap-4 cursor-pointer">
-                <IconFlag :class="completed ? 'fill-green-500':'fill-rose-500'" class="w-7 h-7 transition-all duration-200" />
+                <IconFlag :class="props.schedule.completed ? 'fill-green-500':'fill-slate-400'" class="w-7 h-7 transition-all duration-200" />
 
                 <span class="flex flex-col max-w-[80%]">
-                    <p class="text-sm text-slate-700 font-medium truncate">{{props.title}}</p>
-                    <p class="text-xs text-slate-500 font-light">created: {{displayDate(props.created)}} </p>
+                    <p class="text-sm text-slate-700 font-medium">{{props.schedule.title}}</p>
+                    <p class="text-xs text-slate-500 font-light">{{displayDate(props.schedule.created)}} </p>
                 </span>
             </summary>
 
             <span class="flex flex-col gap-8 mt-4 ml-10">
-                <p class="text-slate-500 text-sm font-normal">{{props.detail}}</p>
+                <p class="text-slate-700 text-sm font-normal">{{props.schedule.detail}}</p>
 
                 <!-- buttons -->
-                <div class="flex flex-wrap items-center justify-between border-t pt-2 md:gap-3">
-                    <AppToggle v-model="completed" :label="props.title" placement="bottom" text="Completed" />
+                <div class="flex flex-wrap items-center justify-end border-t pt-2 md:gap-3">
                     <div class="flex flex-wrap gap-3 md:gap-1 xl:gap-3">
-                        <AppButton class="md:w-full xl:w-auto" @click.prevent="" label="Update" :type="1" :color="1" />
-                        <AppButton class="md:w-full xl:w-auto" @click.prevent="scheduleStore.delete.open = true" label="Delete" :type="2" :color="2" />
+                        <AppButton class="md:w-full xl:w-auto" @click.prevent="scheduleStore.delete.open = true, scheduleStore.delete.id = props.schedule.id" label="Delete" :type="2" :color="2" />
                     </div>
                 </div>
             </span>
 
         </details>
-        
+
     </main>
 </template>

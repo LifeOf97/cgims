@@ -32,7 +32,11 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.create.error = null
 
                     // refresh the questionnaires list
-                    this.getQuestionnaires()
+                    // this.getQuestionnaires()
+                    const questionnaires = JSON.parse(localStorage.getItem("cgims_questionnaires"))
+                    questionnaires.unshift(resp.data)
+                    localStorage.setItem("cgims_questionnaires", JSON.stringify(questionnaires))
+                    this.retrieve.data = JSON.parse(localStorage.getItem("cgims_questionnaires"))
                 })
                 .catch((err) => {
                     this.create.loading = false
@@ -54,7 +58,11 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.update.error = null
 
                     // refresh the questionnaires list
-                    this.getQuestionnaires()
+                    // this.getQuestionnaires()
+                    const questionnaires = JSON.parse(localStorage.getItem("cgims_questionnaires"))
+                    questionnaires.unshift(resp.data)
+                    localStorage.setItem("cgims_questionnaires", JSON.stringify(questionnaires))
+                    this.retrieve.data = JSON.parse(localStorage.getItem("cgims_questionnaires"))
                 })
                 .catch((err) => {
                     this.update.loading = false
@@ -72,8 +80,8 @@ export const useStaffQuestionnaireStore = defineStore({
                 .then((resp) => {
                     this.retrieve.loading = false
                     this.retrieve.error = null
+                    this.retrieve.data = resp.data
                     localStorage.setItem("cgims_questionnaires", JSON.stringify(resp.data))
-                    this.retrieve.data = JSON.parse(localStorage.getItem("cgims_questionnaires"))
                 })
                 .catch((err) => {
                     this.retrieve.loading = false

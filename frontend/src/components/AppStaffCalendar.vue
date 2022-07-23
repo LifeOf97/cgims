@@ -1,26 +1,19 @@
 <script setup>
 /* eslint-disable */
-import { ref } from 'vue';
 import { Calendar } from 'v-calendar';
 import {DateTime} from "luxon";
 
-// refs
-const now = ref(DateTime.now())
+// props
+const props = defineProps({
+  attr: {type: Array, default: [{key: 'today', highlight: 'red', dates: new Date()}]}
+})
 
 // datas
 const weekday = DateTime.now().setZone('Africa/Lagos').setLocale("en-US").toLocaleString({weekday: 'long'})
 const fullDate = DateTime.now().setZone('Africa/Lagos').setLocale("en-US").toLocaleString(DateTime.DATE_FULL)
 
 const attr = [
-    {
-        key: 'today',
-        highlight: 'red',
-        dates: new Date(),
-        // popover: {
-        //     label: "Good to see you",
-        //     hideIndicator: true
-        // }
-    }
+    {key: 'today', highlight: 'red', dates: new Date()}
 ]
 
 // methods
@@ -37,6 +30,6 @@ const toDay = () => {
         <p class="text-lg text-slate-900 font-semibold md:text-2xl">{{fullDate}}</p>
     </div>
 
-    <Calendar :attributes="attr" is-expanded />
+    <Calendar :attributes="props.attr" is-expanded />
   </main>
 </template>

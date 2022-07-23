@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { defineStore } from "pinia";
 import { useStaffQuestionnaireStore } from "./staffQuestionnaire";
+import { useStaffScheduleStore } from "./staffSchedule";
 import axios from "axios";
 
 
@@ -27,6 +28,7 @@ export const useUserStore = defineStore({
   actions: {
     async signIn(data) {
       const questionnaireStore = useStaffQuestionnaireStore()
+      const scheduleStore = useStaffScheduleStore()
       this.userSignIn.loading = true
       this.userSignIn.success = false
       this.userSignIn.error = null
@@ -51,18 +53,15 @@ export const useUserStore = defineStore({
           // get the staff data
           this.getMe()
           questionnaireStore.getQuestionnaires()
+          scheduleStore.getSchedules()
 
           // then redirect to initially requested page or dashboard
           setTimeout(() => {
-            this.$router.push(
-              this.userSignIn.redirect ||
-              {
-                name: 'staff',
-                params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}
-              })
+            if (this.userSignIn.redirect) this.$router.push({name: this.userSignIn.redirect, params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}})
+            else this.$router.push({name: 'staff', params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}})
             this.userSignIn.loading = false
             this.userSignIn.success = false
-          }, 3000);
+          }, 1000);
 
         })
         .catch((err) => {
@@ -96,6 +95,7 @@ export const useUserStore = defineStore({
       localStorage.removeItem('cgims_refresh')
       localStorage.removeItem('cgims_user')
       localStorage.removeItem('cgims_questionnaires')
+      localStorage.removeItem('cgims_schedules')
       this.userSignOut.open = false
       this.$router.push({name: 'signinstaff'})
   },

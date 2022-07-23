@@ -30,8 +30,8 @@ const otherName = () => {
 </script>
 
 <template>
-    <div class="flex flex-col">
-        <p class="text-slate-500 text-xs lg:text-lg">Good {{greet}}</p>
+    <div class="flex flex-col gap-1">
+        <p class="text-slate-500 text-xs lg:text-lg"><code class="text-2xl">&#128075;</code> Good {{greet}}</p>
         <h3 class="text-slate-800 text-xl font-black md:text-3xl">{{person.profile.first_name}} {{otherName()}} {{person.profile.last_name}}</h3>
     </div>
 </template>

@@ -92,7 +92,7 @@ router.beforeEach((to, from) => {
 
   // make sure request is authenticated or redirect
   if (to.meta.requiresAuth && !JSON.parse(localStorage.getItem('cgims_access'))) {
-    user.userSignIn.redirect = to.fullPath
+    user.userSignIn.redirect = to.name
     return {name: 'signinstaff', query: {redirect: to.fullPath}}
   }
 })

@@ -6,6 +6,7 @@ const props = defineProps({
   type: {type: String, default: "text"},
   required: {type: Boolean, default: true},
   placeholder: {type: String, default: "Enter value..."},
+  maxLength: {type: Number, default: 100}
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -24,6 +25,7 @@ const emit = defineEmits(["update:modelValue"]);
       :type="type"
       :name="props.label"
       :id="props.label"
+      :maxlength="maxLength"
       :placeholder="placeholder"
       :required="required"
       class="w-full p-2 bg-slate-100 font-normal text-xs text-slate-900 rounded-sm ring-rose-500 ring-offset-2

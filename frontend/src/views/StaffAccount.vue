@@ -133,7 +133,7 @@ const mobileNav = ref(false)
               <template #detail>Are you sure you want to delete this schedule?</template>
               <template #buttons>
                 <AppButton class="w-full md:w-auto" @click.prevent="scheduleStore.delete.open = false" label="Cancle" :type="1" :color="1" />
-                <AppButton class="w-full md:w-auto" @click.prevent label="Delete" :type="2" :color="2" />
+                <AppButton class="w-full md:w-auto" @click.prevent="scheduleStore.deleteSchedule()" label="Delete" :type="2" :color="2" :loading="scheduleStore.delete.loading" />
               </template>
             </AppNotificationModal>
           </div>

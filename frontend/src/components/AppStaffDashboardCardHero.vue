@@ -22,7 +22,7 @@ useTippy(story, {
 </script>
 
 <template>
-  <main class="w-full h-full selection:bg-blue-600 selection:text-white">
+  <main class="w-full h-full selection:bg-rose-500 selection:text-white">
 
     <div class="w-full flex items-center justify-between rounded-lg bg-rose-500 p-5">
 
