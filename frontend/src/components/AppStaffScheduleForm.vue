@@ -35,6 +35,9 @@ const submit = () => {
     }
     scheduleStore.createSchedule(data)
 
+    title.value = "",
+    detail.value = ""
+    expire.value = ""
 }
 
 // vue calendar
@@ -52,7 +55,7 @@ const selectAttribute = {
 
     <form @submit.prevent="submit()" class="w-full flex flex-col gap-7">
 
-        <AppInputField label="Title" v-model="title" placeholder="Enter schedule title..." />
+        <AppInputField label="Title" v-model="title" :maxLength="65" placeholder="Enter schedule title..." />
 
         <div class="w-full h-full flex flex-col gap-2">
             <label for="question" class="text-slate-700 text-xs font-medium md:text-sm">Detail</label>

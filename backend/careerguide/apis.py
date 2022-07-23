@@ -300,7 +300,6 @@ class ScheduleViewSet(viewsets.GenericViewSet):
 
         # check to make sure the expire field was filled with a date, else populate
         # it with a date 7 days in the future.
-        print(serializer.initial_data.get("expire"))
         if serializer.initial_data.get("expire"):
             if timezone.datetime.date(
                 timezone.datetime.fromisoformat(serializer.initial_data["expire"])

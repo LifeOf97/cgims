@@ -52,7 +52,7 @@ const data = {
 
         <!-- start of student images -->
         <div
-          class="w-full h-60 bg-slate-200 rounded-lg overflow-hidden md:absolute top-36 md:h-40 md:w-40 md:left-10 xl:left-20">
+          class="w-full h-60 bg-slate-200 rounded-lg overflow-hidden md:absolute top-36 md:h-40 md:w-40 md:left-10">
           <img v-if="props.mugshot" :src="props.mugshot" alt="Image" class="w-full h-full object-cover object-center">
           <IconUser v-else class="w-full h-full fill-slate-400" />
         </div>
