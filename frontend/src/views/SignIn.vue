@@ -1,8 +1,9 @@
 <script setup>
 /* eslint-disable */
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useUserStore } from '../stores/user';
+import { useTippy } from 'vue-tippy';
 import chairsImg from '../assets/images/chairs2.jpg'
 import AppLogo from '../components/AppLogo.vue';
 import AppInputField from '../components/AppInputField.vue';
@@ -12,6 +13,8 @@ import AppButton from '../components/AppButton.vue';
 import IconLongLeft from '../components/icons/IconLongLeft.vue';
 import IconCheckAllBig from '../components/icons/IconCheckAllBig.vue';
 import IconCloseBig from '../components/icons/IconCloseBig.vue';
+import IconInfoCircleOutline from '../components/icons/IconInfoCircleOutline.vue';
+import AppTippySignInDetails from '../components/AppTippySignInDetails.vue'
 
 // stores
 const userStore = useUserStore()
@@ -20,6 +23,7 @@ const userStore = useUserStore()
 const username = ref(JSON.parse(localStorage.getItem("cgims_username")))
 const password = ref('')
 const rememberMe = ref(JSON.parse(localStorage.getItem("cgims_username")) ? true:false)
+const info = ref(null)
 
 // methods
 const signIn = () => {
@@ -32,6 +36,9 @@ const signIn = () => {
 
     password.value = ""
 }
+
+// tippy
+useTippy(info, {content: "Hello"})
 </script>
 
 <template>
@@ -41,9 +48,14 @@ const signIn = () => {
             <div class="relative flex-1 h-full bg-white flex items-center justify-center">
                 <div class="w-10/12 mx-auto flex flex-col justify-center gap-10 md:w-5/12 lg:w-7/12">
 
-                    <div class="flex flex-col items-center justify-center gap-2 lg:items-start">
+                    <div class="flex flex-col items-start justify-center gap-2">
                         <AppLogo />
-                        <p class="text-lg font-semibold text-slate-700 md:text-xl">Sign into your account</p>
+                        <div class="w-full flex items-center justify-between">
+                            <p class="text-lg font-semibold text-slate-700 md:text-xl">Sign into your account</p>
+                            <IconInfoCircleOutline
+                                v-tippy="{content: AppTippySignInDetails, theme: 'translucent', allowHTML: true, animation: 'scale', interactive: true}"
+                                class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900 focus:outline-none" />
+                        </div>
                     </div>
 
                     <form @submit.prevent="signIn()" class="w-full flex flex-col gap-5">

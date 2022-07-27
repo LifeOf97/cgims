@@ -25,7 +25,7 @@ export const useStaffScheduleStore = defineStore({
               this.create.error = null
 
               const schedules = JSON.parse(localStorage.getItem("cgims_schedules"))
-              schedules.push(resp.data)
+              schedules.unshift(resp.data)
               localStorage.setItem("cgims_schedules", JSON.stringify(schedules))
               this.retrieve.data = JSON.parse(localStorage.getItem("cgims_schedules"))
 
@@ -54,7 +54,7 @@ export const useStaffScheduleStore = defineStore({
             .catch((err) => {
               this.retrieve.loading = false
               if (err.response.status == 401) userStore.signOut()
-              else this.create.error = "An error occured."
+              else this.retrieve.error = "An error occured."
               console.log(err.response)
             })
         },
@@ -78,7 +78,7 @@ export const useStaffScheduleStore = defineStore({
                 this.delete.loading = false
                 if (err.response.status == 401) userStore.signOut()
                 else if (err.response.status == 404) this.getSchedules()
-                else this.create.error = "An error occured, please try again."
+                else this.retrieve.error = "An error occured, please try again."
                 console.log(err.response)
             })
         }

@@ -1,22 +1,21 @@
 <script setup>
 /* eslint-disable */
+import { computed } from 'vue';
 import classRoomImg from '../assets/images/classroom.jpg'
+import { useStudentStore } from '../stores/staffStudents';
+import { useRoute } from 'vue-router';
 import IconUser from './icons/IconUser.vue';
 import IconLongLeft from './icons/IconLongLeft.vue';
 
-// props
-const props = defineProps({
-  firstName: { type: String, default: "First" },
-  lastName: { type: String, default: "Last" },
-  otherName: { type: String, default: "Other" },
-  mugshot: { type: String, default: "" },
-  department: { type: String, default: "Department" },
-  class: { type: String, default: "jss1" },
-  regNo: { type: String, default: "1234" },
-  address: { type: String, default: "Address" },
-  parent: { type: String, default: "Parent Name" },
-  phone: { type: String, default: "+234 8065035596" },
-  about: { type: String, default: "About me" },
+// stores
+const studentStore = useStudentStore()
+
+// route
+const route = useRoute()
+
+const student = computed(() => {
+  const sid = route.path.split('/').splice(3,).join('/').toLowerCase()
+  return studentStore.retrieve.data.find((student) => student.sid == sid)
 })
 
 // datas
@@ -25,6 +24,8 @@ const data = {
     backgroundImage: `url(${classRoomImg})`,
   }
 }
+
+
 </script>
 
 <template>
@@ -53,7 +54,7 @@ const data = {
         <!-- start of student images -->
         <div
           class="w-full h-60 bg-slate-200 rounded-lg overflow-hidden md:absolute top-36 md:h-40 md:w-40 md:left-10">
-          <img v-if="props.mugshot" :src="props.mugshot" alt="Image" class="w-full h-full object-cover object-center">
+          <img v-if="student.profile.image" :src="student.profile.image" alt="Image" class="w-full h-full object-cover object-center">
           <IconUser v-else class="w-full h-full fill-slate-400" />
         </div>
         <!-- end of student images -->
@@ -61,54 +62,59 @@ const data = {
         <div class="w-full h-full mt-16 pb-10 md:mt-28 xl:w-10/12">
           <div class="w-full h-full grid gap-7 grid-cols-1 sm:grid-cols-2 lg:gap-10 xl:grid-cols-3">
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">First Name</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.firstName }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.profile.first_name }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Last Name</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.lastName }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.profile.last_name }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Other Name</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.otherName }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.profile.other_name }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Department</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.department }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.department }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Class</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.class }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.level }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Reg No</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.regNo }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.reg_no }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Address</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.address }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.profile.state }}, {{ student.profile.country }}.</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Parent</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.parent }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.parent }}</p>
             </span>
 
-            <span class="flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Contact</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.phone }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.profile.phone_1 }}, {{ student.profile.phone_2 }}</p>
+            </span>
+            
+            <span class="flex flex-col flex-wrap gap-1">
+              <p class="text-xs text-slate-500 font-normal">Gender</p>
+              <p class="text-xs text-slate-900 font-semibold break-all first-letter:capitalize md:text-sm">{{ student.profile.gender }}</p>
             </span>
 
-            <span class="col-span-full flex flex-col gap-1">
+            <span class="flex flex-col flex-wrap gap-1 sm:col-span-full lg:col-span-2">
               <p class="text-xs text-slate-500 font-normal">About Me</p>
-              <p class="text-xs text-slate-900 font-semibold md:text-sm">{{ props.about }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all first-letter:capitalize md:text-sm">{{ student.profile.about }}</p>
             </span>
           </div>
         </div>

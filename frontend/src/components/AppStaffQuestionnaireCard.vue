@@ -47,7 +47,7 @@ const updateQuestionnaire = () => {
 </script>
 
 <template>
-  <main class="relative w-full bg-slate-50 shadow-md rounded-md">
+  <main class="relative w-full bg-slate-100 shadow-md rounded-md">
     <div class="w-full h-full mx-auto flex gap-5 px-4 py-4">
         
         <div class="flex items-center justify-center">
@@ -55,7 +55,7 @@ const updateQuestionnaire = () => {
                 <AppDoughnutChart :chart-data="chartData" class="w-16 h-16 md:w-20 md:h-20" />
                 <div class="flex flex-col items-center gap-1">
                     <p class="text-xs text-slate-500">Completed by</p>
-                    <p class="text-xs text-slate-700 font-medium">0/{{props.questionnaire.students.length}}</p>
+                    <p class="text-xs text-green-500 font-medium">0/{{props.questionnaire.students.length}}</p>
                 </div>
             </div>
             <div v-else class="flex flex-col items-center justify-center gap-2">

@@ -48,7 +48,7 @@ export const useStaffQuestionnaireStore = defineStore({
         async updateQuestionnaire(data) {
             const userStore = useUserStore()
             this.update.loading = true
-            this.create.error = null
+            this.update.error = null
             const id = this.focus.data.id
 
             await axios.put(`staffs/me/questionnaires/${id}/update/`, data, {headers: {"Authorization": `Bearer ${JSON.parse(localStorage.getItem('cgims_access'))}` } })
@@ -58,16 +58,12 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.update.error = null
 
                     // refresh the questionnaires list
-                    // this.getQuestionnaires()
-                    const questionnaires = JSON.parse(localStorage.getItem("cgims_questionnaires"))
-                    questionnaires.unshift(resp.data)
-                    localStorage.setItem("cgims_questionnaires", JSON.stringify(questionnaires))
-                    this.retrieve.data = JSON.parse(localStorage.getItem("cgims_questionnaires"))
+                    this.getQuestionnaires()
                 })
                 .catch((err) => {
                     this.update.loading = false
                     if (err.response.status == 401) userStore.signOut()
-                    else this.create.error = "An error occured, please try again."
+                    else this.update.error = "An error occured, please try again."
                     console.log(err.response)
                 })
         },
@@ -86,7 +82,7 @@ export const useStaffQuestionnaireStore = defineStore({
                 .catch((err) => {
                     this.retrieve.loading = false
                     if (err.response.status == 401) userStore.signOut()
-                    else this.create.error = "An error occured, please try again."
+                    else this.retrieve.error = "An error occured, please try again."
                     console.log(err.response)
                 })
         },
@@ -111,7 +107,7 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.delete.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else if (err.response.status == 404) this.getQuestionnaires()
-                    else this.create.error = "An error occured, please try again."
+                    else this.delete.error = "An error occured, please try again."
                     console.log(err.response)
                 })
         }

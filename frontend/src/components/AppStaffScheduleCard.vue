@@ -27,7 +27,7 @@ const displayDate = (value) => {
 </script>
 
 <template>
-    <main class="detail">
+    <main class="detail break-all">
 
         <details @click="open = !open" class="flex flex-col gap-4 bg-slate-100 rounded-md p-4 shadow transition-all duration-500 group open:shadow-lg hover:shadow-lg">
             <summary class="flex items-center gap-4 cursor-pointer">

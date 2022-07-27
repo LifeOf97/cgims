@@ -22,7 +22,7 @@ DEPT: tuple = (
     ('art', 'art'),
     ('science', 'science'),
     ('commercial', 'commercial'),
-    ('social_science', 'social_science'),
+    ('social science', 'social science'),
 )
 
 
@@ -35,7 +35,7 @@ class Profile(AbstractUser):
     id = models.UUIDField(_("ID"), primary_key=True, unique=True, editable=False, default=uuid.uuid4)
     username = models.CharField(
         _("Username"), max_length=255, unique=True, blank=False, null=False,
-        help_text=_("<b>Students username syntax: department/class/reg_no</b><br><b>Staff username syntax: STF0000</b>")
+        help_text=_("<b>Students username syntax: department/level/reg_no</b><br><b>Staff username syntax: STF0000</b>")
     )
 
     # user bio

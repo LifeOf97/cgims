@@ -78,13 +78,13 @@ onMounted(() => {
                     on areas they psychologically find them fit. The job of counselling towards a future career is not an easy
                     one, the student has to be followed regularly within attitude and academic performance so that he/she will
                     be directed towards his/her gift career. This project work researched into the procedure involved in guiding
-                    and counselling student in secondary schools with a view to come up with the modernized system that would
+                    and counselling student in secondary schools with a view to come up with a modernized system that would
                     help in carrying out these activities effectively.<br><br>
                     
                     The problems associated with the existing system were detected and possible solutions to the problem were
                     provided in the new system. The new system is a web-based one, which works automatically; it is very easy
-                    to use, it is also interactive, and cost effective. The new system is comprehensive enough, timely and accurate
-                    in report generation.                    
+                    to use, it is also interactive, and cost effective. The new system is comprehensive enough, timely and facilitates
+                    accurate report generation.                    
                 </p>
             </div>
 

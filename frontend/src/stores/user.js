@@ -2,6 +2,7 @@
 import { defineStore } from "pinia";
 import { useStaffQuestionnaireStore } from "./staffQuestionnaire";
 import { useStaffScheduleStore } from "./staffSchedule";
+import { useStudentStore } from "./staffStudents";
 import axios from "axios";
 
 
@@ -29,6 +30,7 @@ export const useUserStore = defineStore({
     async signIn(data) {
       const questionnaireStore = useStaffQuestionnaireStore()
       const scheduleStore = useStaffScheduleStore()
+      const studentStore = useStudentStore()
       this.userSignIn.loading = true
       this.userSignIn.success = false
       this.userSignIn.error = null
@@ -54,6 +56,7 @@ export const useUserStore = defineStore({
           this.getMe()
           questionnaireStore.getQuestionnaires()
           scheduleStore.getSchedules()
+          studentStore.getStudents()
 
           // then redirect to initially requested page or dashboard
           setTimeout(() => {
@@ -96,6 +99,7 @@ export const useUserStore = defineStore({
       localStorage.removeItem('cgims_user')
       localStorage.removeItem('cgims_questionnaires')
       localStorage.removeItem('cgims_schedules')
+      localStorage.removeItem('cgims_students')
       this.userSignOut.open = false
       this.$router.push({name: 'signinstaff'})
   },
