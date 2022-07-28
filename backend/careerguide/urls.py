@@ -1,7 +1,4 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from drf_spectacular.views import SpectacularSwaggerView, SpectacularRedocView
-from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.authtoken import views as auth_views
 from django.urls import path
 from . import apis
 
@@ -11,10 +8,6 @@ app_name = "careerguide"
 urlpatterns = [
     # API" root view ulr path
     path("", apis.APIRootView.as_view(), name="APIRoot"),
-
-    # api documentation urls
-    path("schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="schema-redoc"),
-    path("schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="schema-swagger"),
 
     # Authentication url endpoints.
     path('auth/token/signin/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -62,18 +55,18 @@ urlpatterns = [
     path("students/<str:department>/<str:level>/<str:reg_no>/update/", apis.StudentViewSet.as_view({"put": "update", "patch": "update"}), name="student-update"),
     path("students/<str:department>/<str:level>/<str:reg_no>/delete/", apis.StudentViewSet.as_view({"delete": "destroy"}), name="student-delete"),
 
-    # students observations urls path
-    path("students/<str:department>/<str:level>/<str:reg_no>/observations/", apis.ObservationViewSet.as_view({"get": "list"}), name="students-observation-list"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/observations/create/", apis.ObservationViewSet.as_view({"post": "create"}), name="students-observation-create"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/", apis.ObservationViewSet.as_view({"get": "retrieve"}), name="students-observation-detail"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/update/", apis.ObservationViewSet.as_view({"put": "update", "patch": "update"}), name="students-observation-update"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/delete/", apis.ObservationViewSet.as_view({"delete": "destroy"}), name="students-observation-delete"),
+    # # students observations urls path
+    # path("students/<str:department>/<str:level>/<str:reg_no>/observations/", apis.ObservationViewSet.as_view({"get": "list"}), name="students-observation-list"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/observations/create/", apis.ObservationViewSet.as_view({"post": "create"}), name="students-observation-create"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/", apis.ObservationViewSet.as_view({"get": "retrieve"}), name="students-observation-detail"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/update/", apis.ObservationViewSet.as_view({"put": "update", "patch": "update"}), name="students-observation-update"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/observations/<int:id>/delete/", apis.ObservationViewSet.as_view({"delete": "destroy"}), name="students-observation-delete"),
 
-    # students result urls path
-    path("students/results/", apis.ResultViewSet.as_view({"get": "list"}), name="students-result-list"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/results/", apis.ResultViewSet.as_view({"get": "retrieve"}), name="students-result-detail"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/results/create/", apis.ResultViewSet.as_view({"post": "create"}), name="students-result-create"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/results/update/", apis.ResultViewSet.as_view({"put": "update", "patch": "update"}), name="students-result-update"),
-    path("students/<str:department>/<str:level>/<str:reg_no>/results/delete/", apis.ResultViewSet.as_view({"delete": "destroy"}), name="students-result-delete"),
+    # # students result urls path
+    # path("students/results/", apis.ResultViewSet.as_view({"get": "list"}), name="students-result-list"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/results/", apis.ResultViewSet.as_view({"get": "retrieve"}), name="students-result-detail"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/results/create/", apis.ResultViewSet.as_view({"post": "create"}), name="students-result-create"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/results/update/", apis.ResultViewSet.as_view({"put": "update", "patch": "update"}), name="students-result-update"),
+    # path("students/<str:department>/<str:level>/<str:reg_no>/results/delete/", apis.ResultViewSet.as_view({"delete": "destroy"}), name="students-result-delete"),
 
 ]

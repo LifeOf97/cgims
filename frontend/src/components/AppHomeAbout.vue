@@ -76,7 +76,7 @@ onMounted(() => {
                 <p class="text-xs text-slate-600 md:text-sm">
                     The presence of counsellors in school is not just for the sake of it, they are there to direct student
                     on areas they psychologically find them fit. The job of counselling towards a future career is not an easy
-                    one, the student has to be followed regularly within attitude and academic performance so that he/she will
+                    one, the student has to be followed regularly within aptitude and academic performance so that he/she will
                     be directed towards his/her gift career. This project work researched into the procedure involved in guiding
                     and counselling student in secondary schools with a view to come up with a modernized system that would
                     help in carrying out these activities effectively.<br><br>

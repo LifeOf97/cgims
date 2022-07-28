@@ -37,7 +37,7 @@ Profile = get_user_model()
 
 class APIRootView(APIView):
     """
-    API root view, returns the urls to all api endpoint.
+    API root view, returns the urls to top api endpoint.
     """
 
     permission_class = [permissions.AllowAny]
@@ -61,23 +61,36 @@ class APIRootView(APIView):
 
 # create views
 class ProfileViewSet(viewsets.GenericViewSet):
+    """
+    Profiles endpoint
+    """
+
     lookup_field = "id"
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns all profiles in the system.
+        """
         serializer = self.serializer_class(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns a specific profile instance as indicated by the provided profile id.
+        """
         serializer = self.serializer_class(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new profile instance, returns the newly created profile data.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
@@ -88,6 +101,9 @@ class ProfileViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        """
+        Updates the profile instance as indicated by the provided profile id, returns the updated data.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}, partial=True
         )
@@ -98,6 +114,10 @@ class ProfileViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Permanently deletes the profile instance as indicated by the provided profile id, returns a minimal data
+        of the deleted instance for reference.
+        """
         user = self.get_object()
         userid = user.id
         user.delete()
@@ -106,6 +126,10 @@ class ProfileViewSet(viewsets.GenericViewSet):
 
 
 class StaffViewSet(viewsets.GenericViewSet):
+    """
+    Staffs endpoints
+    """
+
     lookup_field = "staff_id"
     queryset = Staff.objects.all()
     serializer_class = StaffSerializer
@@ -138,18 +162,27 @@ class StaffViewSet(viewsets.GenericViewSet):
         return [perm() for perm in permission_classes]
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns all staffs data in the system.
+        """
         serializer = self.get_serializer(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns the data of the currently authenticated staff.
+        """
         serializer = self.get_serializer(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new staff instance, returns the newly created staff data.
+        """
         serializer = self.get_serializer(
             data=request.data, context={"request": request}
         )
@@ -160,6 +193,9 @@ class StaffViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        """
+        Update the data of the currently authenticated staff, returns the updated staff data.
+        """
         serializer = self.get_serializer(
             instance=self.get_object(),
             data=request.data,
@@ -173,6 +209,10 @@ class StaffViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Permanently deletes the currently authenticated staff from the system,
+        returns a minimal data of the deleted staff for reference.
+        """
         staff = self.get_object()
         name, id = [staff.staff_full_name(), staff.staff_id]
         staff.delete()
@@ -185,6 +225,10 @@ class StaffViewSet(viewsets.GenericViewSet):
 
 
 class StudentViewSet(viewsets.GenericViewSet):
+    """
+    Students endpoints
+    """
+
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
@@ -205,18 +249,27 @@ class StudentViewSet(viewsets.GenericViewSet):
         return obj
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns all students data in the system.
+        """
         serializer = self.serializer_class(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns the data of the currently authenticated student.
+        """
         serializer = self.serializer_class(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new student, returns the newly created student data.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
@@ -227,6 +280,9 @@ class StudentViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        """
+        Update the data of the currently authenticated student, returns the updated student data.
+        """
         serializer = self.serializer_class(
             instance=self.get_object(),
             data=request.data,
@@ -240,6 +296,10 @@ class StudentViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Permanently deletes the currently authenticated student from the system, returns a minimal
+        data of the deleted student for reference.
+        """
         student = self.get_object()
         fullname, dept, level, reg_no = [
             student.student_full_name(),
@@ -259,6 +319,9 @@ class StudentViewSet(viewsets.GenericViewSet):
 
 
 class ScheduleViewSet(viewsets.GenericViewSet):
+    """
+    Staffs scheduls endpoint.
+    """
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
 
@@ -282,18 +345,29 @@ class ScheduleViewSet(viewsets.GenericViewSet):
         return obj
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns all schedules belonging to the currently authenticated staff.
+        """
         serializer = self.serializer_class(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns a particular schedule belonging to the currently authenticated staff,
+        as indicated by the provided schedule id.
+        """
         serializer = self.serializer_class(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new schedule for the currently authenticated staff, returns the newly created
+        schedule data.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
@@ -327,6 +401,10 @@ class ScheduleViewSet(viewsets.GenericViewSet):
         )
 
     def update(self, request, *args, **kwargs):
+        """
+        Updates the data of the schedule instance as provided by the schedule id, returns
+        the newly updated schedule data.
+        """
         serializer = self.serializer_class(
             instance=self.get_object(),
             data=request.data,
@@ -340,6 +418,10 @@ class ScheduleViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Parmanently deletes a schedule instance as indicated by the provided by the schedule id
+        from the system, returns a minimal data of the deleted schedule for reference.
+        """
         schedule = self.get_object()
         id, staff, title, created = [
             schedule.id,
@@ -359,6 +441,9 @@ class ScheduleViewSet(viewsets.GenericViewSet):
 
 
 class QuestionnaireViewSet(viewsets.GenericViewSet):
+    """
+    Staffs questionnaires endpoint.
+    """
     queryset = Questionnaire.objects.all()
     serializer_class = QuestionnaireSerializer
 
@@ -381,18 +466,29 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
         return obj
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns all questionnaires created by the currently authenticated staff.
+        """
         serializer = self.serializer_class(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns a particular questionnaire belonging to the currently authenticated staff,
+        as indicated by the provided questionnaire id.
+        """
         serializer = self.serializer_class(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new questionnaire belonging to the currently authenticated staff,
+        return the newly created questionnaire.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
@@ -409,8 +505,7 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
                 | Q(profile__gender__in=[gender for gender in categories])
             )
         ]
-        # print(categories)
-        # print(student_category)
+
         # set the students field to the all students that fit into any of the categories
         serializer.initial_data["students"] = [
             student.sid for student in student_category
@@ -422,6 +517,10 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        """
+        Updates the data of the questionnaire instance as indicated by the provided questionnaire
+        id, returns the newly updated questionnaire data.
+        """
         serializer = self.serializer_class(
             instance=self.get_object(),
             data=request.data,
@@ -441,6 +540,7 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
                 | Q(profile__gender__in=[gender for gender in categories])
             )
         ]
+
         # set the students field to the all students that fit into any of the categories
         serializer.initial_data["students"] = [
             student.sid for student in student_category
@@ -452,6 +552,10 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Parmanently deletes a questionnaire instance as indicated by the provided questionnaire
+        id from the system and returns a minimal data for reference.
+        """
         question = self.get_object()
         id, staff, title, completed = [
             question.id,
@@ -471,23 +575,36 @@ class QuestionnaireViewSet(viewsets.GenericViewSet):
 
 
 class QuestionViewSet(viewsets.GenericViewSet):
+    """
+    Custom Questionnaire endpoint.
+    """
     lookup_field = "id"
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
     def list(self, request, *args, **kwargs):
+        """
+        Returns a list of all custom questionnaires in the system.
+        """
         serializer = self.serializer_class(
             self.get_queryset(), many=True, context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        Returns a particular questionnaire data as indicated by the provided questionnaire id.
+        """
         serializer = self.serializer_class(
             self.get_object(), context={"request": request}
         )
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
+        """
+        Creates a new questionnaire data made available to all staffs, returns the newly created
+        questionnaire.
+        """
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
@@ -498,6 +615,10 @@ class QuestionViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        """
+        Updates a particular questionnaire data as indicated by the provided questionnaire id,
+        returns the newly updated questionnaire.
+        """
         serializer = self.serializer_class(
             instance=self.get_object(),
             data=request.data,
@@ -511,6 +632,10 @@ class QuestionViewSet(viewsets.GenericViewSet):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Parmanently deletes a particular questionnaire data as indicated by thge provided questionnaire id
+        from the system, returns a minimal data for reference.
+        """
         question = self.get_object()
         id, title, created = [question.id, question.title, question.created]
         question.delete()
@@ -523,180 +648,186 @@ class QuestionViewSet(viewsets.GenericViewSet):
         return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
 
 
-class ObservationViewSet(viewsets.GenericViewSet):
-    queryset = Observation.objects.all()
-    serializer_class = ObservationSerializer
+# class ObservationViewSet(viewsets.GenericViewSet):
+#     """
+#     Staffs observations on students endpoint.
+#     """
+#     queryset = Observation.objects.all()
+#     serializer_class = ObservationSerializer
 
-    def get_queryset(self):
-        # return a list of observations created by the logged in staff
-        queryset = super().get_queryset()
+#     def get_queryset(self):
+#         # return a list of observations created by the logged in staff
+#         queryset = super().get_queryset()
 
-        # lookup fields from url to filter the object.
-        lookup_kwargs = {
-            "student__department": self.kwargs["department"],
-            "student__level": self.kwargs["level"],
-            "student__reg_no": self.kwargs["reg_no"],
-        }
-        queryset = queryset.filter(**lookup_kwargs).order_by("-created")
-        return queryset
+#         # lookup fields from url to filter the object.
+#         lookup_kwargs = {
+#             "student__department": self.kwargs["department"],
+#             "student__level": self.kwargs["level"],
+#             "student__reg_no": self.kwargs["reg_no"],
+#         }
+#         queryset = queryset.filter(**lookup_kwargs).order_by("-created")
+#         return queryset
 
-    def get_object(self):
-        # return an instance of a observation for the student instance.
-        # make sure to edit the hyperlink identity field on the serializer class to make use
-        # of the appropriate lookup fields.
-        lookup_kwargs = {
-            "student__department": self.kwargs["department"],
-            "student__level": self.kwargs["level"],
-            "student__reg_no": self.kwargs["reg_no"],
-            "id": self.kwargs["id"],
-        }
-        obj = get_object_or_404(self.get_queryset(), **lookup_kwargs)
-        # make sure to check for object level permissions
-        self.check_object_permissions(self.request, obj)
-        return obj
+#     def get_object(self):
+#         # return an instance of a observation for the student instance.
+#         # make sure to edit the hyperlink identity field on the serializer class to make use
+#         # of the appropriate lookup fields.
+#         lookup_kwargs = {
+#             "student__department": self.kwargs["department"],
+#             "student__level": self.kwargs["level"],
+#             "student__reg_no": self.kwargs["reg_no"],
+#             "id": self.kwargs["id"],
+#         }
+#         obj = get_object_or_404(self.get_queryset(), **lookup_kwargs)
+#         # make sure to check for object level permissions
+#         self.check_object_permissions(self.request, obj)
+#         return obj
 
-    def list(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            self.get_queryset(), many=True, context={"request": request}
-        )
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+#     def list(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             self.get_queryset(), many=True, context={"request": request}
+#         )
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    def retrieve(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            self.get_object(), context={"request": request}
-        )
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+#     def retrieve(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             self.get_object(), context={"request": request}
+#         )
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={"request": request}
-        )
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             data=request.data, context={"request": request}
+#         )
 
-        try:
-            serializer.initial_data["student"] = Student.objects.get(
-                department=self.kwargs["department"],
-                level=self.kwargs["level"],
-                reg_no=self.kwargs["reg_no"],
-            )
-        except Student.DoesNotExist:
-            return Response(
-                data={"datail": "Student with that ID does not exists."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+#         try:
+#             serializer.initial_data["student"] = Student.objects.get(
+#                 department=self.kwargs["department"],
+#                 level=self.kwargs["level"],
+#                 reg_no=self.kwargs["reg_no"],
+#             )
+#         except Student.DoesNotExist:
+#             return Response(
+#                 data={"datail": "Student with that ID does not exists."},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
 
-        if serializer.is_valid():
-            serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save(staff=request.user.staff)
+#             return Response(data=serializer.data, status=status.HTTP_200_OK)
+#         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            instance=self.get_object(),
-            data=request.data,
-            context={"request": request},
-            partial=True,
-        )
+#     def update(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             instance=self.get_object(),
+#             data=request.data,
+#             context={"request": request},
+#             partial=True,
+#         )
 
-        if serializer.is_valid():
-            serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save(staff=request.user.staff)
+#             return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+#         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def destroy(self, request, *args, **kwargs):
-        observation = self.get_object()
-        id, student, created = [
-            observation.id,
-            observation.student.reg_no,
-            observation.created,
-        ]
-        observation.delete()
-        serializer = {
-            "id": id,
-            "student": student,
-            "created": created,
-            "detail": "Deleted successfully",
-        }
-        return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
+#     def destroy(self, request, *args, **kwargs):
+#         observation = self.get_object()
+#         id, student, created = [
+#             observation.id,
+#             observation.student.reg_no,
+#             observation.created,
+#         ]
+#         observation.delete()
+#         serializer = {
+#             "id": id,
+#             "student": student,
+#             "created": created,
+#             "detail": "Deleted successfully",
+#         }
+#         return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
 
 
-class ResultViewSet(viewsets.GenericViewSet):
-    queryset = Result.objects.all()
-    serializer_class = ResultSerializer
+# class ResultViewSet(viewsets.GenericViewSet):
+#     """
+#     Staffs
+#     """
+#     queryset = Result.objects.all()
+#     serializer_class = ResultSerializer
 
-    def get_queryset(self):
-        # return a list of observations created by the logged in user (staff)
-        queryset = super().get_queryset().order_by("-updated")
-        return queryset
+#     def get_queryset(self):
+#         # return a list of observations created by the logged in user (staff)
+#         queryset = super().get_queryset().order_by("-updated")
+#         return queryset
 
-    def get_object(self):
-        # return an instance of a observation for the student instance.
-        # make sure to edit the hyperlink identity field on the serializer class to make use
-        # of the appropriate lookup fields.
-        lookup_kwargs = {
-            "student__department": self.kwargs["department"],
-            "student__level": self.kwargs["level"],
-            "student__reg_no": self.kwargs["reg_no"],
-        }
-        obj = get_object_or_404(self.get_queryset(), **lookup_kwargs)
-        # make sure to check for object level permissions
-        self.check_object_permissions(self.request, obj)
-        return obj
+#     def get_object(self):
+#         # return an instance of a observation for the student instance.
+#         # make sure to edit the hyperlink identity field on the serializer class to make use
+#         # of the appropriate lookup fields.
+#         lookup_kwargs = {
+#             "student__department": self.kwargs["department"],
+#             "student__level": self.kwargs["level"],
+#             "student__reg_no": self.kwargs["reg_no"],
+#         }
+#         obj = get_object_or_404(self.get_queryset(), **lookup_kwargs)
+#         # make sure to check for object level permissions
+#         self.check_object_permissions(self.request, obj)
+#         return obj
 
-    def list(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            self.get_queryset(), many=True, context={"request": request}
-        )
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+#     def list(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             self.get_queryset(), many=True, context={"request": request}
+#         )
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    def retrieve(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            self.get_object(), context={"request": request}
-        )
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+#     def retrieve(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             self.get_object(), context={"request": request}
+#         )
+#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={"request": request}
-        )
+#     def create(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             data=request.data, context={"request": request}
+#         )
 
-        try:
-            serializer.initial_data["student"] = Student.objects.get(
-                department=self.kwargs["department"],
-                level=self.kwargs["level"],
-                reg_no=self.kwargs["reg_no"],
-            )
-        except Student.DoesNotExist:
-            return Response(
-                data={"datail": "Student with that ID does not exists."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+#         try:
+#             serializer.initial_data["student"] = Student.objects.get(
+#                 department=self.kwargs["department"],
+#                 level=self.kwargs["level"],
+#                 reg_no=self.kwargs["reg_no"],
+#             )
+#         except Student.DoesNotExist:
+#             return Response(
+#                 data={"datail": "Student with that ID does not exists."},
+#                 status=status.HTTP_404_NOT_FOUND,
+#             )
 
-        if serializer.is_valid():
-            serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save(staff=request.user.staff)
+#             return Response(data=serializer.data, status=status.HTTP_200_OK)
+#         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            instance=self.get_object(),
-            data=request.data,
-            context={"request": request},
-            partial=True,
-        )
+#     def update(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(
+#             instance=self.get_object(),
+#             data=request.data,
+#             context={"request": request},
+#             partial=True,
+#         )
 
-        if serializer.is_valid():
-            serializer.save(staff=request.user.staff)
-            return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             serializer.save(staff=request.user.staff)
+#             return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+#         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def destroy(self, request, *args, **kwargs):
-        result = self.get_object()
-        id, student, staff = [result.id, result.student.sid, result.staff.staff_id]
-        result.delete()
-        serializer = {
-            "id": id,
-            "student": student,
-            "staff": staff,
-            "detail": "Deleted successfully",
-        }
-        return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)
+#     def destroy(self, request, *args, **kwargs):
+#         result = self.get_object()
+#         id, student, staff = [result.id, result.student.sid, result.staff.staff_id]
+#         result.delete()
+#         serializer = {
+#             "id": id,
+#             "student": student,
+#             "staff": staff,
+#             "detail": "Deleted successfully",
+#         }
+#         return Response(data=serializer, status=status.HTTP_204_NO_CONTENT)

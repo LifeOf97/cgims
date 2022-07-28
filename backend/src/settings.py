@@ -1,6 +1,5 @@
-from corsheaders.defaults import default_headers, default_methods
-from dotenv import load_dotenv
 from datetime import timedelta
+from dotenv import load_dotenv
 from pathlib import Path
 import os
 
@@ -15,7 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
-# SECRET_KEY = CONFIG["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Boolean value
@@ -188,10 +186,10 @@ CORS_ALLOWED_ORIGINS = [
 # CORS_PREFLIGHT_MAX_AGE = 86400
 CORS_ALLOW_CREDENTIALS = True
 
-# drg_spectacular settings
+# drf_spectacular settings
 SPECTACULAR_SETTINGS = {
     'TITLE': 'CGIMS API',
-    'DESCRIPTION': 'Web-based Career Guidance Information Management System',
+    'DESCRIPTION': 'Web-based Career Guidance Information and Management System',
     'VERSION': '1.0.0',
     # OTHER SETTINGS
 }
