@@ -18,14 +18,13 @@ from .models import (
     Question,
 )
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import permissions, authentication
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.response import Response
-from rest_framework.decorators import action
 from rest_framework.reverse import reverse
 from . import permissions as custom_perm
 from rest_framework.views import APIView
+from rest_framework import permissions
 from rest_framework import viewsets
 from rest_framework import status
 from django.utils import timezone
@@ -39,8 +38,8 @@ class APIRootView(APIView):
     """
     API root view, returns the urls to top api endpoint.
     """
-
-    permission_class = [permissions.AllowAny]
+    authentication_classes = []
+    permission_classes = [permissions.AllowAny]
 
     def get(self, request, format=None, *args, **kwargs):
         profiles = reverse("careerguide:profile-list", request=request, format=format)

@@ -6,7 +6,6 @@ backend/media/
 backend/static/
 backend/**/.env*
 backend/**/__pycache_*
-backend/logs
 
 # database
 .pgadmin
