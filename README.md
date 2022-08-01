@@ -40,7 +40,7 @@ As at the time of developing this new system **_Febuary 12, 2022 - March 16 2022
 * Postgresql
 
 **Deployment**
-* Docker (currently not in use)
+* Docker
 * Vercel (frontend)
 * Heroku (Backend)
 
