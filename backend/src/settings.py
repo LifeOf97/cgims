@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # load env file
 # load_dotenv(dotenv_path=F"{BASE_DIR}/src/.env.dev")
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -18,7 +19,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Boolean value
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.1.102"]
 
@@ -77,14 +78,25 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # postgres://lrrmystnytkstg:edbd0bd5e77d54502fbe097a3223a961351846be6e207eeb0fdfdf5e23d7b581@ec2-34-242-89-204.eu-west-1.compute.amazonaws.com:5432/deirjbjtabqadb
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
+#         'NAME': os.environ.get('POSTGRES_NAME', BASE_DIR / 'db.sqlite3'),
+#         'USER': os.environ.get('POSTGRES_USER', 'user'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password'),
+#         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+#         'PORT': os.environ.get('POSTGRES_PORT', 5432),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
-        'NAME': os.environ.get('POSTGRES_NAME', BASE_DIR / 'db.sqlite3'),
-        'USER': os.environ.get('POSTGRES_USER', 'user'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password'),
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', 5432),
+        'NAME': os.environ.get('DB_NAME', BASE_DIR / 'db.sqlite3'),
+        'USER': os.environ.get('DB_USER', 'user'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 

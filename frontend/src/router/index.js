@@ -14,7 +14,7 @@ const router = createRouter({
       meta: {title: "CGIMS | Home"},
     },
     {
-      path: "/signin/staff",
+      path: "/signin/staffs",
       name: "signinstaff",
       component: () => import("../views/SignIn.vue"),
       meta: {title: "CGIMS | Sign In"},

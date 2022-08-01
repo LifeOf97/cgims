@@ -1,13 +1,8 @@
 frontend/node_modules
 frontend/.vscode
 
-backend/venv
-backend/media/
-backend/static/
-backend/**/.env*
-backend/**/__pycache_*
-
-# database
-.pgadmin
-db/
-pgadmin/
+venv
+media/
+static/
+.env*
+__pycache_*
