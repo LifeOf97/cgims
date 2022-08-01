@@ -79,12 +79,12 @@ const data = {
 
             <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Department</p>
-              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.department }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.department.split('_').join(' ') }}</p>
             </span>
 
             <span class="flex flex-col flex-wrap gap-1">
               <p class="text-xs text-slate-500 font-normal">Class</p>
-              <p class="text-xs text-slate-900 font-semibold break-all capitalize md:text-sm">{{ student.level }}</p>
+              <p class="text-xs text-slate-900 font-semibold break-all uppercase md:text-sm">{{ student.level }}</p>
             </span>
 
             <span class="flex flex-col flex-wrap gap-1">

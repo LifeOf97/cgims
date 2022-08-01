@@ -43,7 +43,7 @@ const filters = reactive([
             {id: 1, name: 'art', selected: questionnaireStore.focus.data['categories'].includes('art')},
             {id: 2, name: 'commercial', selected: questionnaireStore.focus.data['categories'].includes('commercial')},
             {id: 3, name: 'science', selected: questionnaireStore.focus.data['categories'].includes('science')},
-            {id: 4, name: 'social science', selected: questionnaireStore.focus.data['categories'].includes('social science')},
+            {id: 4, name: 'social_science', selected: questionnaireStore.focus.data['categories'].includes('social_science')},
         ]
     },
 ])
@@ -155,7 +155,7 @@ const submitQuestionnaire = () => {
                                     class="group flex items-center gap-1 text-xs font-medium px-3 py-2 cursor-pointer rounded-md
                                     transition-all duration-200 ring-slate-400 hover:ring-1">
                                     <IconPlus :class="opt.selected ? 'fill-white':'fill-slate-500'" class="w-4 h-4 transition-all duration-200 capitalize" />
-                                    {{opt.name}}
+                                    {{opt.name.split('_').join(' ')}}
                                     <input @click="updateCategories(opt.selected, opt.name)" type="checkbox" v-model="opt.selected" :name="opt.name" :id="opt.name" class="hidden">
                                 </label>
                             </div>

@@ -71,7 +71,7 @@ useTippy(info, {content: "Hello"})
                         <div class="w-full flex items-center justify-between">
                             <AppCheckBox v-model="rememberMe" label="Remember me" />
                             <RouterLink to="#"
-                                v-tippy="{ content: 'Coming soon', animation: 'scale', trigger: 'click' }"
+                                v-tippy="{ content: 'Not available', animation: 'scale', trigger: 'click' }"
                                 class="text-blue-500 text-xs hover:text-blue-600">Forgot password?</RouterLink>
                         </div>
                         <AppButton :type="2" :color="2" :loading="userStore.userSignIn.loading" label="Sign In" class="mt-2" />

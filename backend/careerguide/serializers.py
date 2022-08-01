@@ -195,7 +195,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
         ('art', 'art'),
         ('science', 'science'),
         ('commercial', 'commercial'),
-        ('social science', 'social science'),
+        ('social_science', 'social_science'),
     )
     staff = serializers.SlugRelatedField(read_only=True, slug_field="staff_id")
     students = serializers.SlugRelatedField(queryset=Student.objects.all(), many=True, slug_field="sid", required=False)

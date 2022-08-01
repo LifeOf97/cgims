@@ -12,11 +12,6 @@ import IconCloseBig from './icons/IconCloseBig.vue';
 const questionnaireStore = useStaffQuestionnaireStore()
 const userStore = useUserStore()
 
-// refs
-
-// datas
-const tags = ['art', 'sss1', 'sss2', 'sss3']
-
 // methods
 const toFullDate = (value) => {
   return DateTime.fromISO(value).setLocale("en-US").toLocaleString(DateTime.DATE_FULL)
@@ -50,7 +45,7 @@ const updateQuestionnaire = () => {
         <!-- start of questionnaire students categories as tags -->
         <div class="w-full flex flex-wrap items-center gap-2">
           <p v-for="tag in questionnaireStore.focus.data.categories" :key="tag"
-            class="text-xs text-slate-600 font-normal px-2 py-1 bg-slate-100 rounded-md">{{ tag }}</p>
+            class="text-xs text-slate-600 font-normal px-2 py-1 bg-slate-100 rounded-md">{{ tag.split('_').join(' ') }}</p>
         </div>
         <!-- end of questionnaire students categories as tags -->
 

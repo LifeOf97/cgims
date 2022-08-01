@@ -22,7 +22,7 @@ DEPT: tuple = (
     ('art', 'art'),
     ('science', 'science'),
     ('commercial', 'commercial'),
-    ('social science', 'social science'),
+    ('social_science', 'social_science'),
 )
 
 

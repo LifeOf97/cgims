@@ -34,7 +34,7 @@ const studentStore = useStudentStore()
             <div class="flex flex-col gap-1">
                 <span class="flex items-center gap-4">
                     <IconGroup class="w-6 h-6 fill-slate-400" />
-                    <p class="text-xs text-slate-400 font-normal capitalize md:text-sm">{{props.student.department}}</p>
+                    <p class="text-xs text-slate-400 font-normal capitalize md:text-sm">{{props.student.department.split('_').join(' ')}}</p>
                 </span>
                 <span class="flex items-center gap-4">
                     <IconAcademicAlt class="w-6 h-6 fill-transparent stroke-slate-400" />
