@@ -33,6 +33,9 @@ USER cgims
 ENV HOME=/home/cgims
 ENV APP_HOME=$HOME/backend
 RUN mkdir $APP_HOME
+RUN mkdir -p $APP_HOME/logs/gunicorn
+RUN mkdir $APP_HOME/static
+RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # install dependencies

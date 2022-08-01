@@ -5,12 +5,25 @@ services:
   api:
     build: ./backend
     command: gunicorn -c gunicorn.conf.py src.wsgi:application
+    volumes:
+      - static_volume:/home/cgims/backend/static
+      - media_volume:/home/cgims/backend/media
     env_file:
       - ./backend/.env.dev
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     depends_on:
       - db
+  
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/cgims/backend/static
+      - media_volume:/home/cgims/backend/media
+    ports:
+      - 8000:80
+    depends_on:
+      - api
 
   db:
     image: postgres:14-alpine
@@ -32,3 +45,5 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
