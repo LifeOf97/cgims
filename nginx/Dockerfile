@@ -1,13 +1,17 @@
 FROM nginx:1.23
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY cgims.conf /etc/nginx/conf.d/
+# copy over conf files
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./default.conf /etc/nginx/conf.d/default.conf
 
-# create nonroot user/group
-# RUN useradd --create-home --shell /bin/bash --user-group cgims
+WORKDIR /app
 
-# activate system user
-# USER cgims
+# set permissions for nginx user
+RUN chown -R nginx:nginx /app && chmod -R 755 /app && \
+    chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    chown -R nginx:nginx /etc/nginx/conf.d
 
-# enable the conf by linking it to the sites-enabled directory:
-# RUN ln -s /etc/nginx/sites-available/cgims.conf /etc/nginx/sites-enabled/
+RUN touch /var/run/nginx.pid && chown -R nginx:nginx /var/run/nginx.pid
+
+USER nginx

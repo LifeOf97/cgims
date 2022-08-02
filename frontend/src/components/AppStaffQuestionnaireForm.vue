@@ -6,6 +6,7 @@ import IconCloseBig from './icons/IconCloseBig.vue';
 import AppInputField from './AppInputField.vue';
 import AppButton from './AppButton.vue';
 import IconPlus from './icons/IconPlus.vue';
+import AppEmptyState from './AppEmptyState.vue';
 
 // stores
 const questionnaireStore = useStaffQuestionnaireStore()
@@ -48,6 +49,18 @@ const filters = reactive([
     },
 ])
 
+const testt = {
+    categories: ["male"],
+    completed: false,
+    created: "2022-07-27T12:21:16.512318+01:00",
+    id: 57,
+    question: "For my students",
+    slug: "another-questionnaire",
+    staff: "stf1211",
+    students: ["art/jss3/1222", "commercial/jss2/1212"],
+    title: "Another questionnaire",
+}
+
 // methods
 const updateCategories = (state, value) => {
     // for some reasons the checkbox state is passed as false when active and
@@ -65,6 +78,12 @@ const submitQuestionnaire = () => {
 
     if (questionnaireStore.create.open) return questionnaireStore.createQuestionnaire(data)
     else return questionnaireStore.updateQuestionnaire(data)
+}
+
+const selectQuestionnaire = (data) => {
+    title.value = data.title
+    question.value = data.question
+    selectQuestion.value = false
 }
 </script>
 
@@ -98,20 +117,48 @@ const submitQuestionnaire = () => {
                 <div class="col-span-3 flex flex-col gap-7 lg:col-span-2">
                     <div class="relative">
                         <AppInputField label="Title" v-model="title" placeholder="Enter questionnaire title..." />
-                        <button @click="selectQuestion = !selectQuestion" type="button" class="absolute top-0 right-0 text-xs font-bold text-blue-500 transition-all duration-200 hover:text-blue-600 md:text-sm">Select Questions</button>
+                        <button @click="selectQuestion = !selectQuestion" type="button" class="absolute top-0 right-0 text-xs font-bold text-blue-500 transition-all duration-200 hover:text-blue-600 md:text-sm">
+                            Select Question
+                        </button>
                         
+                        <!-- start of predefined questionnaire -->
                         <transition
                             name="slide-down"
                             enter-from-class="-translate-y-10 opacity-0"
-                            enter-active-class="transition-all duration-500"
+                            enter-active-class="transition-all duration-200"
                             leave-to-class="-translate-y-10 opacity-0"
-                            leave-active-class="transition-all duration-500">
-                            <div v-if="selectQuestion" class="absolute top-16 w-full h-60 bg-white shadow-lg flex flex-col z-10">
+                            leave-active-class="transition-all duration-200">
+                            <div v-if="selectQuestion" class="absolute top-16 w-full max-h-[15rem] bg-white shadow-lg flex flex-col z-10 overflow-y-auto">
                                 <div class="w-full p-3 bg-slate-100 shadow-inner shadow-slate-400/50">
                                     <p class="text-xs font-medium text-center text-slate-400 md:text-sm">Select a predefined questionnaire</p>
                                 </div>
+
+
+                                <ul v-if="questionnaireStore.predefined.data.length > 0" class="w-full px-4 py-6 flex flex-col gap-2 text-xs font-medium md:text-sm">
+                                    <li v-for="question in questionnaireStore.predefined.data">
+                                        <button @click.prevent="selectQuestionnaire(question)" type="submit" class="p-2 w-full text-left rounded-lg transition-all duration-150 hover:text-white hover:bg-rose-500">
+                                            -- {{question.title}}
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <!-- start of an empty predefined questionnaire state -->
+                                <AppEmptyState v-if="questionnaireStore.predefined.data.length < 1">
+                                    <template #title>
+                                        <p class="text-slate-500 text-xs font-normal text-center md:text-sm">
+                                        The system has no predefined questionniares
+                                        </p>
+                                    </template>
+                                    <template #tail>
+                                        <p class="text-slate-400 text-xs font-light text-center md:text-sm">
+                                        Contact admin
+                                        </p>
+                                    </template>
+                                </AppEmptyState>
+                                <!-- end of an empty predefined questionnaire state -->
                             </div>
                         </transition>
+                        <!-- end of predefined questionnaire -->
                     </div>
 
                     <div class="w-full h-full flex flex-col gap-2">

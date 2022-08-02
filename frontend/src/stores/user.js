@@ -55,6 +55,7 @@ export const useUserStore = defineStore({
           // get the staff data
           this.getMe()
           questionnaireStore.getQuestionnaires()
+          questionnaireStore.getPredefinedQuestionnaires()
           scheduleStore.getSchedules()
           studentStore.getStudents()
 

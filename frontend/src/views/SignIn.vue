@@ -3,7 +3,6 @@
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useUserStore } from '../stores/user';
-import { useTippy } from 'vue-tippy';
 import chairsImg from '../assets/images/chairs2.jpg'
 import AppLogo from '../components/AppLogo.vue';
 import AppInputField from '../components/AppInputField.vue';
@@ -23,7 +22,6 @@ const userStore = useUserStore()
 const username = ref(JSON.parse(localStorage.getItem("cgims_username")))
 const password = ref('')
 const rememberMe = ref(JSON.parse(localStorage.getItem("cgims_username")) ? true:false)
-const info = ref(null)
 
 // methods
 const signIn = () => {
@@ -36,9 +34,6 @@ const signIn = () => {
 
     password.value = ""
 }
-
-// tippy
-useTippy(info, {content: "Hello"})
 </script>
 
 <template>
@@ -53,7 +48,7 @@ useTippy(info, {content: "Hello"})
                         <div class="w-full flex items-center justify-between">
                             <p class="text-lg font-semibold text-slate-700 md:text-xl">Sign into your account</p>
                             <IconInfoCircleOutline
-                                v-tippy="{content: AppTippySignInDetails, theme: 'translucent', allowHTML: true, animation: 'scale', interactive: true}"
+                                v-tippy="{content: AppTippySignInDetails, theme: 'dark', allowHTML: true, animation: 'scale', interactive: true}"
                                 class="w-6 h-6 fill-slate-400 transition-all duration-200 cursor-help hover:fill-slate-900 focus:outline-none" />
                         </div>
                     </div>

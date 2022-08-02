@@ -11,8 +11,9 @@ export const useStaffQuestionnaireStore = defineStore({
         update: {open: false, loading: false, error: null},
         view: {open: false, loading: false},
         retrieve: {data: JSON.parse(localStorage.getItem("cgims_questionnaires")), loading: false, open: false, error: null},
+        predefined: {data: JSON.parse(localStorage.getItem("cgims_predefined_questionnaires")), loading: false, error: null},
         delete: {open: false, loading: false, error: null},
-        focus: {data: {id: "", categories: [], completed: false, question: null, slug: null, title: null, students: [], question: null}},
+        focus: {data: {id: null, completed: false, question: null, slug: null, title: null, students: [], categories: []}},
       }),
     getters: {
         latestFourQuestionnaires: (state) => {
@@ -108,6 +109,25 @@ export const useStaffQuestionnaireStore = defineStore({
                     if (err.response.status == 401) userStore.signOut()
                     else if (err.response.status == 404) this.getQuestionnaires()
                     else this.delete.error = "An error occured, please try again."
+                    console.log(err.response)
+                })
+        },
+        async getPredefinedQuestionnaires() {
+            const userStore = useUserStore()
+            this.predefined.loading = true
+            this.predefined.error = null
+
+            await axios.get(`questions/`, {headers: {"Authorization": `Bearer ${JSON.parse(localStorage.getItem('cgims_access'))}` } })
+                .then((resp) => {
+                    this.predefined.loading = false
+                    this.predefined.error = null
+                    this.predefined.data = resp.data
+                    localStorage.setItem("cgims_predefined_questionnaires", JSON.stringify(resp.data))
+                })
+                .catch((err) => {
+                    this.predefined.loading = false
+                    if (err.response.status == 401) userStore.signOut()
+                    else this.predefined.error = "An error occured, please try again."
                     console.log(err.response)
                 })
         }
