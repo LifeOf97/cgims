@@ -60,7 +60,7 @@ const updateQuestionnaire = () => {
             </div>
             <div v-else class="flex flex-col items-center justify-center gap-2">
                 <IconUserPlus class="w-10 h-10 fill-slate-300" />
-                <p class="text-xs text-slate-500">Not Assigned</p>
+                <p class="text-xs text-slate-500">No Students</p>
             </div>
         </div>
 

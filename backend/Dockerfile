@@ -38,15 +38,19 @@ RUN mkdir $APP_HOME/static
 RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
-# install dependencies
+# copy over required dependencies
 COPY --from=builder --chown=cgims:cgims /app/wheels /wheels
 COPY --from=builder --chown=cgims:cgims /app/requirements.txt .
-ENV PATH="${HOME}/.local/bin:${PATH}"
+
+# add required dir to PATH
+ENV PATH="${PATH}:${HOME}/.local/bin"
+
+# install dependencies
 RUN pip install --user --no-cache /wheels/*
 
 # copy entrypoint.sh
 COPY --chown=cgims:cgims ./entrypoint.sh .
-RUN sed -i 's/\r$//g' $APP_HOME/entrypoint.sh
+# RUN sed -i 's/\r$//g' $APP_HOME/entrypoint.sh
 RUN chmod +x $APP_HOME/entrypoint.sh
 
 # copy project over

@@ -2,6 +2,17 @@ version: '3.8'
 
 services:
 
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    command: npm run dev
+    ports:
+      - 3000:3000
+    networks:
+      cgims_net:
+        ipv4_address: 192.168.0.2
+
   api:
     build:
       context: ./backend
@@ -12,7 +23,7 @@ services:
       - media_volume:/home/cgims/backend/media
     networks:
       cgims_net:
-        ipv4_address: 192.168.0.2
+        ipv4_address: 192.168.0.3
     env_file:
       - ./backend/.env
     expose:
@@ -29,7 +40,7 @@ services:
       - media_volume:/home/cgims/backend/media
     networks:
       cgims_net:
-        ipv4_address: 192.168.0.3
+        ipv4_address: 192.168.0.4
     ports:
       - 8000:80
     depends_on:
@@ -44,7 +55,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       cgims_net:
-        ipv4_address: 192.168.0.4
+        ipv4_address: 192.168.0.5
 
   pgadmin:
     image: dpage/pgadmin4
@@ -53,22 +64,11 @@ services:
       - ./pgadmin/pg:/var/lib/pgadmin
     networks:
       cgims_net:
-        ipv4_address: 192.168.0.5
+        ipv4_address: 192.168.0.6
     env_file:
       - ./backend/.env
     ports:
       - 5050:80
-
-  web:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    command: npm run dev
-    ports:
-      - 3000:3000
-    networks:
-      cgims_net:
-        ipv4_address: 192.168.0.6
 
 volumes:
   postgres_data:

@@ -2,6 +2,22 @@ version: '3.8'
 
 services:
 
+  web_with_nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/app/backend/static
+      - media_volume:/app/backend/media
+    networks:
+      cgims_net:
+        ipv4_address: 192.168.0.2
+    ports:
+      - 8000:80
+      - 443:443
+    depends_on:
+      - api
+
   api:
     build:
       context: ./backend
@@ -12,28 +28,13 @@ services:
       - media_volume:/home/cgims/backend/media
     networks:
       cgims_net:
-        ipv4_address: 192.168.0.2
+        ipv4_address: 192.168.0.3
     env_file:
       - ./backend/.env
     expose:
       - 8000
     depends_on:
       - db
-  
-  web_with_nginx:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    volumes:
-      - static_volume:/app/backend/static
-      - media_volume:/app/backend/media
-    networks:
-      cgims_net:
-        ipv4_address: 192.168.0.3
-    ports:
-      - 8000:80
-    depends_on:
-      - api
 
   db:
     image: postgres:14-alpine
@@ -63,6 +64,7 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+
 
 networks:
   cgims_net:

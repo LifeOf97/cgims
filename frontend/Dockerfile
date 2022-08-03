@@ -1,6 +1,5 @@
 # this dockerfile serves our vuejs app via nginx
-# and this nginx container also serves as a reverse
-# proxy for our django app
+# and also serves as a reverse proxy for our django api
 
 ####################
 # Build vuejs app
@@ -42,10 +41,12 @@ RUN chown -R nginx:nginx /app && chmod -R 755 /app && \
     chown -R nginx:nginx /var/log/nginx && \
     chown -R nginx:nginx /etc/nginx/conf.d
 
-RUN touch /var/run/nginx.pid && chown -R nginx:nginx /var/run/nginx.pid
+RUN touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid
 
 # copy over already built vue app
 COPY --from=build-vue --chown=nginx:nginx \
     /home/cgims/frontend/dist /app/frontend/dist
 
+# set system user
 USER nginx

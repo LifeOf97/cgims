@@ -18,7 +18,7 @@ import "v-calendar/dist/style.css";
 // axios.defaults.baseURL = "http://localhost:8000/api/";
 // axios.defaults.baseURL = "http://192.168.1.102:8000/api/";
 // docker
-axios.defaults.baseURL = "http://192.168.0.3:80/api/";
+axios.defaults.baseURL = "http://192.168.0.2:80/api/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 9000;
