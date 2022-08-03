@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # Boolean value
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "https://cgims.herokuapp.com/"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "cgims.herokuapp.com"]
 # ALLOWED_HOSTS = ['*']
 
 
@@ -188,6 +188,8 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
+    'https://cgims.herokuapp.com/'
+    'https://cgims.vercel.app/'
 ]
 
 CORS_REPLACE_HTTPS_REFERER = False
