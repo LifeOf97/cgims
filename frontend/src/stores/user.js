@@ -74,7 +74,6 @@ export const useUserStore = defineStore({
 
           if (err.response.status == 401) this.userSignIn.error = "Incorrect Staff_id/password"
           else this.userSignIn.error = "An error occured, please try again."
-          console.log(err.response)
         })
     },
     async getMe() {
@@ -91,7 +90,6 @@ export const useUserStore = defineStore({
           this.userData.loading = false
           if (err.response.status == 401) this.signOut()
           else this.create.error = "An error occured."
-          console.log(err.response)
         })
     },
     async signOut() {

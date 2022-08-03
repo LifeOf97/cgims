@@ -20,13 +20,13 @@ services:
     depends_on:
       - db
   
-  nginx:
+  web_with_nginx:
     build:
-      context: ./nginx
+      context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - static_volume:/home/cgims/backend/static
-      - media_volume:/home/cgims/backend/media
+      - static_volume:/app/backend/static
+      - media_volume:/app/backend/media
     networks:
       cgims_net:
         ipv4_address: 192.168.0.3

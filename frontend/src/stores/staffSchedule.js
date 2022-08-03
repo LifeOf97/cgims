@@ -36,7 +36,6 @@ export const useStaffScheduleStore = defineStore({
               if (err.response.status == 401) userStore.signOut()
               else if (err.response.status == 406) this.create.error = err.response.data.error
               else this.create.error = "An error occured."
-              console.log(err.response)
             })
         },
         async getSchedules() {
@@ -55,7 +54,6 @@ export const useStaffScheduleStore = defineStore({
               this.retrieve.loading = false
               if (err.response.status == 401) userStore.signOut()
               else this.retrieve.error = "An error occured."
-              console.log(err.response)
             })
         },
         async deleteSchedule() {
@@ -79,7 +77,6 @@ export const useStaffScheduleStore = defineStore({
                 if (err.response.status == 401) userStore.signOut()
                 else if (err.response.status == 404) this.getSchedules()
                 else this.retrieve.error = "An error occured, please try again."
-                console.log(err.response)
             })
         }
       }

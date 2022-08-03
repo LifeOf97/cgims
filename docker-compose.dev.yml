@@ -23,7 +23,7 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
       - static_volume:/home/cgims/backend/static
       - media_volume:/home/cgims/backend/media
@@ -62,7 +62,7 @@ services:
   web:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     command: npm run dev
     ports:
       - 3000:3000

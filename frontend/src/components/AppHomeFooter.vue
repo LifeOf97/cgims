@@ -52,7 +52,7 @@ onMounted(() => {
             <div ref="startAnim" class="w-11/12 mx-auto flex flex-col md:w-10/12 lg:w-9/12">
                 <div ref="footTxt" class="flex flex-col items-center gap-2 md:items-start">
                     <p class="text-xs font-normal text-slate-500 md:text-base">Please Note</p>
-                    <div class="w-7/12 flex flex-col gap-5 md:w-5/12 lg:w-3/12">
+                    <div class="w-10/12 flex flex-col gap-5 md:w-5/12 lg:w-3/12">
                         <p class="text-xs text-center italic font-normal text-slate-400 md:text-left">
                             All images, illustrations and explanations from third party sources
                             used by the developer have been duly attributed to their respective

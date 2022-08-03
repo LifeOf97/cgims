@@ -27,7 +27,6 @@ export const useStudentStore = defineStore({
                     this.retrieve.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else this.create.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         }
     }

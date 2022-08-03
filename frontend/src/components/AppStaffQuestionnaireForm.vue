@@ -1,7 +1,7 @@
 <script setup>
 /* eslint-disable */
 import { useStaffQuestionnaireStore } from '../stores/staffQuestionnaire';
-import { ref, reactive, onMounted, onBeforeMount } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import IconCloseBig from './icons/IconCloseBig.vue';
 import AppInputField from './AppInputField.vue';
 import AppButton from './AppButton.vue';
@@ -49,18 +49,6 @@ const filters = reactive([
     },
 ])
 
-const testt = {
-    categories: ["male"],
-    completed: false,
-    created: "2022-07-27T12:21:16.512318+01:00",
-    id: 57,
-    question: "For my students",
-    slug: "another-questionnaire",
-    staff: "stf1211",
-    students: ["art/jss3/1222", "commercial/jss2/1212"],
-    title: "Another questionnaire",
-}
-
 // methods
 const updateCategories = (state, value) => {
     // for some reasons the checkbox state is passed as false when active and
@@ -85,6 +73,11 @@ const selectQuestionnaire = (data) => {
     question.value = data.question
     selectQuestion.value = false
 }
+
+// hooks
+onMounted(() => {
+  if (!questionnaireStore.predefined.data) questionnaireStore.getPredefinedQuestionnaires()
+})
 </script>
 
 <template>

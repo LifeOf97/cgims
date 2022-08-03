@@ -1,0 +1,16 @@
+FROM node:buster-slim
+
+# create nonroot user/group
+RUN useradd --create-home --shell /bin/bash --user-group cgims
+USER cgims
+
+RUN mkdir -p /home/cgims/frontend
+
+WORKDIR /home/cgims/frontend
+
+COPY --chown=cgims:cgims package.json .
+COPY --chown=cgims:cgims package-lock.json .
+RUN npm install
+RUN npm install http-server
+
+COPY --chown=cgims:cgims . .

@@ -43,7 +43,6 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.create.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else this.create.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         },
         async updateQuestionnaire(data) {
@@ -65,7 +64,6 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.update.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else this.update.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         },
         async getQuestionnaires() {
@@ -84,7 +82,6 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.retrieve.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else this.retrieve.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         },
         async deleteQuestionnaire() {
@@ -109,7 +106,6 @@ export const useStaffQuestionnaireStore = defineStore({
                     if (err.response.status == 401) userStore.signOut()
                     else if (err.response.status == 404) this.getQuestionnaires()
                     else this.delete.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         },
         async getPredefinedQuestionnaires() {
@@ -128,7 +124,6 @@ export const useStaffQuestionnaireStore = defineStore({
                     this.predefined.loading = false
                     if (err.response.status == 401) userStore.signOut()
                     else this.predefined.error = "An error occured, please try again."
-                    console.log(err.response)
                 })
         }
     },
