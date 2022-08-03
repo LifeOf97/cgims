@@ -45,4 +45,4 @@ As at the time of developing this new system **_Febuary 12, 2022 - March 16 2022
 * Heroku (Backend)
 
 #
-Please note, because of the free tier i use with the platform hosting the CGIMS backend api. _[Heroku](https://heroku.com)_ in my case, media files such as images are not provided, so the first letter of the staff or student first name are used in place of the users avatar once sigtned in.
+Please note, because of the free tier i use with the platform hosting the CGIMS backend api. _[Heroku](https://heroku.com)_ in my case, media files such as images are not provided, so the first letter of the signed in staff or student is used in place of the users avatar.
