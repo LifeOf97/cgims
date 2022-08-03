@@ -4,7 +4,7 @@ This web based system was developed as a result of my undergraduate project.
 
 ## What is CGIMS/Web-Based CGIMS
 
-[CGIMS](https://web-cgims.netlify.app/) is a web based system to facilitate counselling exercises in secondary schools here in Nigeria.
+[CGIMS](https://cgims.vercel.app/) is a web based system to facilitate counselling exercises in secondary schools here in Nigeria.
 Web-based career guidance information and management system, creates an awareness to the use of computers in counselling. Currently the job of counselling towards a future career is not an easy one, the student has to be followed regularly within aptitude and academic performance so that he/she will be directed towards his/her gift career.
 
 

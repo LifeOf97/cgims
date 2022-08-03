@@ -26,8 +26,7 @@ onMounted(() => {
     <main class="w-full bg-white">
 
         <div class="flex flex-col gap-10 border-t border-slate-200 py-10">
-            <div ref="footTxt2"
-                class="w-11/12 mx-auto flex flex-col gap-2 items-center justify-between md:flex-row md:w-10/12 lg:w-9/12">
+            <div ref="footTxt2" class="w-11/12 mx-auto flex flex-col gap-2 items-center justify-between md:flex-row md:w-10/12 lg:w-9/12">
 
                 <div class="flex gap-2 items-center text-xs text-slate-600">
                     <p>Copyright &copy; 2022</p>
@@ -61,6 +60,12 @@ onMounted(() => {
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-2 text-xs w-11/12 mx-auto md:w-10/12 lg:w-9/12">
+                <p class="font-medium text-slate-900">API Docs: </p>
+                <a class="cursor-pointer text-blue-500 hover:text-blue-600" href="https://cgims.herokuapp.com/api/schema/swagger/" target="_blank" rel="noopener noreferrer">Swagger,</a>
+                <a class="cursor-pointer text-blue-500 hover:text-blue-600" href="https://cgims.herokuapp.com/api/schema/redoc/" target="_blank" rel="noopener noreferrer">Redoc</a>
             </div>
 
         </div>
