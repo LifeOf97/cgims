@@ -4,8 +4,8 @@ bind = "0.0.0.0:8000"
 # bind = "unix:/run/cgims.sock"
 workers = multiprocessing.cpu_count() * 2 + 1
 reload_engine = "inotify"
-group = "cgims"
-user = "cgims"
+group = "realestKMA"
+user = "realestKMA"
 reload = True
 
 # logs

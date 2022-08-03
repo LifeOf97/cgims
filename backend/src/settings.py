@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # Boolean value
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "https://cgims.herokuapp.com/"]
 # ALLOWED_HOSTS = ['*']
 
 

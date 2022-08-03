@@ -1,4 +1,3 @@
 release: python manage.py makemigrations --no-input
-release: python manage.py migrate --no-input
 release: python manage.py migrate --no-input --clear
-web: gunicorn src.wsgi
+web: gunicorn src.wsgi:application
