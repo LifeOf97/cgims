@@ -188,8 +188,8 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://localhost:3000',
-    'https://cgims.herokuapp.com/'
-    'https://cgims.vercel.app/'
+    'https://cgims.herokuapp.com/',
+    'https://cgims.vercel.app/',
 ]
 
 CORS_REPLACE_HTTPS_REFERER = False
