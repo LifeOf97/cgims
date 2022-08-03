@@ -19,10 +19,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Boolean value
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.1.102"]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -176,7 +176,7 @@ REST_FRAMEWORK = {
 
 # Django security Settings
 # CSRF_COOKIE_DOMAIN = ""
-# CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
 # CSRF_COOKIE_HTTPONLY = False
 # CSRF_COOKIE_SECURE = True
 
@@ -186,22 +186,12 @@ REST_FRAMEWORK = {
 
 # Django corsheaders settings
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8000",
-    "http://localhost:3000",
-    "http://192.168.1.102:8000",
-    "http://192.168.1.102:3000",
-    "http://192.168.1.102:4173",
-    # docker
-    "http://192.168.0.6:3000",
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
 ]
 
-# CORS_ALLOW_METHODS = list(default_methods) + []
-# CORS_ALLOW_HEADERS = list(default_headers) + []
-# CORS_EXPOSE_HEADERS = []
-# CORS_REPLACE_HTTPS_REFERER = False
-# CORS_PREFLIGHT_MAX_AGE = 86400
+CORS_REPLACE_HTTPS_REFERER = False
+CORS_PREFLIGHT_MAX_AGE = 86400
 CORS_ALLOW_CREDENTIALS = True
 
 # drf_spectacular settings
