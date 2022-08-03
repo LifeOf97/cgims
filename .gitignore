@@ -12,3 +12,4 @@ backend/logs
 .pgadmin
 db/
 pgadmin/
+.vscode
