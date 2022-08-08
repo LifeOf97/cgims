@@ -1,6 +1,6 @@
 <script setup>
 /* eslint-disable */
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useUserStore } from '../stores/user';
 import chairsImg from '../assets/images/chairs2.jpg'
@@ -34,6 +34,11 @@ const signIn = () => {
 
     password.value = ""
 }
+
+// hooks
+onMounted(() => {
+  userStore.getMe()
+})
 </script>
 
 <template>

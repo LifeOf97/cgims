@@ -1,5 +1,7 @@
 <script setup>
 /* eslint-disable */
+import { onMounted } from 'vue';
+import { useUserStore } from '../stores/user';
 import AppHomeTopNav from '../components/AppHomeTopNav.vue';
 import AppHomeHero from '../components/AppHomeHero.vue';
 import AppHomeAbout from '../components/AppHomeAbout.vue';
@@ -7,6 +9,13 @@ import AppHomeWhy from '../components/AppHomeWhy.vue';
 import AppHomeHow from '../components/AppHomeHow.vue';
 import AppHomeFooter from '../components/AppHomeFooter.vue';
 
+// stores
+const userStore = useUserStore()
+
+// hooks
+onMounted(() => {
+  userStore.getMe()
+})
 </script>
 
 <template>
