@@ -24,7 +24,7 @@ export const useUserStore = defineStore({
       redirect: null,
       error: null
     },
-    userSignOut: {open: false}
+    userSignOut: { open: false }
   }),
   actions: {
     async signIn(data) {
@@ -44,7 +44,7 @@ export const useUserStore = defineStore({
           localStorage.setItem("cgims_staffid", JSON.stringify(data['username']))
           this.userSignIn.access = JSON.parse(localStorage.getItem("cgims_access"))
           this.userSignIn.refresh = JSON.parse(localStorage.getItem("cgims_refresh"))
-          
+
           // check if user marked rememberMe
           if (data.rememberMe) {
             localStorage.setItem("cgims_username", JSON.stringify(data['username']))
@@ -61,8 +61,8 @@ export const useUserStore = defineStore({
 
           // then redirect to initially requested page or dashboard
           setTimeout(() => {
-            if (this.userSignIn.redirect) this.$router.push({name: this.userSignIn.redirect, params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}})
-            else this.$router.push({name: 'staff', params: {staffId: JSON.parse(localStorage.getItem("cgims_staffid"))}})
+            if (this.userSignIn.redirect) this.$router.push({ name: this.userSignIn.redirect, params: { staffId: JSON.parse(localStorage.getItem("cgims_staffid")) } })
+            else this.$router.push({ name: 'staff', params: { staffId: JSON.parse(localStorage.getItem("cgims_staffid")) } })
             this.userSignIn.loading = false
             this.userSignIn.success = false
           }, 1000);
@@ -80,7 +80,7 @@ export const useUserStore = defineStore({
       this.userData.loading = true
       this.userData.error = null
 
-      await axios.get('staffs/me/', {headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('cgims_access'))}` } })
+      await axios.get('staffs/me/', { headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('cgims_access'))}` } })
         .then((resp) => {
           this.userData.loading = false
           localStorage.setItem("cgims_user", JSON.stringify(resp.data))
@@ -100,7 +100,16 @@ export const useUserStore = defineStore({
       localStorage.removeItem('cgims_schedules')
       localStorage.removeItem('cgims_students')
       this.userSignOut.open = false
-      this.$router.push({name: 'signinstaff'})
-  },
+      this.$router.push({ name: 'signinstaff' })
+    },
+    async wakeDyno() {
+      await axios.get('schema/swagger/')
+        .then((resp) => {
+          console.log('Welcome')
+        })
+        .catch((err) => {
+          console.log('Welcome')
+        })
+    }
   },
 });

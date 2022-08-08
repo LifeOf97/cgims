@@ -14,7 +14,7 @@ const userStore = useUserStore()
 
 // hooks
 onMounted(() => {
-  userStore.signIn()
+  userStore.wakeDyno()
 })
 </script>
 
