@@ -14,7 +14,7 @@ const userStore = useUserStore()
 
 // hooks
 onMounted(() => {
-  userStore.getMe()
+  userStore.signIn()
 })
 </script>
 

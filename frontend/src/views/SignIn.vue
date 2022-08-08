@@ -37,7 +37,7 @@ const signIn = () => {
 
 // hooks
 onMounted(() => {
-  userStore.getMe()
+  userStore.signIn()
 })
 </script>
 
