@@ -15,8 +15,7 @@ Version 1 of this new system will provide questionnaires carefully crafted by th
 
 # Please Note
 
-As at the time of developing this new system **_Febuary 12, 2022 - March 16 2022_** due to tight deadlines and interference with my upcoming exams at that time, i was not able to write test for both the frontend and backend codes.
-
+As of January 2023, the backend server will no longer be available due to the fact that i was using the heroku free service which is no longer available for free. When/if i find a suitable replacement, this documentation will be updated to notify readers. Thank you for your understanding.
 
 ## Tech Stack
 
