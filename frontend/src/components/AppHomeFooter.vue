@@ -56,7 +56,7 @@ onMounted(() => {
                             All images, illustrations and explanations from third party sources
                             used by the developer have been duly attributed to their respective
                             owners and/or sources. in cases where it is not obvious please hover
-                            your house or touch on the respective content to see the attribution.
+                            your mouse or touch on the respective content to see the attribution.
                         </p>
                     </div>
                 </div>
